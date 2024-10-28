@@ -1,18 +1,37 @@
-// src/components/PackageCost.tsx
 import React, { useState } from 'react';
 import { getPackageCost } from '../api';
+import axios, { AxiosError } from 'axios';
 
 const PackageCost: React.FC = () => {
   const [id, setId] = useState<string>('');
   const [cost, setCost] = useState<any>(null);
   const [includeDependencies, setIncludeDependencies] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const fetchCost = async () => {
     try {
       const result = await getPackageCost(id, includeDependencies);
       setCost(result);
-    } catch (error) {
-      console.error("Failed to fetch package cost", error);
+      setErrorMessage(null);
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        const axiosError = err as AxiosError;
+
+        const statusCode = axiosError.response?.status || 'Unknown status code';
+        const errorData = axiosError.response?.data;
+
+        let errorMessage = '';
+        if (errorData && typeof errorData === 'object') {
+          errorMessage = (errorData as { error?: string }).error || axiosError.message;
+        } else {
+          errorMessage = axiosError.message;
+        }
+
+        setErrorMessage(`Error ${statusCode}: ${errorMessage}`);
+      } else {
+        setErrorMessage('An unexpected error occurred.');
+      }
+      console.error("Failed to fetch package cost", err);
     }
   };
 
@@ -37,10 +56,12 @@ const PackageCost: React.FC = () => {
         <label className="form-check-label" htmlFor="includeDependencies">Include Dependencies</label>
       </div>
       <button onClick={fetchCost} className="btn btn-info mb-3">Fetch Cost</button>
+
+      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+
       {cost && <pre className="bg-light p-3 rounded">{JSON.stringify(cost, null, 2)}</pre>}
     </div>
   );
 };
 
 export default PackageCost;
-    
