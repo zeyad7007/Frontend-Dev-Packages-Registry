@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { getPackagesByRegex, Package } from '../api';
+import { getPackagesByRegex } from '../api';
 import axios, { AxiosError } from 'axios';
+import { Package } from '../Interface';
 
 const SearchByRegex: React.FC = () => {
   const [regex, setRegex] = useState<string>('');
@@ -57,7 +58,9 @@ const SearchByRegex: React.FC = () => {
             </div>
           ))
         ) : (
-          <p>No packages found</p>
+          packages.length === 0 && regex ? (
+            <p>No packages found</p>
+          ) : null
         )}
       </div>
     </div>

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { getPackageCost } from '../api';
 import axios, { AxiosError } from 'axios';
+import { CostI } from '../Interface';
 
 const PackageCost: React.FC = () => {
   const [id, setId] = useState<string>('');
-  const [cost, setCost] = useState<any>(null);
+  const [cost, setCost] = useState<CostI[]>();
   const [includeDependencies, setIncludeDependencies] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -57,9 +58,24 @@ const PackageCost: React.FC = () => {
       </div>
       <button onClick={fetchCost} className="btn btn-info mb-3">Fetch Cost</button>
 
-      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+      {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
 
-      {cost && <pre className="bg-light p-3 rounded">{JSON.stringify(cost, null, 2)}</pre>}
+      {cost && (
+        <div className="bg-light p-3 rounded">
+          <h5>Package Cost Details:</h5>
+          {Object.entries(cost).map(([packageId, costDetails]) => (
+            <div key={packageId}>
+              <h6>Package ID: {packageId}</h6>
+              <ul>
+                {costDetails.standalonecost !== undefined && (
+                  <li><strong>Standalone Cost:</strong> {costDetails.ID.standalonecost} MB</li>
+                )}
+                <li><strong>Total Cost:</strong> {costDetails.ID.totalcost} MB</li>
+              </ul>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

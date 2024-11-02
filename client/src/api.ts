@@ -1,57 +1,6 @@
-// src/api.ts
 import axios from 'axios';
+import { Package, PackageUpdateI, PackageUploadI, GetPackagesQuery, Metrics, CostI } from './Interface';
 
-export interface Package {
-  metadata: {
-    Name: string;
-    Version?: string;
-    ID: string;
-  };
-  data: {
-    Content?: string;
-    URL?: string;
-    JSProgram: string;
-    debloat?:boolean;
-  };
-}
-
-export interface PackageUploadI {
-  
-    Name: string;
-    Content?: string;
-    URL?: string;
-    JSProgram: string;
-    debloat?:boolean;
-  
-}
-
-export interface PackageUpdateI {
-  metadata: {
-    Name: string;
-    Version: string;
-  };
-  data: {
-    Content?: string;
-    URL?: string;
-    JSProgram: string;
-    debloat?:boolean;
-  };
-}
-
-export interface StatusMessage{
-  Code: number;
-  Message:string;
-
-}
-
-export interface GetPackagesQuery{
-  Name: string;
-  Version: string;
-
-}
-
-
-// Axios instance
 const apiClient = axios.create({
   baseURL: 'http://3.94.57.71:3000', // API server
   headers: {
@@ -96,14 +45,14 @@ export const getPackagesByRegex = async (regex: string): Promise<Package[]> => {
   return response.data;
 };
 
-export const getPackageCost = async (id: string, dependency: boolean = false): Promise<any> => {
+export const getPackageCost = async (id: string, dependency: boolean = false): Promise<CostI[]> => {
   console.log(id);
   const response = await apiClient.get(`/package/${id}/cost`, { params: { dependency } });
   console.log(response.data);
   return response.data;
 };
 
-export const getPackageRating = async (id: string): Promise<any> => {
+export const getPackageRating = async (id: string): Promise<Metrics> => {
   console.log(id);
   const response = await apiClient.get(`/package/${id}/rate`);
   console.log(response.data);

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { uploadPackage, PackageUploadI } from '../api';
+import { uploadPackage } from '../api';
 import axios, { AxiosError } from 'axios';
+import { PackageUploadI } from '../Interface';
 
 const UploadPackage: React.FC = () => {
   const [packageData, setPackageData] = useState<PackageUploadI>({

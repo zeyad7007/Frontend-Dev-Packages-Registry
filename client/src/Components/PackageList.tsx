@@ -1,23 +1,26 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { getPackages, Package } from '../api';
+import React, { useState, useCallback } from 'react';
+import { getPackages } from '../api';
 import axios, { AxiosError } from 'axios';
+import { Package } from '../Interface';
 
 const PackageList: React.FC = () => {
   const [packages, setPackages] = useState<Package[]>([]);
-  const [offset, setOffset] = useState<number>(0);
+  const [offset, setOffset] = useState<string>(''); // Use a string to allow empty state
   const [queries, setQueries] = useState<{ Name: string; Version: string }[]>([
     { Name: '', Version: '' },
   ]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const fetchPackages = useCallback(async () => {
-    if (offset < 0) {
-      setErrorMessage('Offset cannot be negative.');
+    const parsedOffset = parseInt(offset);
+    if (isNaN(parsedOffset) || parsedOffset < 0) {
+      setErrorMessage('Offset must be a non-negative number.');
       return;
     }
+
     try {
       const query = queries.filter(q => q.Name || q.Version); // Filter out empty queries
-      const result = await getPackages(offset, query);
+      const result = await getPackages(parsedOffset, query);
       setPackages(result);
       setErrorMessage(null);
     } catch (err) {
@@ -42,22 +45,20 @@ const PackageList: React.FC = () => {
     }
   }, [offset, queries]);
 
-  useEffect(() => {
-    fetchPackages();
-  }, [fetchPackages]);
-
   const handleAddQuery = () => {
-    setQueries([...queries, { Name: '', Version: '' }]);
+    setQueries(prevQueries => [...prevQueries, { Name: '', Version: '' }]);
   };
 
   const handleRemoveQuery = (index: number) => {
-    setQueries(queries.filter((_, i) => i !== index));
+    setQueries(prevQueries => prevQueries.filter((_, i) => i !== index));
   };
 
   const handleQueryChange = (index: number, field: 'Name' | 'Version', value: string) => {
-    const newQueries = [...queries];
-    newQueries[index][field] = value;
-    setQueries(newQueries);
+    setQueries(prevQueries => {
+      const newQueries = [...prevQueries];
+      newQueries[index] = { ...newQueries[index], [field]: value };
+      return newQueries;
+    });
   };
 
   return (
@@ -93,18 +94,22 @@ const PackageList: React.FC = () => {
           Add Another Query
         </button>
       </div>
-      <input
-        type="number"
-        className="form-control my-3"
-        placeholder="Enter Offset (for pagination)"
-        value={offset}
-        onChange={(e) => setOffset(Number(e.target.value))}
-      />
+      <div className="form-group">
+        <label htmlFor="offsetInput">Enter Offset (for pagination)</label>
+        <input
+          id="offsetInput"
+          type="number"
+          className="form-control my-3"
+          placeholder="Enter Offset"
+          value={offset}
+          onChange={(e) => setOffset(e.target.value)}
+        />
+      </div>
       <button onClick={fetchPackages} className="btn btn-primary mb-3">Load Packages</button>
 
       {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
 
-      {packages.map((pkg) => (
+      {packages.length > 0 && packages.map((pkg) => (
         <div key={pkg.metadata.ID} className="border rounded p-3 mb-2">
           <h5>{pkg.metadata.Name}</h5>
           <p>Version: {pkg.metadata.Version}</p>

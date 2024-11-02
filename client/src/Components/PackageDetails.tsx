@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { getPackageById, Package } from '../api';
+import { getPackageById } from '../api';
+import { Package } from '../Interface';
+
 import axios, { AxiosError } from 'axios';
 
 const PackageDetails: React.FC = () => {

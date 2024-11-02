@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { resetRegistry } from '../api';
 import axios, { AxiosError } from 'axios';
 
 const ResetRegistry: React.FC = () => {
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
   const handleReset = async () => {
     try {
       await resetRegistry();
-      alert("Registry has been reset.");
+      setErrorMessage(null);
+      const successMessage = document.createElement('div');
+      successMessage.className = 'alert alert-success';
+      successMessage.innerText = `Registry has been reset successfully.`;
+      document.querySelector('.container')?.prepend(successMessage);
+      setTimeout(() => successMessage.remove(), 5000);
+      setErrorMessage(null);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         const axiosError = err as AxiosError;
@@ -35,6 +43,7 @@ const ResetRegistry: React.FC = () => {
       <button className="btn btn-danger mt-4" onClick={handleReset}>
         Reset Registry
       </button>
+      {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
     </div>
   );
 };

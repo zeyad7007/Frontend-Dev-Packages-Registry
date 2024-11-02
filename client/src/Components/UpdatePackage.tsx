@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { updatePackageById, PackageUpdateI } from '../api';
+import { updatePackageById } from '../api';
 import axios, { AxiosError } from 'axios';
+import { PackageUpdateI } from '../Interface';
 
 const UpdatePackage: React.FC = () => {
   const [id, setId] = useState<string>('');
@@ -125,7 +126,7 @@ const UpdatePackage: React.FC = () => {
       <input
         type="text"
         className="form-control my-3"
-        placeholder="GitHub Repo URL (optional)"
+        placeholder="GitHub Repo URL"
         value={packageData.data.URL || ''}
         onChange={(e) => setPackageData({
           ...packageData,

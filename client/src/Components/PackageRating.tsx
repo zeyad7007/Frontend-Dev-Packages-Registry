@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { getPackageRating } from '../api';
 import axios, { AxiosError } from 'axios';
+import { Metrics } from '../Interface';
 
 const PackageRating: React.FC = () => {
   const [id, setId] = useState<string>('');
-  const [rating, setRating] = useState<any>(null);
+  const [rating, setRating] = useState<Metrics>();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const fetchRating = async () => {
@@ -46,9 +47,31 @@ const PackageRating: React.FC = () => {
       />
       <button onClick={fetchRating} className="btn btn-info mb-3">Fetch Rating</button>
 
-      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+      {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
 
-      {rating && <pre className="bg-light p-3 rounded">{JSON.stringify(rating, null, 2)}</pre>}
+      {rating && (
+        <div className="bg-light p-3 rounded">
+          <h5>Package Rating Details:</h5>
+          <ul>
+            <li><strong>Bus Factor:</strong> {rating.BusFactor}</li>
+            <li><strong>Bus Factor Latency:</strong> {rating.BusFactorLatency}</li>
+            <li><strong>Correctness:</strong> {rating.Correctness}</li>
+            <li><strong>Correctness Latency:</strong> {rating.CorrectnessLatency}</li>
+            <li><strong>Ramp Up:</strong> {rating.RampUp}</li>
+            <li><strong>Ramp Up Latency:</strong> {rating.RampUpLatency}</li>
+            <li><strong>Responsiveness:</strong> {rating.Responsiveness}</li>
+            <li><strong>Responsiveness Latency:</strong> {rating.ResponsivenessLatency}</li>
+            <li><strong>License Score:</strong> {rating.LicenseScore}</li>
+            <li><strong>License Score Latency:</strong> {rating.LicenseScoreLatency}</li>
+            <li><strong>Good Pinning Practice:</strong> {rating.GoodPinningPractice}</li>
+            <li><strong>Good Pinning Practice Latency:</strong> {rating.GoodPinningPracticeLatency}</li>
+            <li><strong>Pull Request:</strong> {rating.PullRequest}</li>
+            <li><strong>Pull Request Latency:</strong> {rating.PullRequestLatency}</li>
+            <li><strong>Net Score:</strong> {rating.NetScore}</li>
+            <li><strong>Net Score Latency:</strong> {rating.NetScoreLatency}</li>
+          </ul>
+        </div>
+      )}
     </div>
   );
 };
