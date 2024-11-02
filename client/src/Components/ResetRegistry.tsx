@@ -14,24 +14,20 @@ const ResetRegistry: React.FC = () => {
       successMessage.innerText = `Registry has been reset successfully.`;
       document.querySelector('.container')?.prepend(successMessage);
       setTimeout(() => successMessage.remove(), 5000);
-      setErrorMessage(null);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         const axiosError = err as AxiosError;
-
         const statusCode = axiosError.response?.status || 'Unknown status code';
         const errorData = axiosError.response?.data;
-
         let errorMessage = '';
         if (errorData && typeof errorData === 'object') {
           errorMessage = (errorData as { error?: string }).error || axiosError.message;
         } else {
           errorMessage = axiosError.message;
         }
-
-        alert(`Error ${statusCode}: ${errorMessage}`);
+        setErrorMessage(`Error ${statusCode}: ${errorMessage}`);
       } else {
-        alert('An unexpected error occurred.');
+        setErrorMessage('An unexpected error occurred.');
       }
       console.error("Failed to reset registry:", err);
     }
@@ -39,11 +35,11 @@ const ResetRegistry: React.FC = () => {
 
   return (
     <div className="container">
-      <h2>Reset Registry</h2>
-      <button className="btn btn-danger mt-4" onClick={handleReset}>
+      <h2 className="display-4 fw-bold">Reset Registry</h2> {/* Bold heading */}
+      <button className="btn btn-danger btn-lg mt-4" onClick={handleReset} aria-live="polite">
         Reset Registry
       </button>
-      {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
+      {errorMessage && <div className="alert alert-danger" role="alert" aria-live="assertive">{errorMessage}</div>}
     </div>
   );
 };

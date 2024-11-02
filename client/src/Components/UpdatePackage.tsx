@@ -40,7 +40,6 @@ const UpdatePackage: React.FC = () => {
   };
 
   const handleUpdate = async () => {
-    
     try {
       await updatePackageById(id, packageData);
       setErrorMessage(null);
@@ -52,17 +51,14 @@ const UpdatePackage: React.FC = () => {
     } catch (err) {
       if (axios.isAxiosError(err)) {
         const axiosError = err as AxiosError;
-
         const statusCode = axiosError.response?.status || 'Unknown status code';
         const errorData = axiosError.response?.data;
-
         let errorMessage = '';
         if (errorData && typeof errorData === 'object') {
           errorMessage = (errorData as { error?: string }).error || axiosError.message;
         } else {
           errorMessage = axiosError.message;
         }
-
         setErrorMessage(`Error ${statusCode}: ${errorMessage}`);
       } else {
         setErrorMessage('An unexpected error occurred.');
@@ -73,17 +69,19 @@ const UpdatePackage: React.FC = () => {
 
   return (
     <div className="container">
-      <h2>Update Package by ID</h2>
+      <h2 className="display-4 fw-bold">Update Package by ID</h2> {/* Bold and larger heading */}
       <input
         type="text"
-        className="form-control my-3"
+        className="form-control form-control-lg my-3"
+        aria-label="Enter Package ID"
         placeholder="Enter Package ID"
         value={id}
         onChange={(e) => setId(e.target.value)}
       />
       <input
         type="text"
-        className="form-control my-3"
+        className="form-control form-control-lg my-3"
+        aria-label="Package Name"
         placeholder="Package Name"
         value={packageData.metadata.Name}
         onChange={(e) => setPackageData({
@@ -93,7 +91,8 @@ const UpdatePackage: React.FC = () => {
       />
       <input
         type="text"
-        className="form-control my-3"
+        className="form-control form-control-lg my-3"
+        aria-label="Package Version"
         placeholder="Package Version"
         value={packageData.metadata.Version}
         onChange={(e) => setPackageData({
@@ -106,6 +105,7 @@ const UpdatePackage: React.FC = () => {
           type="checkbox"
           className="form-check-input"
           id="debloat"
+          aria-label="Debloat option"
           checked={packageData.data.debloat}
           onChange={(e) => setPackageData({
             ...packageData,
@@ -115,7 +115,8 @@ const UpdatePackage: React.FC = () => {
         <label className="form-check-label" htmlFor="debloat">Debloat</label>
       </div>
       <textarea
-        className="form-control my-3"
+        className="form-control form-control-lg my-3"
+        aria-label="JavaScript Program"
         placeholder="JS Program"
         value={packageData.data.JSProgram}
         onChange={(e) => setPackageData({
@@ -125,7 +126,8 @@ const UpdatePackage: React.FC = () => {
       />
       <input
         type="text"
-        className="form-control my-3"
+        className="form-control form-control-lg my-3"
+        aria-label="GitHub Repo URL"
         placeholder="GitHub Repo URL"
         value={packageData.data.URL || ''}
         onChange={(e) => setPackageData({
@@ -135,12 +137,13 @@ const UpdatePackage: React.FC = () => {
       />
       <input
         type="file"
-        className="form-control my-3"
+        className="form-control form-control-lg my-3"
+        aria-label="File upload"
         onChange={handleFileChange}
       />
-      <button onClick={handleUpdate} className="btn btn-warning">Update Package</button>
+      <button onClick={handleUpdate} className="btn btn-warning btn-lg">Update Package</button> {/* Larger button */}
 
-      {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
+      {errorMessage && <div className="alert alert-danger" role="alert" aria-live="assertive">{errorMessage}</div>}
     </div>
   );
 };

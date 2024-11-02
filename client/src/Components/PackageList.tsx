@@ -26,17 +26,14 @@ const PackageList: React.FC = () => {
     } catch (err) {
       if (axios.isAxiosError(err)) {
         const axiosError = err as AxiosError;
-
         const statusCode = axiosError.response?.status || 'Unknown status code';
         const errorData = axiosError.response?.data;
-
         let errorMessage = '';
         if (errorData && typeof errorData === 'object') {
           errorMessage = (errorData as { error?: string }).error || axiosError.message;
         } else {
           errorMessage = axiosError.message;
         }
-
         setErrorMessage(`Error ${statusCode}: ${errorMessage}`);
       } else {
         setErrorMessage('An unexpected error occurred.');
@@ -63,26 +60,28 @@ const PackageList: React.FC = () => {
 
   return (
     <div className="container">
-      <h2>Package List</h2>
+      <h2 className="display-4 fw-bold">Package List</h2> {/* Bold and large heading */}
       <div className="form-group">
         {queries.map((query, index) => (
           <div key={index} className="query-group mb-3">
             <input
               type="text"
-              className="form-control my-2"
-              placeholder="Enter Package Name (optional)"
+              className="form-control form-control-lg my-2"
+              aria-label="Enter Package Name"
+              placeholder="Enter Package Name"
               value={query.Name}
               onChange={(e) => handleQueryChange(index, 'Name', e.target.value)}
             />
             <input
               type="text"
-              className="form-control my-2"
-              placeholder="Enter Version (e.g., Exact (1.2.3), Bounded range (1.2.3-2.1.0), Carat (^1.2.3), Tilde (~1.2.0))"
+              className="form-control form-control-lg my-2"
+              aria-label="Enter Version"
+              placeholder="Enter Version"
               value={query.Version}
               onChange={(e) => handleQueryChange(index, 'Version', e.target.value)}
             />
             <button
-              className="btn btn-danger mb-3"
+              className="btn btn-danger btn-lg mb-3"
               onClick={() => handleRemoveQuery(index)}
               disabled={queries.length === 1} // Prevent removing the last remaining query
             >
@@ -90,31 +89,33 @@ const PackageList: React.FC = () => {
             </button>
           </div>
         ))}
-        <button onClick={handleAddQuery} className="btn btn-secondary mb-3">
+        <button onClick={handleAddQuery} className="btn btn-secondary btn-lg mb-3">
           Add Another Query
         </button>
       </div>
       <div className="form-group">
-        <label htmlFor="offsetInput">Enter Offset (for pagination)</label>
+        <label htmlFor="offsetInput" className="display-4 fw-bold form-label form-control-lg mb-1">Enter Offset (for pagination)</label>
         <input
           id="offsetInput"
           type="number"
-          className="form-control my-3"
+          className="form-control form-control-lg my-2"
           placeholder="Enter Offset"
           value={offset}
           onChange={(e) => setOffset(e.target.value)}
         />
       </div>
-      <button onClick={fetchPackages} className="btn btn-primary mb-3">Load Packages</button>
+      <button onClick={fetchPackages} className="btn btn-primary btn-lg mb-3">Load Packages</button>
 
-      {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
+      {errorMessage && <div className="alert alert-danger" role="alert" aria-live="assertive">{errorMessage}</div>}
 
-      {packages.length > 0 && packages.map((pkg) => (
-        <div key={pkg.metadata.ID} className="border rounded p-3 mb-2">
-          <h5>{pkg.metadata.Name}</h5>
-          <p>Version: {pkg.metadata.Version}</p>
-        </div>
-      ))}
+      <div aria-live="polite">
+        {packages.length > 0 && packages.map((pkg) => (
+          <div key={pkg.metadata.ID} className="border rounded p-3 mb-2">
+            <h5>{pkg.metadata.Name}</h5>
+            <p>Version: {pkg.metadata.Version}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

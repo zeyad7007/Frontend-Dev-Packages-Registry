@@ -35,21 +35,17 @@ const UploadPackage: React.FC = () => {
       successMessage.innerText = `Package uploaded with ID: ${result.metadata.ID}`;
       document.querySelector('.container')?.prepend(successMessage);
       setTimeout(() => successMessage.remove(), 5000);
-      setErrorMessage(null);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         const axiosError = err as AxiosError;
-
         const statusCode = axiosError.response?.status || 'Unknown status code';
         const errorData = axiosError.response?.data;
-
         let errorMessage = '';
         if (errorData && typeof errorData === 'object') {
           errorMessage = (errorData as { error?: string }).error || axiosError.message;
         } else {
           errorMessage = axiosError.message;
         }
-
         setErrorMessage(`Error ${statusCode}: ${errorMessage}`);
       } else {
         setErrorMessage('An unexpected error occurred.');
@@ -60,10 +56,11 @@ const UploadPackage: React.FC = () => {
 
   return (
     <div className="container">
-      <h2>Upload Package</h2>
+      <h2 className="display-4 fw-bold">Upload Package</h2> {/* Bold heading */}
       <input
         type="text"
-        className="form-control my-3"
+        className="form-control form-control-lg my-3"
+        aria-label="Package Name"
         placeholder="Package Name"
         value={packageData.Name}
         onChange={(e) => setPackageData({ ...packageData, Name: e.target.value })}
@@ -73,32 +70,36 @@ const UploadPackage: React.FC = () => {
           type="checkbox"
           className="form-check-input"
           id="debloat"
+          aria-label="Debloat option"
           checked={packageData.debloat}
           onChange={(e) => setPackageData({ ...packageData, debloat: e.target.checked })}
         />
         <label className="form-check-label" htmlFor="debloat">Debloat</label>
       </div>
       <textarea
-        className="form-control my-3"
+        className="form-control form-control-lg my-3"
+        aria-label="JavaScript Program"
         placeholder="JS Program"
         value={packageData.JSProgram}
         onChange={(e) => setPackageData({ ...packageData, JSProgram: e.target.value })}
       />
       <input
         type="text"
-        className="form-control my-3"
+        className="form-control form-control-lg my-3"
+        aria-label="GitHub Repo URL"
         placeholder="GitHub Repo URL"
-        value={packageData.URL}
+        value={packageData.URL || ''}
         onChange={(e) => setPackageData({ ...packageData, URL: e.target.value, Content: undefined })}
       />
       <input
         type="file"
-        className="form-control my-3"
+        className="form-control form-control-lg my-3"
+        aria-label="File upload"
         onChange={handleFileChange}
       />
-      <button onClick={handleUpload} className="btn btn-success">Upload Package</button>
+      <button onClick={handleUpload} className="btn btn-success btn-lg">Upload Package</button>
 
-      {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
+      {errorMessage && <div className="alert alert-danger" role="alert" aria-live="assertive">{errorMessage}</div>}
     </div>
   );
 };

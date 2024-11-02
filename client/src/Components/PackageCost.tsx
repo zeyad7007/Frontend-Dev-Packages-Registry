@@ -1,3 +1,4 @@
+// Example usage in PackageCost.tsx
 import React, { useState } from 'react';
 import { getPackageCost } from '../api';
 import axios, { AxiosError } from 'axios';
@@ -17,17 +18,14 @@ const PackageCost: React.FC = () => {
     } catch (err) {
       if (axios.isAxiosError(err)) {
         const axiosError = err as AxiosError;
-
         const statusCode = axiosError.response?.status || 'Unknown status code';
         const errorData = axiosError.response?.data;
-
         let errorMessage = '';
         if (errorData && typeof errorData === 'object') {
           errorMessage = (errorData as { error?: string }).error || axiosError.message;
         } else {
           errorMessage = axiosError.message;
         }
-
         setErrorMessage(`Error ${statusCode}: ${errorMessage}`);
       } else {
         setErrorMessage('An unexpected error occurred.');
@@ -38,10 +36,11 @@ const PackageCost: React.FC = () => {
 
   return (
     <div className="container">
-      <h2>Get Package Cost</h2>
+      <h2 className="display-4 fw-bold">Get Package Cost</h2>
       <input
         type="text"
-        className="form-control my-3"
+        className="form-control form-control-lg my-3"
+        aria-label="Enter Package ID"
         placeholder="Enter Package ID"
         value={id}
         onChange={(e) => setId(e.target.value)}
@@ -51,17 +50,22 @@ const PackageCost: React.FC = () => {
           type="checkbox"
           className="form-check-input"
           id="includeDependencies"
+          aria-label="Include Dependencies"
           checked={includeDependencies}
           onChange={(e) => setIncludeDependencies(e.target.checked)}
         />
         <label className="form-check-label" htmlFor="includeDependencies">Include Dependencies</label>
       </div>
-      <button onClick={fetchCost} className="btn btn-info mb-3">Fetch Cost</button>
+      <button onClick={fetchCost} className="btn btn-info btn-lg mb-3">Fetch Cost</button>
 
-      {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
+      {errorMessage && (
+        <div className="alert alert-danger" role="alert" aria-live="assertive">
+          {errorMessage}
+        </div>
+      )}
 
       {cost && (
-        <div className="bg-light p-3 rounded">
+        <div className="bg-light p-3 rounded" aria-live="polite">
           <h5>Package Cost Details:</h5>
           {Object.entries(cost).map(([packageId, costDetails]) => (
             <div key={packageId}>

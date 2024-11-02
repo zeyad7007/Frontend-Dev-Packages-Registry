@@ -16,17 +16,14 @@ const SearchByRegex: React.FC = () => {
     } catch (err) {
       if (axios.isAxiosError(err)) {
         const axiosError = err as AxiosError;
-
         const statusCode = axiosError.response?.status || 'Unknown status code';
         const errorData = axiosError.response?.data;
-
         let errorMessage = '';
         if (errorData && typeof errorData === 'object') {
           errorMessage = (errorData as { error?: string }).error || axiosError.message;
         } else {
           errorMessage = axiosError.message;
         }
-
         setErrorMessage(`Error ${statusCode}: ${errorMessage}`);
       } else {
         setErrorMessage('An unexpected error occurred.');
@@ -37,19 +34,24 @@ const SearchByRegex: React.FC = () => {
 
   return (
     <div className="container">
-      <h2>Search Packages by Regex</h2>
+      <h2 className="display-4 fw-bold">Search Packages by Regex</h2> {/* Bold heading */}
       <input
         type="text"
-        className="form-control my-3"
+        className="form-control form-control-lg my-3"
+        aria-label="Enter Regex"
         placeholder="Enter Regex"
         value={regex}
         onChange={(e) => setRegex(e.target.value)}
       />
-      <button onClick={handleSearch} className="btn btn-primary mb-3">Search</button>
+      <button onClick={handleSearch} className="btn btn-primary btn-lg mb-3">Search</button>
 
-      {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
+      {errorMessage && (
+        <div className="alert alert-danger" role="alert" aria-live="assertive">
+          {errorMessage}
+        </div>
+      )}
 
-      <div className="mt-3">
+      <div className="mt-3" aria-live="polite">
         {packages.length > 0 ? (
           packages.map((pkg) => (
             <div key={pkg.metadata.ID} className="border rounded p-3 mb-2">

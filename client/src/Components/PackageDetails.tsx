@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { getPackageById } from '../api';
 import { Package } from '../Interface';
-
 import axios, { AxiosError } from 'axios';
 
 const PackageDetails: React.FC = () => {
@@ -17,17 +16,14 @@ const PackageDetails: React.FC = () => {
     } catch (err) {
       if (axios.isAxiosError(err)) {
         const axiosError = err as AxiosError;
-
         const statusCode = axiosError.response?.status || 'Unknown status code';
         const errorData = axiosError.response?.data;
-
         let errorMessage = '';
         if (errorData && typeof errorData === 'object') {
           errorMessage = (errorData as { error?: string }).error || axiosError.message;
         } else {
           errorMessage = axiosError.message;
         }
-
         setErrorMessage(`Error ${statusCode}: ${errorMessage}`);
       } else {
         setErrorMessage('An unexpected error occurred.');
@@ -36,33 +32,27 @@ const PackageDetails: React.FC = () => {
     }
   };
 
-  const handleDownload = () => {
-    if (packageData && packageData.data.Content) {
-      const base64Content = packageData.data.Content;
-      const blob = new Blob([Uint8Array.from(atob(base64Content), c => c.charCodeAt(0))], { type: 'application/zip' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = `${packageData.metadata.Name}-${packageData.metadata.Version}.zip`;
-      link.click();
-      URL.revokeObjectURL(link.href);
-    }
-  };
-
   return (
-    <div>
-      <h2>Package Details</h2>
+    <div className="container">
+      <h2 className="display-4 fw-bold">Package Details</h2> {/* Bold heading */}
       <input
         type="text"
+        className="form-control form-control-lg my-3"
+        aria-label="Package ID"
+        placeholder="Enter Package ID"
         value={id}
         onChange={(e) => setId(e.target.value)}
-        placeholder="Enter Package ID"
       />
-      <button onClick={fetchPackage}>Fetch Package</button>
+      <button onClick={fetchPackage} className="btn btn-primary btn-lg">Fetch Package</button>
 
-      {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
+      {errorMessage && (
+        <div className="alert alert-danger" role="alert" aria-live="assertive">
+          {errorMessage}
+        </div>
+      )}
 
       {packageData && (
-        <div>
+        <div aria-live="polite">
           <h3>{packageData.metadata.Name} (v{packageData.metadata.Version})</h3>
           <p>ID: {packageData.metadata.ID}</p>
           {packageData.data.URL && (
@@ -74,7 +64,6 @@ const PackageDetails: React.FC = () => {
               <pre>{packageData.data.JSProgram}</pre>
             </div>
           )}
-          <button onClick={handleDownload}>Download Content as ZIP</button>
         </div>
       )}
     </div>

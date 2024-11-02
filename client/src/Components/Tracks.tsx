@@ -15,17 +15,14 @@ const Tracks: React.FC = () => {
       } catch (err) {
         if (axios.isAxiosError(err)) {
           const axiosError = err as AxiosError;
-
           const statusCode = axiosError.response?.status || 'Unknown status code';
           const errorData = axiosError.response?.data;
-
           let errorMessage = '';
           if (errorData && typeof errorData === 'object') {
             errorMessage = (errorData as { error?: string }).error || axiosError.message;
           } else {
             errorMessage = axiosError.message;
           }
-
           setErrorMessage(`Error ${statusCode}: ${errorMessage}`);
         } else {
           setErrorMessage('An unexpected error occurred.');
@@ -38,13 +35,12 @@ const Tracks: React.FC = () => {
 
   return (
     <div className="container">
-      <h2>Planned Tracks</h2>
+      <h2 className="display-4 fw-bold">Planned Tracks</h2> {/* Bold heading */}
+      {errorMessage && <div className="alert alert-danger" role="alert" aria-live="assertive">{errorMessage}</div>}
 
-      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-
-      <ul>
+      <ul aria-live="polite">
         {tracks.map((track, index) => (
-          <li key={index}>{track}</li>
+          <li key={index} className="fs-4">{track}</li> 
         ))}
       </ul>
     </div>
