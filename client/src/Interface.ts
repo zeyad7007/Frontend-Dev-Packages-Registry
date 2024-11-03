@@ -73,3 +73,9 @@ export interface Package {
         totalcost: number; 
     }
 }
+
+export interface PackageListI{
+  id:string;
+  name:string;
+  version:string;
+}

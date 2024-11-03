@@ -1,10 +1,12 @@
 import React, { useState, useCallback } from 'react';
 import { getPackages } from '../api';
 import axios, { AxiosError } from 'axios';
-import { Package } from '../Interface';
+import { PackageListI } from '../Interface';
+
+let flag=0;
 
 const PackageList: React.FC = () => {
-  const [packages, setPackages] = useState<Package[]>([]);
+  const [packages, setPackages] = useState<PackageListI[]>([]);
   const [offset, setOffset] = useState<string>(''); // Use a string to allow empty state
   const [queries, setQueries] = useState<{ Name: string; Version: string }[]>([
     { Name: '', Version: '' },
@@ -19,6 +21,7 @@ const PackageList: React.FC = () => {
     }
 
     try {
+      flag=1;
       const query = queries.filter(q => q.Name || q.Version); // Filter out empty queries
       const result = await getPackages(parsedOffset, query);
       setPackages(result);
@@ -108,13 +111,19 @@ const PackageList: React.FC = () => {
 
       {errorMessage && <div className="alert alert-danger" role="alert" aria-live="assertive">{errorMessage}</div>}
 
-      <div aria-live="polite">
-        {packages.length > 0 && packages.map((pkg) => (
-          <div key={pkg.metadata.ID} className="border rounded p-3 mb-2">
-            <h5>{pkg.metadata.Name}</h5>
-            <p>Version: {pkg.metadata.Version}</p>
-          </div>
-        ))}
+      <div className="mt-3" aria-live="polite">
+        {packages.length > 0 ? (
+          packages.map((pkg) => (
+            <div key={pkg.id} className="border rounded p-3 mb-2">
+              <h5>{pkg.name}</h5>
+              <p>Version: {pkg.version}</p>
+            </div>
+          ))
+        ) : (
+          (packages.length === 0 && flag) ? (
+            <p>No packages found</p>
+          ) : null
+        )}
       </div>
     </div>
   );

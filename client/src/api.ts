@@ -1,6 +1,6 @@
 //api.ts
 import axios from 'axios';
-import { Package, PackageUpdateI, PackageUploadI, GetPackagesQuery, Metrics, CostI } from './Interface';
+import { Package, PackageUpdateI, PackageUploadI, GetPackagesQuery, Metrics, CostI,PackageListI } from './Interface';
 
 const apiClient = axios.create({
   baseURL: 'http://3.94.57.71:3000', // API server
@@ -9,9 +9,9 @@ const apiClient = axios.create({
   },
 });
 
-export const getPackages = async (offset: number, queries: GetPackagesQuery[]): Promise<Package[]> => {
+export const getPackages = async (offset: number, queries: GetPackagesQuery[]): Promise<PackageListI[]> => {
   const response = await apiClient.post('/packages', queries, { params: { offset } });
-  return response.data;
+  return response.data.packages;
 };
 
 export const resetRegistry = async (): Promise<void> => {
