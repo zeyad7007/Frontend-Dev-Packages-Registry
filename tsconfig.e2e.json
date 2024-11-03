@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./testsdist/e2e",            // Output directory for e2e compiled files
+    "rootDir": "./tests/e2e",          // Root directory for e2e source files
+    "types": ["node", "selenium-webdriver"],  // Types needed for e2e testing
+    "composite": true                  // Required for referenced projects
+  },
+  "include": ["tests/e2e/**/*.ts"],     // Include only e2e test files
+  "exclude": ["node_modules", "dist"]   // Exclude unnecessary files and folders
+}

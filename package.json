@@ -7,7 +7,14 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:e2e": "tsc -p tsconfig.e2e.json",
+    "build:unit": "tsc -p tsconfig.unit.json",
+    "build:all": "tsc -b",
+    "test:e2e": "npm run build:e2e && node dist/e2e/your-e2e-test-file.js",
+    "test:unit": "npm run build:unit && node dist/unit/your-unit-test-file.js",
+    "test:all": "npm run build:all && npm run run:all-tests",
+    "run:all-tests": "node runAllTests.js"
   },
   "dependencies": {
     "axios": "^1.7.7",
