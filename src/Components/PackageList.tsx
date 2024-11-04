@@ -107,7 +107,7 @@ const PackageList: React.FC = () => {
           onChange={(e) => setOffset(e.target.value)}
         />
       </div>
-      <button onClick={fetchPackages} className="btn btn-primary btn-lg mb-3">Load Packages</button>
+      <button id= "Load" onClick={fetchPackages} className="btn btn-primary btn-lg mb-3">Load Packages</button>
 
       {errorMessage && <div className="alert alert-danger" role="alert" aria-live="assertive">{errorMessage}</div>}
 

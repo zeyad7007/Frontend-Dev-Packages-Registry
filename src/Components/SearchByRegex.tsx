@@ -46,7 +46,7 @@ const SearchByRegex: React.FC = () => {
       <button onClick={handleSearch} className="btn btn-primary btn-lg mb-3">Search</button>
 
       {errorMessage && (
-        <div className="alert alert-danger" role="alert" aria-live="assertive">
+        <div id="error"className="alert alert-danger" role="alert" aria-live="assertive">
           {errorMessage}
         </div>
       )}
@@ -60,9 +60,7 @@ const SearchByRegex: React.FC = () => {
             </div>
           ))
         ) : (
-          packages.length === 0 && regex ? (
-            <p>No packages found</p>
-          ) : null
+         null
         )}
       </div>
     </div>

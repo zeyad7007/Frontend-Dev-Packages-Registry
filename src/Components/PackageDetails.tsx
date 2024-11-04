@@ -32,9 +32,21 @@ const PackageDetails: React.FC = () => {
     }
   };
 
+  const handleDownload = () => {
+    if (packageData && packageData.data.Content) {
+      const base64Content = packageData.data.Content;
+      const blob = new Blob([Uint8Array.from(atob(base64Content), c => c.charCodeAt(0))], { type: 'application/zip' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `${packageData.metadata.Name}-${packageData.metadata.Version}.zip`;
+      link.click();
+      URL.revokeObjectURL(link.href);
+    }
+  };
+
   return (
     <div className="container">
-      <h2 className="display-4 fw-bold">Package Details</h2> {/* Bold heading */}
+      <h2 className="display-4 fw-bold">Package Details</h2> 
       <input
         type="text"
         className="form-control form-control-lg my-3"
@@ -46,7 +58,7 @@ const PackageDetails: React.FC = () => {
       <button onClick={fetchPackage} className="btn btn-primary btn-lg">Fetch Package</button>
 
       {errorMessage && (
-        <div className="alert alert-danger" role="alert" aria-live="assertive">
+        <div id="error" className="alert alert-danger" role="alert" aria-live="assertive">
           {errorMessage}
         </div>
       )}
@@ -63,6 +75,9 @@ const PackageDetails: React.FC = () => {
               <h4>JavaScript Program:</h4>
               <pre>{packageData.data.JSProgram}</pre>
             </div>
+          )}
+          {packageData.data.Content && (
+            <button onClick={handleDownload} className="btn btn-primary">Download</button>
           )}
         </div>
       )}
