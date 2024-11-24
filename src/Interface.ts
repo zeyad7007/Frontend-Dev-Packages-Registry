@@ -49,21 +49,21 @@ export interface Package {
   }
   
   export interface Metrics{
-    BusFactor: number;
-    BusFactorLatency: number;
-    Correctness: number;
-    CorrectnessLatency: number;
     RampUp: number;
-    RampUpLatency: number;
-    Responsiveness: number;
-    ResponsivenessLatency: number;
+    Correctness: number;
+    BusFactor: number;
+    ResponsiveMaintainer: number;
     LicenseScore: number;
-    LicenseScoreLatency: number;
     GoodPinningPractice: number;
-    GoodPinningPracticeLatency: number;
     PullRequest: number;
-    PullRequestLatency: number;
     NetScore: number;
+    RampUpLatency: number;
+    CorrectnessLatency: number;
+    BusFactorLatency: number;
+    ResponsiveneMaintainerLatency: number;
+    LicenseScoreLatency: number;
+    GoodPinningPracticeLatency: number;
+    PullRequestLatency: number;
     NetScoreLatency: number;
   }
 

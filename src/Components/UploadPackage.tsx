@@ -70,6 +70,7 @@ const UploadPackage: React.FC = () => {
           type="checkbox"
           className="form-check-input"
           id="debloat"
+          name="debloat"
           aria-label="Debloat option"
           checked={packageData.debloat}
           onChange={(e) => setPackageData({ ...packageData, debloat: e.target.checked })}

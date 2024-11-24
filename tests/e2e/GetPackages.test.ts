@@ -2,7 +2,14 @@ import { describe, test, expect, beforeAll, afterAll } from 'vitest';
 import { getChromeDriver } from './SeleniumSetup';
 import { fillInputField, waitForElement, clickElementByText, navigateToUrl } from './NavigationHelper';
 import { By, until } from 'selenium-webdriver';
+import fs from 'fs';
 
+
+declare global {
+    interface Window {
+      __coverage__: unknown;
+    }
+  }
 describe('Get Packages Functionality', () => {
     let driver;
 
@@ -12,8 +19,17 @@ describe('Get Packages Functionality', () => {
     });
 
     afterAll(async () => {
+        // Fetch coverage from the browser and save it
+        const coverage = await driver.executeScript(() => {
+          return window.__coverage__;
+        });
+    
+        if (coverage) {
+            fs.writeFileSync('./.nyc_output/coverage-final.json', JSON.stringify(coverage));
+        }
+    
         await driver.quit();
-    });
+      });
 
     test('Open Get Packages and verify UI elements', async () => {
         await clickElementByText(driver, 'Get Packages');

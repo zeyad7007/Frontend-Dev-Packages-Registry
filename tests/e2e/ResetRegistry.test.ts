@@ -2,7 +2,14 @@ import { describe, test, beforeAll, afterAll, expect } from 'vitest';
 import { getChromeDriver } from './SeleniumSetup';
 import { clickElementByText, navigateToUrl } from './NavigationHelper';
 import { By, until } from 'selenium-webdriver';
+import fs from 'fs';
 
+
+declare global {
+    interface Window {
+      __coverage__: unknown;
+    }
+  }
 describe('Reset Registry Button Display Check', () => {
     let driver;
 
@@ -12,8 +19,17 @@ describe('Reset Registry Button Display Check', () => {
     });
 
     afterAll(async () => {
+        // Fetch coverage from the browser and save it
+        const coverage = await driver.executeScript(() => {
+          return window.__coverage__;
+        });
+    
+        if (coverage) {
+            fs.writeFileSync('./.nyc_output/coverage-final.json', JSON.stringify(coverage));
+        }
+    
         await driver.quit();
-    });
+      });
 
     test('Verify that "Reset Registry" button is displayed', async () => {
         // Navigate to the "Reset Registry" page

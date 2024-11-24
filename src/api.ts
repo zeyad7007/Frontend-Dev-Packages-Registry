@@ -15,7 +15,6 @@ export const getPackages = async (offset: number, queries: GetPackagesQuery[]): 
 };
 
 export const resetRegistry = async (): Promise<void> => {
-  
   await apiClient.delete('/reset');
 };
 

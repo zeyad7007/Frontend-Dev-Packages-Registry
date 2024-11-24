@@ -2,7 +2,14 @@ import { describe, test, expect, beforeAll, afterAll } from 'vitest';
 import { getChromeDriver } from './SeleniumSetup';
 import { fillInputField, waitForElement, clickElementByText, navigateToUrl } from './NavigationHelper';
 import { By, until } from 'selenium-webdriver';
+import fs from 'fs';
 
+
+declare global {
+    interface Window {
+      __coverage__: unknown;
+    }
+  }
 describe('Search by Regex Functionality', () => {
     let driver;
 
@@ -12,8 +19,17 @@ describe('Search by Regex Functionality', () => {
     });
 
     afterAll(async () => {
+        // Fetch coverage from the browser and save it
+        const coverage = await driver.executeScript(() => {
+          return window.__coverage__;
+        });
+    
+        if (coverage) {
+            fs.writeFileSync('./.nyc_output/coverage-final.json', JSON.stringify(coverage));
+        }
+    
         await driver.quit();
-    });
+      });
 
     test('Click on "Search by Regex" and verify input field', async () => {
         // Click on the "Search by Regex" button
@@ -32,8 +48,8 @@ describe('Search by Regex Functionality', () => {
         await clickElementByText(driver, 'Search');
         
         // Wait for the package details to load
-        const packageNameElement = await driver.wait(until.elementLocated(By.xpath("//*[contains(text(),'Test2')]")), 10000);
-        const packageVersionElement = await driver.wait(until.elementLocated(By.xpath("//*[contains(text(),'Version:')]")), 10000);
+        const packageNameElement = await driver.wait(until.elementLocated(By.xpath("//*[contains(text(),'Test2')]")), 5000);
+        const packageVersionElement = await driver.wait(until.elementLocated(By.xpath("//*[contains(text(),'Version:')]")), 5000);
 
         // Verify the package details
         expect(await packageNameElement.getText()).toBe('Test2');
@@ -48,7 +64,7 @@ describe('Search by Regex Functionality', () => {
         await clickElementByText(driver, 'Search');
         
         // Wait for the error message to appear by ID and verify content
-        const errorMessageElement = await driver.wait(until.elementLocated(By.id("error")), 10000);
+        const errorMessageElement = await driver.wait(until.elementLocated(By.id("error")), 5000);
         const errorMessage = await errorMessageElement.getText();
         
         expect(errorMessage).toBe("Error 404: No package found under this regex");

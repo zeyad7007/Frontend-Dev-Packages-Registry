@@ -42,6 +42,7 @@ const PackageCost: React.FC = () => {
         className="form-control form-control-lg my-3"
         aria-label="Enter Package ID"
         placeholder="Enter Package ID"
+        id="package-id-input"
         value={id}
         onChange={(e) => setId(e.target.value)}
       />
@@ -49,14 +50,14 @@ const PackageCost: React.FC = () => {
         <input
           type="checkbox"
           className="form-check-input"
-          id="includeDependencies"
+          id="include-dependencies-checkbox"
           aria-label="Include Dependencies"
           checked={includeDependencies}
           onChange={(e) => setIncludeDependencies(e.target.checked)}
         />
         <label className="form-check-label" htmlFor="includeDependencies">Include Dependencies</label>
       </div>
-      <button onClick={fetchCost} className="btn btn-info btn-lg mb-3">Fetch Cost</button>
+      <button onClick={fetchCost} id="fetch-cost-button" className="btn btn-info btn-lg mb-3">Fetch Cost</button>
 
       {errorMessage && (
         <div className="alert alert-danger" role="alert" aria-live="assertive">

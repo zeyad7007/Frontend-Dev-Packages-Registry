@@ -2,6 +2,13 @@ import { describe, test, expect, beforeAll, afterAll } from 'vitest';
 import { getChromeDriver } from './SeleniumSetup';
 import { fillInputField, waitForElement, clickElementByText, navigateToUrl } from './NavigationHelper';
 import { By, until } from 'selenium-webdriver';
+import fs from 'fs';
+
+declare global {
+  interface Window {
+    __coverage__: unknown;
+  }
+}
 
 describe('Get Package by ID Functionality', () => {
     let driver;
@@ -12,8 +19,17 @@ describe('Get Package by ID Functionality', () => {
     });
 
     afterAll(async () => {
+        // Fetch coverage from the browser and save it
+        const coverage = await driver.executeScript(() => {
+          return window.__coverage__;
+        });
+    
+        if (coverage) {
+          fs.writeFileSync('./.nyc_output/coverage-final.json', JSON.stringify(coverage));
+        }
+    
         await driver.quit();
-    });
+      });
 
     test('Click on "Get Package by ID" and verify input field', async () => {
         await clickElementByText(driver, 'Get Package by ID');
@@ -22,7 +38,7 @@ describe('Get Package by ID Functionality', () => {
     });
 
     test('Fetch a package by ID with a GitHub URL and verify ID, Download button, and JavaScript Program', async () => {
-        await fillInputField(driver, By.xpath("//input[@placeholder='Enter Package ID']"), '92');
+        await fillInputField(driver, By.xpath("//input[@placeholder='Enter Package ID']"), '255');
         await clickElementByText(driver, 'Fetch Package');
 
         const packageNameElement = await driver.wait(
@@ -54,15 +70,15 @@ describe('Get Package by ID Functionality', () => {
 
         // Validate elements
         expect(await packageNameElement.getText()).toBe("Test1 (v1.0.0)");
-        expect(await idElement.getText()).toBe("ID: 92");
-        expect(githubUrl).toContain('https://github.com/abdelrahmanHamdyG/Book-Exchange-Api');
+        expect(await idElement.getText()).toBe("ID: 255");
+        expect(githubUrl).toContain('https://github.com/abdelrahmanHamdyG/NPM-packages-Evaluator');
         expect(await jsProgramElement.isDisplayed()).toBe(true);
         expect(await jsProgramCode.getText()).toBe('console.log("Test1");');
         expect(await downloadButton.isDisplayed()).toBe(true);
     });
 
     test('Fetch a package by ID without a GitHub URL and verify ID, Download button, and JavaScript Program', async () => {
-        await fillInputField(driver, By.xpath("//input[@placeholder='Enter Package ID']"), '93');
+        await fillInputField(driver, By.xpath("//input[@placeholder='Enter Package ID']"), '256');
         await clickElementByText(driver, 'Fetch Package');
 
         
@@ -92,7 +108,7 @@ describe('Get Package by ID Functionality', () => {
         
         // Validate elements
         expect(await packageNameElement.getText()).toBe("Test2 (v1.0.0)");
-        expect(await idElement.getText()).toBe("ID: 93");
+        expect(await idElement.getText()).toBe("ID: 256");
         expect(elements.length).toBe(0); // No GitHub URL
         expect(await jsProgramElement.isDisplayed()).toBe(true);
         expect(await jsProgramCode.getText()).toBe('console.log("Test2");');

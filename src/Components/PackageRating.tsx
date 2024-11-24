@@ -40,10 +40,11 @@ const PackageRating: React.FC = () => {
         className="form-control form-control-lg my-3"
         aria-label="Enter Package ID"
         placeholder="Enter Package ID"
+        id="package-id-input"
         value={id}
         onChange={(e) => setId(e.target.value)}
       />
-      <button onClick={fetchRating} className="btn btn-info btn-lg mb-3">Fetch Rating</button>
+      <button onClick={fetchRating} id="fetch-rating-button" className="btn btn-info btn-lg mb-3">Fetch Rating</button>
 
       {errorMessage && (
         <div className="alert alert-danger" role="alert" aria-live="assertive">
@@ -55,14 +56,15 @@ const PackageRating: React.FC = () => {
         <div className="bg-light p-3 rounded" aria-live="polite">
           <h5>Package Rating Details:</h5>
           <ul>
-            <li><strong>Bus Factor:</strong> {rating.BusFactor}</li>
-            <li><strong>Correctness:</strong> {rating.Correctness}</li>
-            <li><strong>Ramp Up:</strong> {rating.RampUp}</li>
-            <li><strong>Responsiveness:</strong> {rating.Responsiveness}</li>
-            <li><strong>License Score:</strong> {rating.LicenseScore}</li>
-            <li><strong>Good Pinning Practice:</strong> {rating.GoodPinningPractice}</li>
-            <li><strong>Pull Request:</strong> {rating.PullRequest}</li>
-            <li><strong>Net Score:</strong> {rating.NetScore}</li>
+            
+            <li><strong>Bus Factor:</strong><br />Score: {rating.BusFactor}<br />Latency: {rating.BusFactorLatency}ms</li>
+            <li><strong>Correctness:</strong><br />Score: {rating.Correctness}<br />Latency: {rating.CorrectnessLatency}ms</li>
+            <li><strong>Ramp Up:</strong><br />Score: {rating.RampUp}<br />Latency: {rating.RampUpLatency}ms</li>
+            <li><strong>Responsiveness:</strong><br />Score: {rating.ResponsiveMaintainer}<br />Latency: {rating.ResponsiveneMaintainerLatency}ms</li>
+            <li><strong>License Score:</strong><br />Score: {rating.LicenseScore}<br />Latency: {rating.LicenseScoreLatency}ms</li>
+            <li><strong>Good Pinning Practice:</strong><br />Score: {rating.GoodPinningPractice}<br />Latency: {rating.GoodPinningPracticeLatency}ms</li>
+            <li><strong>Pull Request:</strong><br />Score: {rating.PullRequest}<br />Latency: {rating.PullRequestLatency}ms</li>
+            <li><strong>Net Score:</strong><br />Score: {rating.NetScore}<br />Latency: {rating.NetScoreLatency}ms</li>
           </ul>
         </div>
       )}

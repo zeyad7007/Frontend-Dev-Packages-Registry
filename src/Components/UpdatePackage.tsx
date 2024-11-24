@@ -75,6 +75,7 @@ const UpdatePackage: React.FC = () => {
         className="form-control form-control-lg my-3"
         aria-label="Enter Package ID"
         placeholder="Enter Package ID"
+        id="package-id-input"
         value={id}
         onChange={(e) => setId(e.target.value)}
       />
@@ -83,6 +84,7 @@ const UpdatePackage: React.FC = () => {
         className="form-control form-control-lg my-3"
         aria-label="Package Name"
         placeholder="Package Name"
+        id="package-name-input"
         value={packageData.metadata.Name}
         onChange={(e) => setPackageData({
           ...packageData,
@@ -94,6 +96,7 @@ const UpdatePackage: React.FC = () => {
         className="form-control form-control-lg my-3"
         aria-label="Package Version"
         placeholder="Package Version"
+        id="package-version-input"
         value={packageData.metadata.Version}
         onChange={(e) => setPackageData({
           ...packageData,
@@ -104,7 +107,7 @@ const UpdatePackage: React.FC = () => {
         <input
           type="checkbox"
           className="form-check-input"
-          id="debloat"
+          id="debloat-checkbox"
           aria-label="Debloat option"
           checked={packageData.data.debloat}
           onChange={(e) => setPackageData({
@@ -118,6 +121,7 @@ const UpdatePackage: React.FC = () => {
         className="form-control form-control-lg my-3"
         aria-label="JavaScript Program"
         placeholder="JS Program"
+        id="js-program-textarea"
         value={packageData.data.JSProgram}
         onChange={(e) => setPackageData({
           ...packageData,
@@ -129,6 +133,7 @@ const UpdatePackage: React.FC = () => {
         className="form-control form-control-lg my-3"
         aria-label="GitHub Repo URL"
         placeholder="GitHub Repo URL"
+        id="github-url-input"
         value={packageData.data.URL || ''}
         onChange={(e) => setPackageData({
           ...packageData,
@@ -139,9 +144,10 @@ const UpdatePackage: React.FC = () => {
         type="file"
         className="form-control form-control-lg my-3"
         aria-label="File upload"
+        id="file-upload"
         onChange={handleFileChange}
       />
-      <button onClick={handleUpdate} className="btn btn-warning btn-lg">Update Package</button> {/* Larger button */}
+      <button onClick={handleUpdate} id="update-package-button" className="btn btn-warning btn-lg">Update Package</button> {/* Larger button */}
 
       {errorMessage && <div className="alert alert-danger" role="alert" aria-live="assertive">{errorMessage}</div>}
     </div>

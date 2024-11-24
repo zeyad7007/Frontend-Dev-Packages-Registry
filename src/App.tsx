@@ -15,7 +15,7 @@ const App: React.FC = () => {
   return (
     <Router>
       <div className="container">
-        <h1 className="display-1 text-center mt-5 fw-bold">ECE 461 Project API Interface</h1>
+        <h1 className="display-1 text-center mt-5 fw-bold">Fuwwah Package Registry</h1>
         <div className="mt-4">
           <div className="d-flex flex-wrap justify-content-around mb-4" role="navigation" aria-label="Main Navigation">
             <Link to="/packages" className="btn btn-primary btn-lg m-2">Get Packages</Link>

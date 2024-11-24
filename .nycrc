@@ -1,6 +1,21 @@
 {
-  "include": ["src/**/*.ts", "src/**/*.tsx"],   
-  "exclude": ["tests/**", "node_modules/**"],   
-  "reporter": ["html", "text-summary"],         
-  "all": true                                   
+  "extends": "@istanbuljs/nyc-config-typescript",
+  "all": true,
+  "include": ["src/**/*.{ts,tsx}"],
+  "exclude": [
+    "node_modules",
+    "tests",
+    "coverage",
+    "vite.config.ts",
+    "src/Interface.ts",
+    "src/vite-env.d.ts"
+  ],
+  "reporter": ["text", "html", "json", "lcov"],
+  "report-dir": "./coverage",
+  "temp-dir": "./.nyc_output",
+  "check-coverage": true,
+  "statements": 60,
+  "branches": 60,
+  "functions": 60,
+  "lines": 60
 }

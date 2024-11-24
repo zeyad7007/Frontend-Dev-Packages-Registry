@@ -8,26 +8,30 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "build:e2e": "tsc -p tsconfig.e2e.json",
-    "build:unit": "tsc -p tsconfig.unit.json",
-    "build:all": "tsc -b",
-    "test:e2e": "npm run build:e2e && node dist/e2e/your-e2e-test-file.js",
-    "test:unit": "npm run build:unit && node dist/unit/your-unit-test-file.js",
-    "test:all": "npm run build:all && npm run run:all-tests",
-    "run:all-tests": "node runAllTests.js",
     "test": "vitest --coverage",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui",
+    "test:nyc": "npx nyc -- npx vitest run",
+    "nyc:ui": "start coverage/index.html"
   },
   "dependencies": {
+    "@testing-library/dom": "^10.4.0",
+    "@types/testing-library__react": "^10.2.0",
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
+    "jest-mock-axios": "^4.8.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.27.0"
+    "react-router-dom": "^6.28.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.0.1",
+    "@testing-library/user-event": "^14.5.2",
     "@types/axios": "^0.14.4",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.8.7",
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.1",
     "@types/react-router-dom": "^5.3.3",
@@ -37,6 +41,8 @@
     "@vitest/coverage-istanbul": "^2.1.4",
     "@vitest/coverage-v8": "^2.1.4",
     "@vitest/ui": "^2.1.4",
+    "axios-mock-adapter": "^2.1.0",
+    "c8": "^10.1.2",
     "eslint": "^9.13.0",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.13",
@@ -47,6 +53,6 @@
     "typescript-eslint": "^8.10.0",
     "vite": "^5.4.9",
     "vite-plugin-istanbul": "^6.0.2",
-    "vitest": "^2.1.4"
+    "vitest": "^2.1.5"
   }
 }
