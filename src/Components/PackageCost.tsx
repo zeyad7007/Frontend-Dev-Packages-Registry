@@ -1,4 +1,3 @@
-// Example usage in PackageCost.tsx
 import React, { useState } from 'react';
 import { getPackageCost } from '../api';
 import axios, { AxiosError } from 'axios';

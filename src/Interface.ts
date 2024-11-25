@@ -79,3 +79,21 @@ export interface PackageListI{
   name:string;
   version:string;
 }
+
+export interface AuthenticateI{
+  User: {
+    name: string; 
+    isAdmin: false; 
+  };
+  Secret: {
+    password: string; 
+  };
+}
+
+  export interface LogoutI{
+    message: string;
+}
+
+export interface TokenI{
+  token: string;
+}
