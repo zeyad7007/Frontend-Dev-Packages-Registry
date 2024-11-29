@@ -63,7 +63,7 @@ const PackageList: React.FC = () => {
 
   return (
     <div className="container">
-      <h2 className="display-4 fw-bold">Package List</h2> {/* Bold and large heading */}
+      <h2 className="display-4 fw-bold text-center">Package List</h2> {/* Bold and large heading */}
       <div className="form-group">
         {queries.map((query, index) => (
           <div key={index} className="query-group mb-3">

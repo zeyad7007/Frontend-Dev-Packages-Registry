@@ -8,7 +8,16 @@ import {
   CostI, 
   PackageListI, 
   AuthenticateI, 
-  TokenI
+  TokenI,
+  PermissionsI,
+  UserPermissionsResponseI,
+  UserRegisterI,
+  GroupI,
+  UsertoGroupI,
+  PackettoGroupI,
+  GroupResponseI,
+  UserinGroupI,
+  PackageHistoryI
 } from './Interface';
 
 // Create an Axios instance
@@ -108,4 +117,59 @@ export const logout = async (): Promise<string> => {
   const response = await apiClient.post('/logout');
   console.log(response);
   return response.data.message; 
+};
+
+export const updatePermissions = async (id:string, data:PermissionsI): Promise<UserPermissionsResponseI> => {
+  const response = await apiClient.post(`/Access/${id}`, data);
+  console.log(response);
+  return response.data; 
+
+};
+
+export const getPermissions = async (id:string): Promise<PermissionsI> => {
+  const response = await apiClient.get(`/Access/${id}`);
+  console.log(response);
+  return response.data; 
+};
+
+export const registerUser = async (data:UserRegisterI): Promise<string> => {
+  const response = await apiClient.post('/register', data);
+  console.log(response);
+  return response.data.message;
+};
+
+export const createGroup = async (data:GroupI): Promise<number> => {
+  const response = await apiClient.post('/group', data);
+  console.log(response);
+  return response.data.id;
+};
+
+export const assignUserToGroup = async (data:UsertoGroupI, groupId:number): Promise<string> => {
+  const response = await apiClient.post(`/add_user/${groupId}`, data);
+  console.log(response);
+  return response.data.message;
+};
+
+export const assignPackageToGroup = async (data:PackettoGroupI, groupId:number): Promise<string> => {
+  const response = await apiClient.post(`/add_package/${groupId}`, data);
+  console.log(response);
+  return response.data.message;
+};
+
+export const getGroups = async (): Promise<GroupResponseI[]> => {
+  const response = await apiClient.get(`/groups`);
+  console.log(response);
+  return response.data;
+};
+
+export const getUsersInGroup = async (groupId:number): Promise<UserinGroupI[]> => {
+  const response = await apiClient.get(`/groups/${groupId}`);
+  console.log(response);
+  return response.data;
+};
+
+export const getHistory = async (PackageId:number): Promise<PackageHistoryI[]> => {
+  const response = await apiClient.get(`/history/${PackageId}`);
+  console.log(response);
+  return response.data;
 };

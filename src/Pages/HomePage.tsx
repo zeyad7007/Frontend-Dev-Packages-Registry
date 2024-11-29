@@ -9,6 +9,7 @@ import PackageRating from '../Components/PackageRating';
 import PackageCost from '../Components/PackageCost';
 import SearchByRegex from '../Components/SearchByRegex';
 import Logout from '../Components/Logout';
+
 // Define props interface for HomePage
 interface HomePageProps {
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
@@ -47,6 +48,7 @@ const HomePage: React.FC<HomePageProps> = ({ setIsAuthenticated }) => {
         <Link to="package-rating" className="btn btn-info btn-lg m-2">Get Package Rating</Link>
         <Link to="package-cost" className="btn btn-info btn-lg m-2">Get Package Cost</Link>
         <Link to="search" className="btn btn-primary btn-lg m-2">Search by Regex</Link>
+        
       </div>
 
       {/* Nested Routes */}
@@ -59,13 +61,24 @@ const HomePage: React.FC<HomePageProps> = ({ setIsAuthenticated }) => {
         <Route path="package-rating" element={<PackageRating />} />
         <Route path="package-cost" element={<PackageCost />} />
         <Route path="search" element={<SearchByRegex />} />
+        
       </Routes>
 
-      {/* Logout Button */}
-      <div className="d-flex justify-content-center mt-5">
-        <Logout onLogout={handleLogout} />
-      </div>
+       {/* Admin Actions and Logout Section */}
+      <div className="d-flex flex-column align-items-center mt-5">
+        {/* Admin Actions Button */}
+        <button
+          className="btn btn-secondary btn-lg mb-3"
+          onClick={() => navigate('/admin-actions')}
+        >
+          Admin Actions
+        </button>
 
+        {/* Logout Button */}
+        <div className="d-flex justify-content-center">
+          <Logout onLogout={handleLogout} />
+        </div>
+      </div>
     </div>
   );
 };

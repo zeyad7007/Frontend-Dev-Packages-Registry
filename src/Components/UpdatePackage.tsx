@@ -69,7 +69,7 @@ const UpdatePackage: React.FC = () => {
 
   return (
     <div className="container">
-      <h2 className="display-4 fw-bold">Update Package by ID</h2> {/* Bold and larger heading */}
+      <h2 className="display-4 fw-bold text-center">Update Package</h2> {/* Bold and larger heading */}
       <input
         type="text"
         className="form-control form-control-lg my-3"

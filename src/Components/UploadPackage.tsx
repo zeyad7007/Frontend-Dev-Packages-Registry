@@ -56,7 +56,7 @@ const UploadPackage: React.FC = () => {
 
   return (
     <div className="container">
-      <h2 className="display-4 fw-bold">Upload Package</h2> {/* Bold heading */}
+      <h2 className="display-4 fw-bold text-center">Upload Package</h2> {/* Bold heading */}
       <input
         type="text"
         className="form-control form-control-lg my-3"

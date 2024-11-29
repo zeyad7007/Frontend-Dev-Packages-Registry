@@ -35,7 +35,7 @@ const Tracks: React.FC = () => {
 
   return (
     <div className="container">
-      <h2 className="display-4 fw-bold">Planned Tracks</h2> {/* Bold heading */}
+      <h2 className="display-4 fw-bold text-center">Planned Tracks</h2> {/* Bold heading */}
       {errorMessage && <div id= "planned-tracks-error" className="alert alert-danger" role="alert" aria-live="assertive">{errorMessage}</div>}
 
       <ul aria-live="polite">

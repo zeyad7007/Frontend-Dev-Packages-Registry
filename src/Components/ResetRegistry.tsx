@@ -35,7 +35,7 @@ const ResetRegistry: React.FC = () => {
 
   return (
     <div className="container">
-      <h2 className="display-4 fw-bold">Reset Registry</h2> {/* Bold heading */}
+      <h2 className="display-4 fw-bold text-center">Reset Registry</h2> {/* Bold heading */}
       <button className="btn btn-danger btn-lg mt-4" onClick={handleReset} aria-live="polite">
         Reset Registry
       </button>

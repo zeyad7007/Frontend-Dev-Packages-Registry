@@ -34,7 +34,7 @@ const SearchByRegex: React.FC = () => {
 
   return (
     <div className="container">
-      <h2 className="display-4 fw-bold">Search Packages by Regex</h2> {/* Bold heading */}
+      <h2 className="display-4 fw-bold text-center">Search by Regex</h2> {/* Bold heading */}
       <input
         type="text"
         className="form-control form-control-lg my-3"

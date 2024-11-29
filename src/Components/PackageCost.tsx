@@ -35,7 +35,7 @@ const PackageCost: React.FC = () => {
 
   return (
     <div className="container">
-      <h2 className="display-4 fw-bold">Get Package Cost</h2>
+      <h2 className="display-4 fw-bold text-center">Package Cost</h2>
       <input
         type="text"
         className="form-control form-control-lg my-3"

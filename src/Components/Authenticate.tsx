@@ -50,7 +50,7 @@ const Authenticate: React.FC<AuthenticateProps> = ({ onLogin })  => {
         onChange={(e) => setCredentials({...credentials, User:{name:e.target.value,isAdmin:false}})}
       />
       <input
-        type="text"
+        type="password"
         className="form-control form-control-lg my-3"
         aria-label="Enter Password"
         placeholder="Enter Password"

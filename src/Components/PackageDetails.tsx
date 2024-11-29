@@ -46,7 +46,7 @@ const PackageDetails: React.FC = () => {
 
   return (
     <div className="container">
-      <h2 className="display-4 fw-bold">Package Details</h2> 
+      <h2 className="display-4 fw-bold text-center">Package Details</h2> 
       <input
         type="text"
         className="form-control form-control-lg my-3"

@@ -83,17 +83,73 @@ export interface PackageListI{
 export interface AuthenticateI{
   User: {
     name: string; 
-    isAdmin: false; 
+    isAdmin: boolean; 
   };
   Secret: {
     password: string; 
   };
 }
 
-  export interface LogoutI{
+  export interface MessageI{
     message: string;
 }
 
 export interface TokenI{
   token: string;
 }
+
+export interface PermissionsI{
+  can_download: boolean;
+  can_upload: boolean;
+  can_search: boolean;
+};
+
+export interface UserPermissionsResponseI {
+  message: string; 
+  user: {
+    id: number; 
+    can_download: boolean; 
+    can_search: boolean; 
+    can_upload: boolean;
+  };
+};
+
+export interface UserRegisterI{
+  name: string;
+  password: string;
+  isAdmin: boolean;
+  groupId: number;
+  canDownload: boolean;
+  canSearch: boolean;
+  canUpload: boolean;
+};
+
+export interface GroupI{
+  name: string;
+};
+
+export interface UsertoGroupI{
+  userId: number;
+};
+
+export interface PackettoGroupI{
+  packageId: number;
+};
+
+export interface GroupResponseI{
+  id: number;
+  group_name: string;
+};
+
+export interface UserinGroupI{
+  id: number;
+  name: string;
+};
+
+export interface PackageHistoryI {
+  id: number; 
+  package_id: number; 
+  user_id: number;
+  action: string; 
+  action_date: string; 
+};

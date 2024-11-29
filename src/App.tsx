@@ -4,7 +4,7 @@ import LandingPage from './Pages/LandingPage';
 import LoginPage from './Pages/LoginPage';
 import HomePage from './Pages/HomePage';
 import Tracks from './Components/Tracks';
-
+import AdminActions from './Pages/AdminPage';
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
@@ -33,7 +33,10 @@ const App: React.FC = () => {
             )
           }
         />
+
         <Route path="/tracks" element={<Tracks />} />
+
+        <Route path="/admin-actions/*" element={<AdminActions />} />
       </Routes>
     </Router>
   );
