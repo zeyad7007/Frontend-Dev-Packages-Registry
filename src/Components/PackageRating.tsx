@@ -60,7 +60,7 @@ const PackageRating: React.FC = () => {
             <li><strong>Bus Factor:</strong><br />Score: {rating.BusFactor}<br />Latency: {rating.BusFactorLatency}ms</li>
             <li><strong>Correctness:</strong><br />Score: {rating.Correctness}<br />Latency: {rating.CorrectnessLatency}ms</li>
             <li><strong>Ramp Up:</strong><br />Score: {rating.RampUp}<br />Latency: {rating.RampUpLatency}ms</li>
-            <li><strong>Responsiveness:</strong><br />Score: {rating.ResponsiveMaintainer}<br />Latency: {rating.ResponsiveneMaintainerLatency}ms</li>
+            <li><strong>Responsiveness:</strong><br />Score: {rating.Responsiveness}<br />Latency: {rating.ResponsivenessLatency}ms</li>
             <li><strong>License Score:</strong><br />Score: {rating.LicenseScore}<br />Latency: {rating.LicenseScoreLatency}ms</li>
             <li><strong>Good Pinning Practice:</strong><br />Score: {rating.GoodPinningPractice}<br />Latency: {rating.GoodPinningPracticeLatency}ms</li>
             <li><strong>Pull Request:</strong><br />Score: {rating.PullRequest}<br />Latency: {rating.PullRequestLatency}ms</li>
