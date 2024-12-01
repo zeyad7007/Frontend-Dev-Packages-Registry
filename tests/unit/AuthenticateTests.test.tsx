@@ -10,7 +10,7 @@ vi.mock('../../src/api');
 // Import the mocked function
 import { authenticate } from '../../src/api';
 import Authenticate from '../../src/Components/Authenticate';
-import { isAxiosError } from 'axios';
+
 
 // Get the typed mock function
 const mockedAuthenticate = vi.mocked(authenticate);
