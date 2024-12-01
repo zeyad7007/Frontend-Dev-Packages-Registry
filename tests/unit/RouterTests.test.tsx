@@ -1,91 +1,55 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from '../../src/App';
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, test, expect, beforeEach } from 'vitest';
 import '@testing-library/jest-dom';
 
-
+// Helper function to simulate navigation
+const navigateTo = (path: string) => {
+  window.history.pushState({}, 'Test page', path);
+};
 
 describe('App Component', () => {
   beforeEach(() => {
+    // Clear localStorage before each test to reset authentication state
+    localStorage.clear();
+  });
+
+  test('renders the LandingPage component on /', () => {
+    navigateTo('/');
     render(<App />);
+    expect(screen.getByRole('heading', { name: /Welcome to Fuwwah Package Registry/i })).toBeInTheDocument();
   });
 
-  it('renders the main heading', () => {
-    const heading = screen.getByRole('heading', { name: /Fuwwah Package Registry/i });
-    expect(heading).toBeInTheDocument();
-  });
-
-  it('renders all navigation buttons', () => {
-    const buttons = [
-      'Get Packages',
-      'Reset Registry',
-      'Get Package by ID',
-      'Update Package by ID',
-      'Upload Package',
-      'Get Package Rating',
-      'Get Package Cost',
-      'Search by Regex',
-      'Get Tracks',
-    ];
-    
-    buttons.forEach((buttonText) => {
-      const button = screen.getByRole('link', { name: buttonText });
-      expect(button).toBeInTheDocument();
-    });
-  });
-
-  it('renders the PackageList component on /packages route', () => {
-    window.history.pushState({}, 'Test page', '/packages');
+  test('renders the LoginPage component on /login when not authenticated', () => {
+    navigateTo('/login');
     render(<App />);
-    expect(screen.getByText(/Package List/i)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /Login/i })).toBeInTheDocument();
   });
 
-  it('renders the ResetRegistry component on /reset route', () => {
-    window.history.pushState({}, 'Test page', '/reset');
+  test('redirects to LoginPage when not authenticated and accessing /home', () => {
+    navigateTo('/home');
     render(<App />);
-    expect(screen.getByRole('heading', { name: /Reset Registry/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /Login/i })).toBeInTheDocument();
   });
 
-  it('renders the PackageDetails component on /package route', () => {
-    window.history.pushState({}, 'Test page', '/package');
+  test('renders HomePage when authenticated and accessing /home', () => {
+    // Simulate an authenticated state
+    localStorage.setItem('authToken', 'mock-token');
+    navigateTo('/home');
     render(<App />);
-    expect(screen.getByText(/Package Details/i)).toBeInTheDocument();
+    expect(screen.getByText(/Welcome!/i)).toBeInTheDocument(); // Adjust based on HomePage content
   });
 
-  it('renders the UpdatePackage component on /update-package route', () => {
-    window.history.pushState({}, 'Test page', '/update-package');
-    render(<App />);
-    expect(screen.getByRole('heading', { name: /Update Package/i })).toBeInTheDocument();
-  });
-
-  it('renders the UploadPackage component on /upload route', () => {
-    window.history.pushState({}, 'Test page', '/upload');
-    render(<App />);
-    expect(screen.getByRole('heading', { name: /Upload Package/i })).toBeInTheDocument();
-  });
-
-  it('renders the PackageRating component on /package-rating route', () => {
-    window.history.pushState({}, 'Test page', '/package-rating');
-    render(<App />);
-    expect(screen.getByRole('heading', { name: /Package Rating/i })).toBeInTheDocument();
-  });
-
-  it('renders the PackageCost component on /package-cost route', () => {
-    window.history.pushState({}, 'Test page', '/package-cost');
-    render(<App />);
-    expect(screen.getByRole('heading', { name: /Package Cost/i })).toBeInTheDocument();
-  });
-
-  it('renders the SearchByRegex component on /search route', () => {
-    window.history.pushState({}, 'Test page', '/search');
-    render(<App />);
-    expect(screen.getByRole('heading', { name: /Search Packages by Regex/i })).toBeInTheDocument();
-  });
-
-  it('renders the Tracks component on /tracks route', () => {
-    window.history.pushState({}, 'Test page', '/tracks');
+  test('renders the Tracks component on /tracks', () => {
+    navigateTo('/tracks');
     render(<App />);
     expect(screen.getByRole('heading', { name: /Tracks/i })).toBeInTheDocument();
+  });
+
+  test('renders the AdminActions component on /admin-actions', () => {
+    navigateTo('/admin-actions');
+    render(<App />);
+    expect(screen.getByText(/Admin Actions/i)).toBeInTheDocument(); // Adjust based on actual content in AdminActions
   });
 });
