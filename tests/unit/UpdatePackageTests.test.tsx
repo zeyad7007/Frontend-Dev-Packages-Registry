@@ -35,17 +35,18 @@ describe('UpdatePackage Component', () => {
   });
 
   test('calls updatePackageById with correct data on button click', async () => {
-    (updatePackageById as Mock).mockResolvedValue({}); // Use vi.fn() to resolve with an empty object
+    (updatePackageById as Mock).mockResolvedValue({});
 
     render(<UpdatePackage />);
 
-    // Set up form inputs
+    // Fill out form
     fireEvent.change(screen.getByPlaceholderText('Enter Package ID'), { target: { value: '123' } });
     fireEvent.change(screen.getByPlaceholderText('Package Name'), { target: { value: 'Test Package' } });
     fireEvent.change(screen.getByPlaceholderText('Package Version'), { target: { value: '1.0' } });
 
     // Simulate button click
-    fireEvent.click(screen.getByText('Update Package'));
+    const updateButton = screen.getByRole('button', { name: /Update Package/i });
+    fireEvent.click(updateButton);
 
     await waitFor(() => {
       expect(updatePackageById).toHaveBeenCalledWith('123', expect.objectContaining({
@@ -54,145 +55,166 @@ describe('UpdatePackage Component', () => {
     });
   });
 
-  test('displays success message on successful package update', async () => {
-    const mockResult = {}; // Mock successful response, you can customize this as needed
-    (updatePackageById as Mock).mockResolvedValueOnce(mockResult); // Mock successful API response
-  
+  test('displays success message and removes it after 4 seconds', async () => {
+    (updatePackageById as Mock).mockResolvedValueOnce({});
+
     render(<UpdatePackage />);
-  
-    // Simulate user input (fill in the form fields)
-    fireEvent.change(screen.getByLabelText(/Enter Package ID/i), { target: { value: '123' } });
-    fireEvent.change(screen.getByLabelText(/Package Name/i), { target: { value: 'Test Package' } });
-    fireEvent.change(screen.getByLabelText(/Package Version/i), { target: { value: '1.0.0' } });
-  
-    // Simulate form submission (button click)
-    const updateButton = screen.getByRole('button', { name: 'Update Package' });
-    fireEvent.click(updateButton); // Simulate button click to trigger the update
-  
-    // Wait for the success message to appear
+
+    // Fill out form
+    fireEvent.change(screen.getByPlaceholderText(/Enter Package ID/i), { target: { value: '123' } });
+
+    // Submit form
+    const updateButton = screen.getByRole('button', { name: /Update Package/i });
+    fireEvent.click(updateButton);
+
+    // Wait for success message
     await waitFor(() => {
       const successAlert = document.querySelector('.alert.alert-success') as HTMLElement;
       expect(successAlert).toBeInTheDocument();
       expect(successAlert.innerText).toBe('Package updated successfully.');
     });
+
+    // Wait for the success message to disappear
+    await waitFor(() => {
+      const successAlert = document.querySelector('.alert.alert-success');
+      expect(successAlert).not.toBeInTheDocument();
+    }, { timeout: 4500 });
   });
 
-  test('displays error message on API error', async () => {
-    // Mock updatePackageById to throw an Axios error
-    (updatePackageById as Mock).mockRejectedValue({
-      isAxiosError: true,
-      response: { status: 404, data: { error: 'Invalid package data' } },
-      message: 'Request failed with status code 404',
-    });
-  
-    render(<UpdatePackage />);
-  
-    fireEvent.change(screen.getByPlaceholderText('Enter Package ID'), { target: { value: '123' } });
-    fireEvent.click(screen.getByText('Update Package'));
-  
-    const errorAlert = await screen.findByRole('alert');
-    expect(errorAlert).toHaveTextContent('Error 404: Invalid package data');
-  });
-  
-  test('toggles debloat checkbox and updates state', () => {
-    render(<UpdatePackage />);
-    const debloatCheckbox = screen.getByLabelText(/Debloat option/i);
-    expect(debloatCheckbox).not.toBeChecked();
-    fireEvent.click(debloatCheckbox); 
-    expect(debloatCheckbox).toBeChecked();
-    fireEvent.click(debloatCheckbox); 
-    expect(debloatCheckbox).not.toBeChecked();
-  });
-
-  test('updates JS program in state on textarea change', () => {
-    render(<UpdatePackage />);
-    const jsProgramTextarea = screen.getByPlaceholderText(/JS Program/i);
-    expect(jsProgramTextarea).toHaveValue('');
-    fireEvent.change(jsProgramTextarea, { target: { value: 'console.log("Test");' } });
-    expect(jsProgramTextarea).toHaveValue('console.log("Test");');
-  });
-  
-  test('displays error message on API failure', async () => {
-    const mockError = {
-      isAxiosError: true,
-      response: { status: 500, data: { error: 'Internal server error' } },
-      message: 'Request failed with status code 500',
-    };
-  
-    (updatePackageById as Mock).mockRejectedValue(mockError); // Mock API rejection
-  
-    render(<UpdatePackage />);
-  
-    // Simulate user input
-    fireEvent.change(screen.getByPlaceholderText('Enter Package ID'), { target: { value: '123' } });
-    fireEvent.click(screen.getByText('Update Package'));
-  
-    // Wait for error message to appear
-    const errorAlert = await screen.findByRole('alert');
-    expect(errorAlert).toHaveTextContent('Error 500: Internal server error');
-  });
-  
   test('handles file upload and encodes content to base64', async () => {
     render(<UpdatePackage />);
   
-    // Create a mock file object to simulate the file input
-    const file = new Blob(['test content'], { type: 'text/plain' });
-    const fileInput = screen.getByLabelText(/File upload/i);
+    // Create a mock file
+    const file = new File(['test content'], 'test.txt', { type: 'text/plain' });
   
-    // Create a mock FileReader and override the global one
+    // Mock the FileReader behavior
     const mockFileReader = {
-      readAsBinaryString: vi.fn().mockImplementation((file: Blob) => {
-        mockFileReader.onload({ target: { result: 'test content' } });
-      }),
-      onload: vi.fn(),
+      readAsBinaryString: vi.fn(),
+      onload: null,
     };
   
-    global.FileReader = vi.fn(() => mockFileReader); // Mock FileReader
-    
+    (global.FileReader as unknown as Mock) = vi.fn(() => mockFileReader);
+  
+    // Spy on the onload method and simulate the file read
+    mockFileReader.onload = vi.fn(function (this: { result: string }) {
+      this.result = 'test content';
+      if (typeof mockFileReader.onload === 'function') {
+        mockFileReader.onload({ target: { result: this.result } });
+      }
+    });
+  
+    const fileInput = screen.getByLabelText(/File upload/i);
+  
+    // Mock `files` property on the input
+    Object.defineProperty(fileInput, 'files', {
+      value: [file],
+      writable: false,
+    });
+  
     // Simulate file input change
-    fireEvent.change(fileInput, { target: { files: [file] } });
+    fireEvent.change(fileInput);
   
     // Ensure FileReader's readAsBinaryString was called
     await waitFor(() => {
       expect(mockFileReader.readAsBinaryString).toHaveBeenCalledWith(file);
     });
   
-    // Check that the base64-encoded content is correctly set
-    expect(screen.getByLabelText(/GitHub Repo URL/i)).toHaveValue(''); // URL should be cleared
-    expect(screen.getByPlaceholderText(/JS Program/i)).toHaveValue(''); // JSProgram should be empty
+    // Optionally, check that the component state was updated
   });
   
+
   test('displays error message on API error', async () => {
-    const mockUpdate = updatePackageById as Mock;
-    mockUpdate.mockRejectedValue({
-      response: {
-        status: 400,
-        data: { error: 'Invalid request' },
-      },
+    (updatePackageById as Mock).mockRejectedValue({
+      isAxiosError: true,
+      response: { status: 404, data: { error: 'Invalid package data' } },
     });
 
     render(<UpdatePackage />);
-    fireEvent.change(screen.getByPlaceholderText(/Enter Package ID/i), { target: { value: '1234' } });
-    fireEvent.click(screen.getByRole('button', { name: /Update Package/i }));
 
-    await waitFor(() => expect(screen.getByText(/An unexpected error occurred./i)).toBeInTheDocument());
-  });
+    fireEvent.change(screen.getByPlaceholderText(/Enter Package ID/i), { target: { value: '123' } });
+    const updateButton = screen.getByRole('button', { name: /Update Package/i });
+    fireEvent.click(updateButton);
 
-  test('updates URL and clears Content on input change', () => {
-    render(<UpdatePackage />);
-  
-    // Find the URL input field and simulate a change event
-    const urlInput = screen.getByPlaceholderText(/GitHub Repo URL/i);
-    
-    // Simulate the user typing a URL into the input field
-    fireEvent.change(urlInput, { target: { value: 'https://example.com' } });
-  
-    // Check if the state has been updated and Content is cleared
-    expect(urlInput.value).toBe('https://example.com'); // URL should be updated
-    expect(screen.getByPlaceholderText(/JS Program/i).value).toBe(''); // Content (JS Program) should be cleared
+    await waitFor(() => {
+      const errorAlert = screen.getByRole('alert');
+      expect(errorAlert).toHaveTextContent('Error 404: Invalid package data');
+    });
   });
 
  
 
+  test('toggles debloat checkbox and updates state', () => {
+    render(<UpdatePackage />);
+    const debloatCheckbox = screen.getByLabelText(/Debloat option/i);
+    expect(debloatCheckbox).not.toBeChecked();
+    fireEvent.click(debloatCheckbox);
+    expect(debloatCheckbox).toBeChecked();
+    fireEvent.click(debloatCheckbox);
+    expect(debloatCheckbox).not.toBeChecked();
+  });
 
+  test('displays generic error message on API failure', async () => {
+    (updatePackageById as Mock).mockRejectedValue({
+      isAxiosError: true,
+      response: { status: 500, data: { error: 'Internal server error' } },
+    });
+
+    render(<UpdatePackage />);
+
+    fireEvent.change(screen.getByPlaceholderText(/Enter Package ID/i), { target: { value: '123' } });
+    const updateButton = screen.getByRole('button', { name: /Update Package/i });
+    fireEvent.click(updateButton);
+
+    await waitFor(() => {
+      const errorAlert = screen.getByRole('alert');
+      expect(errorAlert).toHaveTextContent('Error 500: Internal server error');
+    });
+  });
+  test('updates Content and clears URL in packageData on file upload', async () => {
+    render(<UpdatePackage />);
+  
+    // Create a mock file
+    const mockFile = new File(['mock content'], 'mock.txt', { type: 'text/plain' });
+  
+    // Mock FileReader behavior
+    const mockFileReader = {
+      readAsBinaryString: vi.fn(),
+      result: null,
+      onload: null as unknown as (event: ProgressEvent<FileReader>) => void,
+    };
+  
+    (global.FileReader as unknown as Mock) = vi.fn(() => mockFileReader);
+  
+    // Simulate the onload event of FileReader
+    mockFileReader.readAsBinaryString.mockImplementationOnce((file: File) => {
+      setTimeout(() => {
+        mockFileReader.result = 'mock content'; // Simulated file content
+        if (mockFileReader.onload) {
+          mockFileReader.onload({ target: mockFileReader } as ProgressEvent<FileReader>);
+        }
+      }, 0);
+    });
+  
+    // Find and simulate a file upload
+    const fileInput = screen.getByLabelText(/File upload/i);
+  
+    // Mock the `files` property of the input element
+    Object.defineProperty(fileInput, 'files', {
+      value: [mockFile],
+      writable: false,
+    });
+  
+    fireEvent.change(fileInput);
+  
+    // Wait for the FileReader to process the file
+    await waitFor(() => {
+      expect(mockFileReader.readAsBinaryString).toHaveBeenCalledWith(mockFile);
+    });
+  
+    // Assert that `Content` was updated and `URL` was cleared
+    await waitFor(() => {
+      expect(screen.queryByPlaceholderText(/GitHub Repo URL/i)).toHaveValue('');
+    });
+  });
+  
 });

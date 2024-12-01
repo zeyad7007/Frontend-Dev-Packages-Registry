@@ -47,7 +47,7 @@ const UpdatePackage: React.FC = () => {
       successMessage.className = 'alert alert-success';
       successMessage.innerText = 'Package updated successfully.';
       document.querySelector('.container')?.prepend(successMessage);
-      setTimeout(() => successMessage.remove(), 5000);
+      setTimeout(() => successMessage.remove(), 4000);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         const axiosError = err as AxiosError;
