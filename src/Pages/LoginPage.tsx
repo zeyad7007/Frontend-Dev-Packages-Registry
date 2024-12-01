@@ -22,7 +22,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsAuthenticated }) => {
 
   return (
     <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
-      <div className="card shadow-lg p-4" style={{ maxWidth: '400px', width: '100%' }}>
+      <div className="card shadow-lg p-4" data-testid="login-card" style={{ maxWidth: '400px', width: '100%' }}>
         <h2 className="display-4 fw-bold text-center mb-4">Login</h2>
         <Authenticate onLogin={handleLogin} />
       </div>
