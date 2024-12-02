@@ -125,6 +125,24 @@ describe('UploadPackage Component', () => {
     });
 });
 
+test('displays default error message on API failure', async () => {
+  // Mock the uploadPackage function to simulate an Axios error
+  (uploadPackage as Mock).mockRejectedValueOnce({
+    isAxiosError: true,
+    response: {
+      status: 404
+    }
+  });
+
+  render(<UploadPackage />);
+
+  const uploadButton = screen.getByRole('button', { name: 'Upload Package' });
+  fireEvent.click(uploadButton);
+
+  // Assert: Check that the component displays the specific Axios error message
+  const errorAlert = await screen.findByRole('alert');
+  expect(errorAlert).toHaveTextContent('Error 404: undefined');
+});
 
 
   test('handles file upload', async () => {

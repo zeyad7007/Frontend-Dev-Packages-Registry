@@ -71,6 +71,24 @@ describe('PackageDetails Component', () => {
     expect(errorMessage).toHaveTextContent('Error 404: Package not found');
   });
 
+  test('displays default error message on Axios error', async () => {
+    // Mock an Axios error with specific error data
+    (getPackageById as Mock).mockRejectedValueOnce({
+      isAxiosError: true,
+      response: {
+        status: 404,
+      },
+    });
+
+    render(<PackageDetails />);
+
+    fireEvent.change(screen.getByPlaceholderText('Enter Package ID'), { target: { value: '123' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Fetch Package' }));
+
+    const errorMessage = await screen.findByRole('alert');
+    expect(errorMessage).toHaveTextContent('Error 404: undefined');
+  });
+
   test('displays Axios error message if no error field in response data', async () => {
     // Mock an Axios error without specific error data
     (getPackageById as Mock).mockRejectedValueOnce({
@@ -103,14 +121,5 @@ describe('PackageDetails Component', () => {
     const errorMessage = await screen.findByRole('alert');
     expect(errorMessage).toHaveTextContent('An unexpected error occurred.');
   });
-
-//   test('displays an error when attempting to fetch without an ID', async () => {
-//     render(<PackageDetails />);
-  
-//     fireEvent.click(screen.getByRole('button', { name: 'Fetch Package' }));
-  
-//     const errorMessage = await screen.findByRole('alert');
-//     expect(errorMessage).toHaveTextContent('Package ID cannot be empty.');
-//   });
   
 });

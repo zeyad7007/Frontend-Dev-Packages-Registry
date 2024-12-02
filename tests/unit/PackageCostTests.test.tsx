@@ -59,10 +59,8 @@ describe('PackageCost Component', () => {
     await waitFor(() => {
       const costData = screen.getByText(/Package Cost Details:/);
       expect(costData).toBeInTheDocument();
-      const standAloneCost = screen.getByText('Standalone Cost:').parentElement;
-      // expect(within(standAloneCost).getByText('200')).toBeInTheDocument();
-      const TotalCost = screen.getByText('Total Cost:').parentElement;
-      // expect(within(TotalCost).getByText('500')).toBeInTheDocument();
+      expect(screen.getByText('Standalone Cost:').parentElement);
+      expect( screen.getByText('Total Cost:').parentElement);
     });
   });
 
@@ -85,6 +83,24 @@ describe('PackageCost Component', () => {
 
     const errorMessage = await screen.findByRole('alert');
     expect(errorMessage).toHaveTextContent('Error 404: Package not found');
+  });
+
+  test('displays default error message on Axios error', async () => {
+    // Mock an Axios error with specific error data
+    (getPackageCost as Mock).mockRejectedValueOnce({
+      isAxiosError: true,
+      response: {
+        status: 404
+      }
+    });
+
+    render(<PackageCost />);
+
+    fireEvent.change(screen.getByPlaceholderText('Enter Package ID'), { target: { value: '456' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Fetch Cost' }));
+
+    const errorMessage = await screen.findByRole('alert');
+    expect(errorMessage).toHaveTextContent('Error 404: undefined');
   });
 
   test('displays Axios error message if no error field in response data', async () => {

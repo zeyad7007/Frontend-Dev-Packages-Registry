@@ -105,6 +105,24 @@ describe('PackageList Component', () => {
     expect(errorMessage).toHaveTextContent('Error 404: Packages not found');
   });
 
+  test('displays default error message on Axios error', async () => {
+    // Mock an Axios error with specific error data
+    (getPackages as Mock).mockRejectedValueOnce({
+      isAxiosError: true,
+      response: {
+        status: 404
+      }
+    });
+
+    render(<PackageList />);
+
+    fireEvent.change(screen.getByPlaceholderText('Enter Offset'), { target: { value: '0' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Load Packages' }));
+
+    const errorMessage = await screen.findByRole('alert');
+    expect(errorMessage).toHaveTextContent('Error 404: undefined');
+  });
+
   test('displays Axios error message if no error field in response data', async () => {
     // Mock an Axios error without specific error data
     (getPackages as Mock).mockRejectedValueOnce({

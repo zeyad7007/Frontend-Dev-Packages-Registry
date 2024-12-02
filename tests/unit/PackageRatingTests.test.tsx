@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor,within } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor} from '@testing-library/react';
 import { describe, expect, vi, beforeEach, Mock } from 'vitest';
 import PackageRating from '../../src/Components/PackageRating';
 import { getPackageRating } from '../../src/api';
@@ -157,5 +157,27 @@ describe('PackageRating Component', () => {
     await waitFor(() => {
       expect(screen.getByRole('alert')).toHaveTextContent('An unexpected error occurred.');
     });
+  });
+
+  test('displays default error message on Axios error', async () => {
+    // Mock getPackageRating to reject with an Axios error with specific error data
+    (getPackageRating as Mock).mockRejectedValueOnce({
+      isAxiosError: true,
+      response: {
+        status: 404,
+      }
+    });
+
+    render(<PackageRating />);
+
+    // Set package ID input and trigger fetch
+    fireEvent.change(screen.getByPlaceholderText('Enter Package ID'), {
+      target: { value: '12345' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Fetch Rating' }));
+
+    // Assert: check for specific error message
+    const errorAlert = await screen.findByRole('alert');
+    expect(errorAlert).toHaveTextContent('Error 404: undefined');
   });
 });

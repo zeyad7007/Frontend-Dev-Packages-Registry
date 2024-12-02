@@ -59,4 +59,21 @@ describe('Tracks Component', () => {
     const errorAlert = await screen.findByRole('alert');
     expect(errorAlert).toHaveTextContent('An unexpected error occurred.');
   });
+
+  test('displays specific error message when an AxiosError occurs', async () => {
+    // Arrange: Simulate an AxiosError with a 404 response
+    (getTracks as Mock).mockRejectedValueOnce({
+      isAxiosError: true,  // Explicitly mark this as an AxiosError
+      response: {
+        status: 404
+      }
+    });
+  
+    // Act
+    render(<Tracks />);
+  
+    // Assert: Check that the component displays the specific Axios error message
+    const errorAlert = await screen.findByRole('alert');
+    expect(errorAlert).toHaveTextContent('Error 404: undefined');
+  });
 });
