@@ -21,7 +21,7 @@ import {
 } from './Interface';
 
 // Create an Axios instance
-const apiClient = axios.create({
+export const apiClient  = axios.create({
   baseURL: 'http://3.94.57.71:3000', // API server
   headers: {
     'Content-Type': 'application/json',
@@ -173,3 +173,5 @@ export const getHistory = async (PackageId:number): Promise<PackageHistoryI[]> =
   console.log(response);
   return response.data;
 };
+
+
