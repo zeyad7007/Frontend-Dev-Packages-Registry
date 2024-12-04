@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import istanbul from 'vite-plugin-istanbul';
 
 export default defineConfig({
+  base: '/Frontend-Dev-Packages-Registry/',
   plugins: [
     react(),
     istanbul({

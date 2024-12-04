@@ -61,7 +61,7 @@ const Authenticate: React.FC<AuthenticateProps> = ({ onLogin })  => {
       <div className="d-flex justify-content-center">
         <button 
           onClick={fetchAuthenticate} 
-          id="fetch-authenticate-button" 
+          id="authenticate-button" 
           className="btn btn-info btn-lg mb-3">
           Login
         </button>

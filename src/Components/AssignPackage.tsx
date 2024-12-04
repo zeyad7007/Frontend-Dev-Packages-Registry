@@ -21,7 +21,7 @@ const AssignPackageToGroup: React.FC = () => {
       setErrorMessage(null);
       setSuccessMessage(null);
 
-      const requestData: PackettoGroupI = { packageId: parseInt(packageId) }; // Prepare the request body
+      const requestData: PackettoGroupI = { package_id: parseInt(packageId) }; // Prepare the request body
       const responseMessage = await assignPackageToGroup(requestData, parseInt(groupId)); // Call the API
       setSuccessMessage(responseMessage); // Display success message
     } catch (err) {

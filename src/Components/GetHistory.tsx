@@ -1,33 +1,34 @@
 import React, { useState, useCallback } from 'react';
 import axios, { AxiosError } from 'axios';
-import { getHistory } from '../api'; // API function to fetch package history
-import { PackageHistoryI } from '../Interface'; // Interface for the package history response
+import { getHistory } from '../api';
+import { PackageHistoryI, PackageHistoryBodyI } from '../Interface';
 
 const GetPackageHistory: React.FC = () => {
-  const [packageId, setPackageId] = useState<string>(''); // State for package ID input
-  const [packageHistory, setPackageHistory] = useState<PackageHistoryI[]>([]); // State for package history
+  const [packageId, setPackageId] = useState<number | ''>(''); // State for package ID input
+  const [history, setHistory] = useState<PackageHistoryI[] | null>(null); // State for package history
   const [errorMessage, setErrorMessage] = useState<string | null>(null); // State for error messages
   const [successMessage, setSuccessMessage] = useState<string | null>(null); // State for success messages
 
   // Fetch package history API call
   const fetchHistory = useCallback(async () => {
-    const parsedPackageId = parseInt(packageId, 10);
-    if (isNaN(parsedPackageId)) {
-      setErrorMessage('Package ID must be a valid number.');
+    if (!packageId || typeof packageId !== 'number') {
+      setErrorMessage('Package ID is required and must be a number.');
       setSuccessMessage(null);
-      setPackageHistory([]);
+      setHistory(null);
       return;
     }
 
     try {
       setErrorMessage(null);
       setSuccessMessage(null);
-      setPackageHistory([]);
+      setHistory(null);
 
-      // API call to fetch history
-      const response = await getHistory(parsedPackageId);
-      setPackageHistory(response); // Update state with response
-      setSuccessMessage('Package history fetched successfully.');
+      const body: PackageHistoryBodyI = { id: packageId };
+
+      // Make the API call
+      const response = await getHistory(body);
+      setHistory(response);
+      setSuccessMessage('Successfully fetched package history.');
     } catch (err) {
       if (axios.isAxiosError(err)) {
         const axiosError = err as AxiosError;
@@ -46,24 +47,24 @@ const GetPackageHistory: React.FC = () => {
         setErrorMessage('An unexpected error occurred.');
       }
 
-      setPackageHistory([]); // Reset state on error
+      setHistory(null); // Reset history on error
     }
   }, [packageId]);
 
   return (
     <div className="container mt-4">
-      <h2 className="display-4 fw-bold">Get Package History</h2>
+      <h2 className="display-4 fw-bold text-center">Get Package History</h2>
 
       {/* Package ID Input */}
       <div className="form-group mt-3">
         <label htmlFor="packageIdInput" className="form-label fw-bold">Package ID</label>
         <input
           id="packageIdInput"
-          type="text"
+          type="number"
           className="form-control form-control-lg"
           placeholder="Enter Package ID"
           value={packageId}
-          onChange={(e) => setPackageId(e.target.value)}
+          onChange={(e) => setPackageId(Number(e.target.value) || '')}
         />
       </div>
 
@@ -87,31 +88,18 @@ const GetPackageHistory: React.FC = () => {
       )}
 
       {/* History Display */}
-      {packageHistory.length > 0 && (
-        <div className="mt-4">
+      {history && (
+        <div className="border rounded p-3 mt-3">
           <h4>Package History:</h4>
-          <table className="table table-striped">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Package ID</th>
-                <th>User ID</th>
-                <th>Action</th>
-                <th>Action Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {packageHistory.map((history) => (
-                <tr key={history.id}>
-                  <td>{history.id}</td>
-                  <td>{history.package_id}</td>
-                  <td>{history.user_id}</td>
-                  <td>{history.action}</td>
-                  <td>{new Date(history.action_date).toLocaleString()}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <ul className="list-unstyled">
+            {history.map((entry) => (
+              <li key={entry.id} className="mb-2">
+                <strong>Action:</strong> {entry.action} <br />
+                <strong>Action Date:</strong> {new Date(entry.action_date).toLocaleString()} <br />
+                <strong>User ID:</strong> {entry.user_id}
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </div>

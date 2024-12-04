@@ -17,7 +17,8 @@ import {
   PackettoGroupI,
   GroupResponseI,
   UserinGroupI,
-  PackageHistoryI
+  PackageHistoryI,
+  PackageHistoryBodyI
 } from './Interface';
 
 // Create an Axios instance
@@ -168,8 +169,8 @@ export const getUsersInGroup = async (groupId:number): Promise<UserinGroupI[]> =
   return response.data;
 };
 
-export const getHistory = async (PackageId:number): Promise<PackageHistoryI[]> => {
-  const response = await apiClient.get(`/history/${PackageId}`);
+export const getHistory = async (data:PackageHistoryBodyI): Promise<PackageHistoryI[]> => {
+  const response = await apiClient.post(`/history`, data);
   console.log(response);
   return response.data;
 };

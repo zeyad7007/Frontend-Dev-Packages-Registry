@@ -129,11 +129,11 @@ export interface GroupI{
 };
 
 export interface UsertoGroupI{
-  userId: number;
+  user_id: number;
 };
 
 export interface PackettoGroupI{
-  packageId: number;
+  package_id: number;
 };
 
 export interface GroupResponseI{
@@ -152,4 +152,8 @@ export interface PackageHistoryI {
   user_id: number;
   action: string; 
   action_date: string; 
+};
+
+export interface PackageHistoryBodyI {
+  id: number;
 };

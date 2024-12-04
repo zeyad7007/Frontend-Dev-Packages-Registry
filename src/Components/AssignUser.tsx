@@ -21,7 +21,7 @@ const AssignUserToGroup: React.FC = () => {
       setErrorMessage(null);
       setSuccessMessage(null);
 
-      const requestData: UsertoGroupI = { userId: parseInt(userId) }; // Prepare the request body
+      const requestData: UsertoGroupI = { user_id: parseInt(userId) }; // Prepare the request body
       const responseMessage = await assignUserToGroup(requestData, parseInt(groupId)); // Call the API
       setSuccessMessage(responseMessage); // Display success message
     } catch (err) {
@@ -75,20 +75,20 @@ const AssignUserToGroup: React.FC = () => {
       </div>
 
       {/* Submit Button */}
-      <button onClick={handleAssignUser} className="btn btn-primary btn-lg mt-3">
+      <button onClick={handleAssignUser} id="submitButton" className="btn btn-primary btn-lg mt-3">
         Assign User to Group
       </button>
 
       {/* Error Message */}
       {errorMessage && (
-        <div className="alert alert-danger mt-3" role="alert">
+        <div className="alert alert-danger mt-3" id="errorMessage" role="alert">
           {errorMessage}
         </div>
       )}
 
       {/* Success Message */}
       {successMessage && (
-        <div className="alert alert-success mt-3" role="alert">
+        <div className="alert alert-success mt-3" id="successMessage" role="alert">
           {successMessage}
         </div>
       )}

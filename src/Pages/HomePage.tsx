@@ -34,7 +34,7 @@ const HomePage: React.FC<HomePageProps> = ({ setIsAuthenticated }) => {
     <div className="container mt-5">
       {/* Welcome Section */}
       <div className="text-center mb-5">
-        <h1 className="display-1 fw-bold">Fuwwah Package Registry</h1>
+        <h1 className="display-1 fw-bold" id="fuwwah" >Fuwwah Package Registry</h1>
         <p className="lead mt-3">Welcome! Use the options below to interact with the package registry.</p>
       </div>
 
