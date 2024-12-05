@@ -1,6 +1,6 @@
 import { describe, test, expect, beforeAll, afterAll } from 'vitest';
 import { getChromeDriver } from './SeleniumSetup';
-import { clickElementByText, navigateToUrl } from './NavigationHelper';
+import { clickElementByText, fillInputField, navigateToUrl } from './NavigationHelper';
 import { By, until } from 'selenium-webdriver';
 import fs from 'fs';
 
@@ -15,7 +15,19 @@ describe('Get Package Cost Functionality', () => {
 
     beforeAll(async () => {
         driver = await getChromeDriver();
-        await navigateToUrl(driver, 'http://localhost:5173/home');
+        await navigateToUrl(driver, 'https://frontend-dev-packages-registry.vercel.app/home');
+        // Perform login
+        const usernameInput = await driver.findElement(By.id('username-input')); 
+        const passwordInput = await driver.findElement(By.id('password-input')); 
+        const loginButton = await driver.findElement(By.id('authenticate-button')); 
+
+        await driver.executeScript('arguments[0].scrollIntoView(true);', usernameInput);
+        await fillInputField(driver, By.id('username-input'), 'adminUser'); 
+        await driver.executeScript('arguments[0].scrollIntoView(true);', passwordInput);
+        await fillInputField(driver, By.id('password-input'), 'adminPassword123'); 
+        await driver.executeScript('arguments[0].scrollIntoView(true);', loginButton);
+        await driver.wait(until.elementIsVisible(loginButton), 5000);
+        await driver.executeScript('arguments[0].click();', loginButton);
     });
 
     afterAll(async () => {

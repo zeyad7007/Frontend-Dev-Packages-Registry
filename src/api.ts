@@ -7,7 +7,6 @@ import {
   Metrics,  
   PackageListI, 
   AuthenticateI, 
-  TokenI,
   PermissionsI,
   UserPermissionsResponseI,
   UserRegisterI,
@@ -39,7 +38,7 @@ apiClient.interceptors.request.use(
       const token = localStorage.getItem('authToken'); // Get the token from localStorage
       console.log(token);
       if (token) {
-        config.headers['Authorization'] = `${token}`; // Add Authorization header
+        config.headers['X-Authorization'] = `${token}`; // Add Authorization header
         console.log(config.headers['Authorization']);
       }
     }
@@ -108,10 +107,10 @@ export const getTracks = async (): Promise<string[]> => {
   return response.data.plannedTracks;
 };
 
-export const authenticate = async (data: AuthenticateI): Promise<TokenI> => {
+export const authenticate = async (data: AuthenticateI): Promise<string> => {
   const response = await apiClient.put('/authenticate', data); // Does not require Authorization
-  console.log(response.data);
-  return response.data;
+  console.log(response);
+  return response;
 };
 
 export const logout = async (): Promise<string> => {

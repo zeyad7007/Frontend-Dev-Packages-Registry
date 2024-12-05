@@ -6,7 +6,7 @@ import path from 'path';
 import fs from 'fs';
 
 
-declare global {
+declare global { 
     interface Window {
       __coverage__: unknown;
     }
@@ -16,8 +16,20 @@ describe('Upload Package Functionality', () => {
 
     beforeAll(async () => {
         driver = await getChromeDriver();
-        await navigateToUrl(driver, 'http://localhost:5173/home');
+        await navigateToUrl(driver, 'https://frontend-dev-packages-registry.vercel.app/home');
         await clickElementByText(driver, 'Upload Package');
+        // Perform login
+        const usernameInput = await driver.findElement(By.id('username-input')); 
+        const passwordInput = await driver.findElement(By.id('password-input')); 
+        const loginButton = await driver.findElement(By.id('authenticate-button')); 
+
+        await driver.executeScript('arguments[0].scrollIntoView(true);', usernameInput);
+        await fillInputField(driver, By.id('username-input'), 'adminUser'); 
+        await driver.executeScript('arguments[0].scrollIntoView(true);', passwordInput);
+        await fillInputField(driver, By.id('password-input'), 'adminPassword123'); 
+        await driver.executeScript('arguments[0].scrollIntoView(true);', loginButton);
+        await driver.wait(until.elementIsVisible(loginButton), 5000);
+        await driver.executeScript('arguments[0].click();', loginButton);
     });
 
     afterAll(async () => {

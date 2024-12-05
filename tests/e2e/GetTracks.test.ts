@@ -15,7 +15,8 @@ describe('Get Tracks Functionality', () => {
 
     beforeAll(async () => {
         driver = await getChromeDriver();
-        await navigateToUrl(driver, 'http://localhost:5173/home');
+        await navigateToUrl(driver, 'https://frontend-dev-packages-registry.vercel.app/tracks');
+        
     });
 
     afterAll(async () => {

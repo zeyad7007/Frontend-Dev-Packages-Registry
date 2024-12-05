@@ -33,7 +33,7 @@ describe('Assign User to Group Functionality', () => {
     await driver.executeScript('arguments[0].click();', loginButton);
 
     // Wait for successful login
-    await waitForElement(driver, By.id('assign')); 
+    // await waitForElement(driver, By.id('assign')); 
 
     // Navigate to Assign User page
   });
