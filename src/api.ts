@@ -4,8 +4,7 @@ import {
   PackageUpdateI, 
   PackageUploadI, 
   GetPackagesQuery, 
-  Metrics, 
-  CostI, 
+  Metrics,  
   PackageListI, 
   AuthenticateI, 
   TokenI,
@@ -18,7 +17,8 @@ import {
   GroupResponseI,
   UserinGroupI,
   PackageHistoryI,
-  PackageHistoryBodyI
+  PackageHistoryBodyI,
+  CostFullData
 } from './Interface';
 
 // Create an Axios instance
@@ -88,7 +88,7 @@ export const getPackagesByRegex = async (regex: string): Promise<Package[]> => {
   return response.data;
 };
 
-export const getPackageCost = async (id: string, dependency: boolean = false): Promise<CostI[]> => {
+export const getPackageCost = async (id: string, dependency: boolean = false): Promise<CostFullData> => {
   console.log(id);
   const response = await apiClient.get(`/package/${id}/cost`, { params: { dependency } });
   console.log(response.data);

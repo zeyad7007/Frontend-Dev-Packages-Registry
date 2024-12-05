@@ -117,6 +117,7 @@ const PackageList: React.FC = () => {
             <div key={pkg.id} className="border rounded p-3 mb-2">
               <h5>{pkg.name}</h5>
               <p>Version: {pkg.version}</p>
+              <p>ID: {pkg.id}</p>
             </div>
           ))
         ) : (

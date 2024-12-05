@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
 import { getPackageCost } from '../api';
 import axios, { AxiosError } from 'axios';
-import { CostI } from '../Interface';
+import { CostFullData, Dependency } from '../Interface';
 
 const PackageCost: React.FC = () => {
   const [id, setId] = useState<string>('');
-  const [cost, setCost] = useState<CostI[]>();
-  const [includeDependencies, setIncludeDependencies] = useState<boolean>(false);
+  const [cost, setCost] = useState<CostFullData | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const fetchCost = async () => {
     try {
-      const result = await getPackageCost(id, includeDependencies);
+      const result = await getPackageCost(id);
       setCost(result);
       setErrorMessage(null);
     } catch (err) {
@@ -29,55 +28,63 @@ const PackageCost: React.FC = () => {
       } else {
         setErrorMessage('An unexpected error occurred.');
       }
-      console.error("Failed to fetch package cost", err);
+      console.error('Failed to fetch package cost', err);
     }
   };
 
   return (
-    <div className="container">
-      <h2 className="display-4 fw-bold text-center">Package Cost</h2>
-      <input
-        type="text"
-        className="form-control form-control-lg my-3"
-        aria-label="Enter Package ID"
-        placeholder="Enter Package ID"
-        id="package-id-input"
-        value={id}
-        onChange={(e) => setId(e.target.value)}
-      />
-      <div className="form-check mb-3">
-        <input
-          type="checkbox"
-          className="form-check-input"
-          id="include-dependencies-checkbox"
-          aria-label="Include Dependencies"
-          checked={includeDependencies}
-          onChange={(e) => setIncludeDependencies(e.target.checked)}
-        />
-        <label className="form-check-label" htmlFor="includeDependencies">Include Dependencies</label>
+    <div className="container my-4">
+      <h2 className="text-center mb-4">Package Cost Calculator</h2>
+      <div className="card p-4 shadow-sm">
+        <div className="mb-3">
+          <label htmlFor="package-id-input" className="form-label">
+            Enter Package ID
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="package-id-input"
+            value={id}
+            placeholder="e.g., 123"
+            onChange={(e) => setId(e.target.value)}
+          />
+        </div>
+        <button onClick={fetchCost} className="btn btn-primary w-100">
+          Fetch Cost
+        </button>
       </div>
-      <button onClick={fetchCost} id="fetch-cost-button" className="btn btn-info btn-lg mb-3">Fetch Cost</button>
 
       {errorMessage && (
-        <div className="alert alert-danger" role="alert" aria-live="assertive">
+        <div className="alert alert-danger mt-3" role="alert">
           {errorMessage}
         </div>
       )}
 
       {cost && (
-        <div className="bg-light p-3 rounded" aria-live="polite">
-          <h5>Package Cost Details:</h5>
-          {Object.entries(cost).map(([packageId, costDetails]) => (
-            <div key={packageId}>
-              <h6>Package ID: {packageId}</h6>
-              <ul>
-                {costDetails.standalonecost !== undefined && (
-                  <li><strong>Standalone Cost:</strong> {costDetails.ID.standalonecost} MB</li>
-                )}
-                <li><strong>Total Cost:</strong> {costDetails.ID.totalcost} MB</li>
-              </ul>
-            </div>
-          ))}
+        <div className="card mt-4 p-4 shadow-sm">
+          <h4>Package Cost Details</h4>
+          <hr />
+          <p>
+            <strong>Package ID:</strong> {cost.dependencies.id}
+          </p>
+          <table className="table table-striped table-bordered">
+            <thead className="table-light">
+              <tr>
+                <th>Dependency</th>
+                <th>Standalone Cost (MB)</th>
+                <th>Total Cost (MB)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cost.dependencies.Dependencies.map((dependency: Dependency, index) => (
+                <tr key={index}>
+                  <td>{dependency.Dependency}</td>
+                  <td>{dependency.StandaloneCost !== undefined ? dependency.StandaloneCost : 'N/A'}</td>
+                  <td>{dependency.TotalCost}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
     </div>
