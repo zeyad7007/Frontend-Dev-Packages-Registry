@@ -17,24 +17,23 @@ describe('Assign User to Group Functionality', () => {
     driver = await getChromeDriver();
 
     // Navigate to login page
-    // await driver.get('http://localhost:5173/login');
-    await driver.get('http://localhost:5173/admin-actions/assign-user');
+    await driver.get('https://frontend-dev-packages-registry.vercel.app/admin-actions/assign-user');
 
     // Perform login
-    const usernameInput = await driver.findElement(By.id('username-input')); // Replace with the actual ID of the username field
-    const passwordInput = await driver.findElement(By.id('password-input')); // Replace with the actual ID of the password field
-    const loginButton = await driver.findElement(By.id('authenticate-button')); // Replace with the actual ID of the login button
+    const usernameInput = await driver.findElement(By.id('username-input')); 
+    const passwordInput = await driver.findElement(By.id('password-input')); 
+    const loginButton = await driver.findElement(By.id('authenticate-button')); 
 
     await driver.executeScript('arguments[0].scrollIntoView(true);', usernameInput);
-    await fillInputField(driver, By.id('username-input'), 'adminUser'); // Replace with valid admin username
+    await fillInputField(driver, By.id('username-input'), 'adminUser'); 
     await driver.executeScript('arguments[0].scrollIntoView(true);', passwordInput);
-    await fillInputField(driver, By.id('password-input'), 'adminPassword123'); // Replace with valid admin password
+    await fillInputField(driver, By.id('password-input'), 'adminPassword123'); 
     await driver.executeScript('arguments[0].scrollIntoView(true);', loginButton);
     await driver.wait(until.elementIsVisible(loginButton), 5000);
     await driver.executeScript('arguments[0].click();', loginButton);
 
     // Wait for successful login
-    await waitForElement(driver, By.id('assign')); // Replace with an ID unique to the home page after login
+    await waitForElement(driver, By.id('assign')); 
 
     // Navigate to Assign User page
   });

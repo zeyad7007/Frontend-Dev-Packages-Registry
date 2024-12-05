@@ -71,8 +71,8 @@ const PackageCost: React.FC = () => {
             <thead className="table-light">
               <tr>
                 <th>Dependency</th>
-                <th>Standalone Cost (MB)</th>
-                <th>Total Cost (MB)</th>
+                <th>Standalone Cost (KB)</th>
+                <th>Total Cost (KB)</th>
               </tr>
             </thead>
             <tbody>

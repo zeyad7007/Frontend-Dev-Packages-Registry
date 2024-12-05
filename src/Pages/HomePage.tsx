@@ -10,7 +10,6 @@ import PackageCost from '../Components/PackageCost';
 import SearchByRegex from '../Components/SearchByRegex';
 import Logout from '../Components/Logout';
 
-// Define props interface for HomePage
 interface HomePageProps {
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -18,40 +17,56 @@ interface HomePageProps {
 const HomePage: React.FC<HomePageProps> = ({ setIsAuthenticated }) => {
   const navigate = useNavigate();
 
-  // Logout logic
   const handleLogout = () => {
-    // Remove auth token from localStorage
     localStorage.removeItem('authToken');
-
-    // Update authentication state
     setIsAuthenticated(false);
-
-    // Redirect to login page
     navigate('/login');
+  };
+
+  const goToLandingPage = () => {
+    navigate('/');
   };
 
   return (
     <div className="container mt-5">
-      {/* Welcome Section */}
       <div className="text-center mb-5">
-        <h1 className="display-1 fw-bold" id="fuwwah" >Fuwwah Package Registry</h1>
+        <h1 className="display-1 fw-bold" id="fuwwah">
+          Fuwwah Package Registry
+        </h1>
         <p className="lead mt-3">Welcome! Use the options below to interact with the package registry.</p>
       </div>
 
-      {/* Navigation Buttons */}
-      <div className="d-flex flex-wrap justify-content-around mt-5" role="navigation" aria-label="Home Navigation">
-        <Link to="packages" className="btn btn-primary btn-lg m-2">Get Packages</Link>
-        <Link to="reset" className="btn btn-danger btn-lg m-2">Reset Registry</Link>
-        <Link to="package" className="btn btn-secondary btn-lg m-2">Get Package by ID</Link>
-        <Link to="update-package" className="btn btn-warning btn-lg m-2">Update Package by ID</Link>
-        <Link to="upload" className="btn btn-success btn-lg m-2">Upload Package</Link>
-        <Link to="package-rating" className="btn btn-info btn-lg m-2">Get Package Rating</Link>
-        <Link to="package-cost" className="btn btn-info btn-lg m-2">Get Package Cost</Link>
-        <Link to="search" className="btn btn-primary btn-lg m-2">Search by Regex</Link>
-        
+      <div
+        className="d-flex flex-wrap justify-content-around mt-5"
+        role="navigation"
+        aria-label="Home Navigation"
+      >
+        <Link to="packages" className="btn btn-primary btn-lg m-2">
+          Get Packages
+        </Link>
+        <Link to="reset" className="btn btn-danger btn-lg m-2">
+          Reset Registry
+        </Link>
+        <Link to="package" className="btn btn-secondary btn-lg m-2">
+          Get Package by ID
+        </Link>
+        <Link to="update-package" className="btn btn-warning btn-lg m-2">
+          Update Package by ID
+        </Link>
+        <Link to="upload" className="btn btn-success btn-lg m-2">
+          Upload Package
+        </Link>
+        <Link to="package-rating" className="btn btn-info btn-lg m-2">
+          Get Package Rating
+        </Link>
+        <Link to="package-cost" className="btn btn-info btn-lg m-2">
+          Get Package Cost
+        </Link>
+        <Link to="search" className="btn btn-primary btn-lg m-2">
+          Search by Regex
+        </Link>
       </div>
 
-      {/* Nested Routes */}
       <Routes>
         <Route path="packages" element={<PackageList />} />
         <Route path="reset" element={<ResetRegistry />} />
@@ -61,12 +76,9 @@ const HomePage: React.FC<HomePageProps> = ({ setIsAuthenticated }) => {
         <Route path="package-rating" element={<PackageRating />} />
         <Route path="package-cost" element={<PackageCost />} />
         <Route path="search" element={<SearchByRegex />} />
-        
       </Routes>
 
-       {/* Admin Actions and Logout Section */}
       <div className="d-flex flex-column align-items-center mt-5">
-        {/* Admin Actions Button */}
         <button
           className="btn btn-secondary btn-lg mb-3"
           onClick={() => navigate('/admin-actions')}
@@ -74,7 +86,13 @@ const HomePage: React.FC<HomePageProps> = ({ setIsAuthenticated }) => {
           Admin Actions
         </button>
 
-        {/* Logout Button */}
+        <button
+          className="btn btn-dark btn-lg mb-3"
+          onClick={goToLandingPage}
+        >
+          Back to Landing Page
+        </button>
+
         <div className="d-flex justify-content-center">
           <Logout onLogout={handleLogout} />
         </div>
