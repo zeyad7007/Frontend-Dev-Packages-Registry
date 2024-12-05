@@ -15,8 +15,10 @@ const App: React.FC = () => {
   }, []);
 
   const saveRedirectPath = (path: string) => {
-    if (path !== '/login') {
+    if (path !== '/login' && path !== '/') {
       localStorage.setItem('redirectPath', path);
+    } else {
+      localStorage.setItem('redirectPath', '/home'); // Default to /home if navigating to login or root
     }
   };
 
