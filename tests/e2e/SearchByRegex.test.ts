@@ -15,7 +15,7 @@ describe('Search by Regex Functionality', () => {
 
     beforeAll(async () => {
         driver = await getChromeDriver();
-        await navigateToUrl(driver, 'http://localhost:5173/');
+        await navigateToUrl(driver, 'http://localhost:5173/home');
     });
 
     afterAll(async () => {

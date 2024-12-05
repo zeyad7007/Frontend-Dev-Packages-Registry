@@ -52,7 +52,7 @@ export interface Package {
     RampUp: number;
     Correctness: number;
     BusFactor: number;
-    ResponsiveMaintainer: number;
+    Responsiveness: number;
     LicenseScore: number;
     GoodPinningPractice: number;
     PullRequest: number;
@@ -60,7 +60,7 @@ export interface Package {
     RampUpLatency: number;
     CorrectnessLatency: number;
     BusFactorLatency: number;
-    ResponsiveneMaintainerLatency: number;
+    ResponsivenessLatency: number;
     LicenseScoreLatency: number;
     GoodPinningPracticeLatency: number;
     PullRequestLatency: number;

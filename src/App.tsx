@@ -5,6 +5,7 @@ import LoginPage from './Pages/LoginPage';
 import HomePage from './Pages/HomePage';
 import Tracks from './Components/Tracks';
 import AdminActions from './Pages/AdminPage';
+
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
@@ -13,6 +14,12 @@ const App: React.FC = () => {
     setIsAuthenticated(!!token);
   }, []);
 
+  const saveRedirectPath = (path: string) => {
+    if (path !== '/login') {
+      localStorage.setItem('redirectPath', path);
+    }
+  };
+
   return (
     <Router>
       <Routes>
@@ -20,7 +27,14 @@ const App: React.FC = () => {
         <Route
           path="/login"
           element={
-            isAuthenticated ? <Navigate to="/home" replace /> : <LoginPage setIsAuthenticated={setIsAuthenticated} />
+            isAuthenticated ? (
+              <Navigate to={localStorage.getItem('redirectPath') || '/home'} replace />
+            ) : (
+              <LoginPage
+                setIsAuthenticated={setIsAuthenticated}
+                redirectPath={localStorage.getItem('redirectPath') || '/home'}
+              />
+            )
           }
         />
         <Route
@@ -29,14 +43,27 @@ const App: React.FC = () => {
             isAuthenticated ? (
               <HomePage setIsAuthenticated={setIsAuthenticated} />
             ) : (
-              <Navigate to="/login" replace />
+              <>
+                {saveRedirectPath(window.location.pathname)}
+                <Navigate to="/login" replace />
+              </>
             )
           }
         />
-
         <Route path="/tracks" element={<Tracks />} />
-
-        <Route path="/admin-actions/*" element={<AdminActions />} />
+        <Route
+          path="/admin-actions/*"
+          element={
+            isAuthenticated ? (
+              <AdminActions />
+            ) : (
+              <>
+                {saveRedirectPath(window.location.pathname)}
+                <Navigate to="/login" replace />
+              </>
+            )
+          }
+        />
       </Routes>
     </Router>
   );

@@ -60,6 +60,25 @@ describe('ResetRegistry Component', () => {
     expect(errorAlert).toHaveTextContent('Error 404: Invalid package data');
   });
 
+  test('displays default message on Axios error ', async () => {
+    // Mock resetRegistry to reject with an Axios error that includes response data
+    (resetRegistry as Mock).mockRejectedValueOnce({
+      isAxiosError: true,
+      response: {
+        status: 404
+      }
+    });
+
+    render(<ResetRegistry />);
+
+    // Act: simulate button click
+    fireEvent.click(screen.getByRole('button', { name: 'Reset Registry' }));
+
+    // Assert: check for specific error message
+    const errorAlert = await screen.findByRole('alert');
+    expect(errorAlert).toHaveTextContent('Error 404: undefined');
+  });
+
   test('displays Axios error message if no error field in response data', async () => {
     // Mock resetRegistry to reject with an Axios error that lacks specific error data
     (resetRegistry as Mock).mockRejectedValueOnce({

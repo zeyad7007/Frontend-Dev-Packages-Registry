@@ -4,6 +4,12 @@ import { fillInputField, waitForElement } from './NavigationHelper';
 import { By, until } from 'selenium-webdriver';
 import fs from 'fs';
 
+declare global {
+  interface Window {
+    __coverage__: unknown;
+  }
+}
+
 describe('Assign User to Group Functionality', () => {
   let driver;
 
@@ -11,7 +17,8 @@ describe('Assign User to Group Functionality', () => {
     driver = await getChromeDriver();
 
     // Navigate to login page
-    await driver.get('http://localhost:5173/login');
+    // await driver.get('http://localhost:5173/login');
+    await driver.get('http://localhost:5173/admin-actions/assign-user');
 
     // Perform login
     const usernameInput = await driver.findElement(By.id('username-input')); // Replace with the actual ID of the username field
@@ -27,10 +34,9 @@ describe('Assign User to Group Functionality', () => {
     await driver.executeScript('arguments[0].click();', loginButton);
 
     // Wait for successful login
-    await waitForElement(driver, By.id('fuwwah')); // Replace with an ID unique to the home page after login
+    await waitForElement(driver, By.id('assign')); // Replace with an ID unique to the home page after login
 
     // Navigate to Assign User page
-    await driver.get('http://localhost:5173/admin-actions/assign-user');
   });
 
   afterAll(async () => {
@@ -38,7 +44,7 @@ describe('Assign User to Group Functionality', () => {
     if (coverage) {
       fs.writeFileSync('./.nyc_output/coverage-final.json', JSON.stringify(coverage));
     }
-    await driver.quit();
+    // await driver.quit();
   });
 
   test('Verify form elements', async () => {

@@ -46,7 +46,7 @@ const AssignUserToGroup: React.FC = () => {
 
   return (
     <div className="container mt-4">
-      <h2 className="display-4 fw-bold text-center">Assign User to Group</h2>
+      <h2 id="assign" className="display-4 fw-bold text-center">Assign User to Group</h2>
 
       {/* User ID Input */}
       <div className="form-group mt-3">

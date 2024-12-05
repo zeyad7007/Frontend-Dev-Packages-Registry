@@ -16,7 +16,7 @@ describe('Upload Package Functionality', () => {
 
     beforeAll(async () => {
         driver = await getChromeDriver();
-        await navigateToUrl(driver, 'http://localhost:5173/');
+        await navigateToUrl(driver, 'http://localhost:5173/home');
         await clickElementByText(driver, 'Upload Package');
     });
 

@@ -15,7 +15,7 @@ describe('Get Package by ID Functionality', () => {
 
     beforeAll(async () => {
         driver = await getChromeDriver();
-        await navigateToUrl(driver, 'http://localhost:5173/home');
+        await navigateToUrl(driver, 'http://localhost:5173/home/package');
     });
 
     afterAll(async () => {

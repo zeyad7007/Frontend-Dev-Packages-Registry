@@ -55,24 +55,6 @@ describe('SearchByRegex Component', () => {
     });
   });
 
-//   test('displays "No packages found" when no results match the regex', async () => {
-//     // Mock successful response with an empty array (no matching packages)
-//     (getPackagesByRegex as Mock).mockResolvedValueOnce([]);
-
-//     render(<SearchByRegex />);
-
-//     // Set regex input and trigger search
-//     fireEvent.change(screen.getByPlaceholderText('Enter Regex'), {
-//       target: { value: 'nonexistent.*' },
-//     });
-//     fireEvent.click(screen.getByRole('button', { name: 'Search' }));
-
-//     // Assert: check that "No packages found" message is displayed
-//     await waitFor(() => {
-//       expect(screen.getByText('No package found')).toBeInTheDocument();
-//     });
-//   });
-
   test('displays specific error message on Axios error with response data', async () => {
     // Mock getPackagesByRegex to reject with an Axios error that includes response data
     (getPackagesByRegex as Mock).mockRejectedValueOnce({
@@ -119,6 +101,28 @@ describe('SearchByRegex Component', () => {
     // Assert: check for Axios default error message
     const errorAlert = await screen.findByRole('alert');
     expect(errorAlert).toHaveTextContent('Error 500: Request failed with status code 500');
+  });
+
+  test('displays default Axios error message ', async () => {
+    // Mock getPackagesByRegex to reject with an Axios error without specific error data
+    (getPackagesByRegex as Mock).mockRejectedValueOnce({
+      isAxiosError: true,
+      response: {
+        status: 500,
+      }
+    });
+
+    render(<SearchByRegex />);
+
+    // Set regex input and trigger search
+    fireEvent.change(screen.getByPlaceholderText('Enter Regex'), {
+      target: { value: 'test.*' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Search' }));
+
+    // Assert: check for Axios default error message
+    const errorAlert = await screen.findByRole('alert');
+    expect(errorAlert).toHaveTextContent('Error 500: undefined');
   });
 
   test('displays generic error message for non-Axios errors', async () => {

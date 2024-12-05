@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor,within } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor} from '@testing-library/react';
 import { describe, expect, vi, beforeEach, Mock } from 'vitest';
 import PackageRating from '../../src/Components/PackageRating';
 import { getPackageRating } from '../../src/api';
@@ -32,16 +32,24 @@ describe('PackageRating Component', () => {
   });
 
   test('displays rating details on successful fetch', async () => {
-    // Mock successful response with rating data
+    // Mock successful response with complete rating data
     (getPackageRating as Mock).mockResolvedValueOnce({
       BusFactor: 0.9,
+      BusFactorLatency: 100,
       Correctness: 0.8,
+      CorrectnessLatency: 120,
       RampUp: 0.7,
+      RampUpLatency: 130,
       Responsiveness: 0.6,
+      ResponsivenessLatency: 140,
       LicenseScore: 1.0,
+      LicenseScoreLatency: 150,
       GoodPinningPractice: 0.5,
+      GoodPinningPracticeLatency: 160,
       PullRequest: 0.4,
+      PullRequestLatency: 170,
       NetScore: 0.85,
+      NetScoreLatency: 180,
     });
   
     render(<PackageRating />);
@@ -56,29 +64,30 @@ describe('PackageRating Component', () => {
     await waitFor(() => {
       expect(screen.getByText('Package Rating Details:')).toBeInTheDocument();
   
-      const busFactorElement = screen.getByText('Bus Factor:').parentElement;
-      expect(within(busFactorElement as HTMLElement).getByText('0.9')).toBeInTheDocument();
+      // Verify each rating and its latency
+      expect(screen.getByText(/Bus Factor/i).parentElement).toHaveTextContent('Score: 0.9');
+      expect(screen.getByText(/Bus Factor/i).parentElement).toHaveTextContent('Latency: 100ms');
   
-      const correctnessElement = screen.getByText('Correctness:').parentElement;
-      expect(within(correctnessElement as HTMLElement).getByText('0.8')).toBeInTheDocument();
+      expect(screen.getByText(/Correctness/i).parentElement).toHaveTextContent('Score: 0.8');
+      expect(screen.getByText(/Correctness/i).parentElement).toHaveTextContent('Latency: 120ms');
   
-      const rampUpElement = screen.getByText('Ramp Up:').parentElement;
-      expect(within(rampUpElement as HTMLElement).getByText('0.7')).toBeInTheDocument();
+      expect(screen.getByText(/Ramp Up/i).parentElement).toHaveTextContent('Score: 0.7');
+      expect(screen.getByText(/Ramp Up/i).parentElement).toHaveTextContent('Latency: 130ms');
   
-      const responsivenessElement = screen.getByText('Responsiveness:').parentElement;
-      expect(within(responsivenessElement as HTMLElement).getByText('0.6')).toBeInTheDocument();
+      expect(screen.getByText(/Responsiveness/i).parentElement).toHaveTextContent('Score: 0.6');
+      expect(screen.getByText(/Responsiveness/i).parentElement).toHaveTextContent('Latency: 140ms');
   
-      const licenseScoreElement = screen.getByText('License Score:').parentElement;
-      expect(within(licenseScoreElement as HTMLElement).getByText('1')).toBeInTheDocument();
+      expect(screen.getByText(/License Score/i).parentElement).toHaveTextContent('Score: 1');
+      expect(screen.getByText(/License Score/i).parentElement).toHaveTextContent('Latency: 150ms');
   
-      const goodPinningPracticeElement = screen.getByText('Good Pinning Practice:').parentElement;
-      expect(within(goodPinningPracticeElement as HTMLElement).getByText('0.5')).toBeInTheDocument();
+      expect(screen.getByText(/Good Pinning Practice/i).parentElement).toHaveTextContent('Score: 0.5');
+      expect(screen.getByText(/Good Pinning Practice/i).parentElement).toHaveTextContent('Latency: 160ms');
   
-      const pullRequestElement = screen.getByText('Pull Request:').parentElement;
-      expect(within(pullRequestElement as HTMLElement).getByText('0.4')).toBeInTheDocument();
+      expect(screen.getByText(/Pull Request/i).parentElement).toHaveTextContent('Score: 0.4');
+      expect(screen.getByText(/Pull Request/i).parentElement).toHaveTextContent('Latency: 170ms');
   
-      const netScoreElement = screen.getByText('Net Score:').parentElement;
-      expect(within(netScoreElement as HTMLElement).getByText('0.85')).toBeInTheDocument();
+      expect(screen.getByText(/Net Score/i).parentElement).toHaveTextContent('Score: 0.85');
+      expect(screen.getByText(/Net Score/i).parentElement).toHaveTextContent('Latency: 180ms');
     });
   });
   
@@ -148,5 +157,27 @@ describe('PackageRating Component', () => {
     await waitFor(() => {
       expect(screen.getByRole('alert')).toHaveTextContent('An unexpected error occurred.');
     });
+  });
+
+  test('displays default error message on Axios error', async () => {
+    // Mock getPackageRating to reject with an Axios error with specific error data
+    (getPackageRating as Mock).mockRejectedValueOnce({
+      isAxiosError: true,
+      response: {
+        status: 404,
+      }
+    });
+
+    render(<PackageRating />);
+
+    // Set package ID input and trigger fetch
+    fireEvent.change(screen.getByPlaceholderText('Enter Package ID'), {
+      target: { value: '12345' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Fetch Rating' }));
+
+    // Assert: check for specific error message
+    const errorAlert = await screen.findByRole('alert');
+    expect(errorAlert).toHaveTextContent('Error 404: undefined');
   });
 });
