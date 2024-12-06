@@ -110,7 +110,7 @@ export const getTracks = async (): Promise<string[]> => {
 export const authenticate = async (data: AuthenticateI): Promise<string> => {
   const response = await apiClient.put('/authenticate', data); // Does not require Authorization
   console.log(response);
-  return response;
+  return response.data;
 };
 
 export const logout = async (): Promise<string> => {

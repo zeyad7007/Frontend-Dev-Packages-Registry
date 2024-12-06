@@ -17,9 +17,9 @@ const Authenticate: React.FC<AuthenticateProps> = ({ onLogin })  => {
   const fetchAuthenticate = async () => {
     try {
       const result = await authenticate(credentials);
-      console.log(result.token);
-      setToken(result.token);
-      onLogin(result.token);
+      console.log(result);
+      setToken(result);
+      onLogin(result);
       setErrorMessage(null);
     } catch (err) {
       if (axios.isAxiosError(err)) {
