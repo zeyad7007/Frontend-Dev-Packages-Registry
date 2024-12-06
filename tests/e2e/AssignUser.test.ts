@@ -1,6 +1,6 @@
 import { describe, test, expect, beforeAll, afterAll } from 'vitest';
 import { getChromeDriver } from './SeleniumSetup';
-import { fillInputField, waitForElement } from './NavigationHelper';
+import { fillInputField, waitForElement, clickElementById } from './NavigationHelper';
 import { By, until } from 'selenium-webdriver';
 import fs from 'fs';
 
@@ -17,7 +17,9 @@ describe('Assign User to Group Functionality', () => {
     driver = await getChromeDriver();
 
     // Navigate to login page
-    await driver.get('https://frontend-dev-packages-registry.vercel.app/admin-actions/assign-user');
+    await driver.get('https://frontend-dev-packages-registry.vercel.app/home');
+    // await driver.get('http://localhost:5173/home');
+
 
     // Perform login
     const usernameInput = await driver.findElement(By.id('username-input')); 
@@ -31,7 +33,9 @@ describe('Assign User to Group Functionality', () => {
     await driver.executeScript('arguments[0].scrollIntoView(true);', loginButton);
     await driver.wait(until.elementIsVisible(loginButton), 5000);
     await driver.executeScript('arguments[0].click();', loginButton);
-
+    await new Promise(resolve => setTimeout(resolve, 5000));
+    await clickElementById(driver, 'admin-actions');
+    await clickElementById(driver, 'assign-user');
     // Wait for successful login
     // await waitForElement(driver, By.id('assign')); 
 
@@ -43,7 +47,7 @@ describe('Assign User to Group Functionality', () => {
     if (coverage) {
       fs.writeFileSync('./.nyc_output/coverage-final.json', JSON.stringify(coverage));
     }
-    // await driver.quit();
+    await driver.quit();
   });
 
   test('Verify form elements', async () => {
@@ -67,10 +71,10 @@ describe('Assign User to Group Functionality', () => {
     const submitButton = await driver.findElement(By.id('submitButton'));
 
     await driver.executeScript('arguments[0].scrollIntoView(true);', userIdInput);
-    await fillInputField(driver, By.id('userIdInput'), '5');
+    await fillInputField(driver, By.id('userIdInput'), '35');
 
     await driver.executeScript('arguments[0].scrollIntoView(true);', groupIdInput);
-    await fillInputField(driver, By.id('groupIdInput'), '4');
+    await fillInputField(driver, By.id('groupIdInput'), '6');
 
     await driver.executeScript('arguments[0].scrollIntoView(true);', submitButton);
     await driver.wait(until.elementIsVisible(submitButton), 5000);

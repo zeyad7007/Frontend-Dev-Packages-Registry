@@ -81,6 +81,7 @@ const HomePage: React.FC<HomePageProps> = ({ setIsAuthenticated }) => {
       <div className="d-flex flex-column align-items-center mt-5">
         <button
           className="btn btn-secondary btn-lg mb-3"
+          id="admin-actions"
           onClick={() => navigate('/admin-actions')}
         >
           Admin Actions

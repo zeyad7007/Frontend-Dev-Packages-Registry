@@ -26,7 +26,7 @@ const AdminActions: React.FC = () => {
         <Link to="get-permissions" className="btn btn-primary btn-lg m-2">Get Permissions</Link>
         <Link to="register-user" className="btn btn-primary btn-lg m-2">Register User</Link>
         <Link to="create-group" className="btn btn-primary btn-lg m-2">Create Group</Link>
-        <Link to="assign-user" className="btn btn-primary btn-lg m-2">Assign User to Group</Link>
+        <Link to="assign-user" id="assign-user" className="btn btn-primary btn-lg m-2">Assign User to Group</Link>
         <Link to="assign-package" className="btn btn-primary btn-lg m-2">Assign Package to Group</Link>
         <Link to="get-groups" className="btn btn-primary btn-lg m-2">Get Groups</Link>
         <Link to="get-users-in-group" className="btn btn-primary btn-lg m-2">Get Group Users</Link>

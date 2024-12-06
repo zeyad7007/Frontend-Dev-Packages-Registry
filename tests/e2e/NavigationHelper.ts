@@ -7,7 +7,7 @@ import { WebDriver, By, until } from 'selenium-webdriver';
  */
 export async function navigateToUrl(driver: WebDriver, url: string): Promise<void> {
     await driver.get(url);
-    await driver.wait(until.urlIs(url), 5000); // Wait until the URL loads (adjust timeout if needed)
+    await driver.wait(until.urlIs(url), 10000); // Wait until the URL loads (adjust timeout if needed)
 }
 
 /**
@@ -17,6 +17,11 @@ export async function navigateToUrl(driver: WebDriver, url: string): Promise<voi
  */
 export async function clickElementByText(driver: WebDriver, text: string): Promise<void> {
     const element = await driver.findElement(By.xpath(`//*[text()='${text}']`));
+    await element.click();
+}
+
+export async function clickElementById(driver: WebDriver, id: string): Promise<void> {
+    const element = await driver.findElement(By.id(id));
     await element.click();
 }
 

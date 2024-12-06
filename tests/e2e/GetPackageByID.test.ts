@@ -1,6 +1,6 @@
 import { describe, test, expect, beforeAll, afterAll } from 'vitest';
 import { getChromeDriver } from './SeleniumSetup';
-import { fillInputField, waitForElement, clickElementByText, navigateToUrl } from './NavigationHelper';
+import { fillInputField, waitForElement, clickElementByText } from './NavigationHelper';
 import { By, until } from 'selenium-webdriver';
 import fs from 'fs';
 
@@ -15,7 +15,9 @@ describe('Get Package by ID Functionality', () => {
 
     beforeAll(async () => {
         driver = await getChromeDriver();
-        await navigateToUrl(driver, 'https://frontend-dev-packages-registry.vercel.app/home');
+        await driver.get('https://frontend-dev-packages-registry.vercel.app/home');
+        // await driver.get('http://localhost:5173/home');
+
         // Perform login
         const usernameInput = await driver.findElement(By.id('username-input')); 
         const passwordInput = await driver.findElement(By.id('password-input')); 
@@ -28,6 +30,7 @@ describe('Get Package by ID Functionality', () => {
         await driver.executeScript('arguments[0].scrollIntoView(true);', loginButton);
         await driver.wait(until.elementIsVisible(loginButton), 5000);
         await driver.executeScript('arguments[0].click();', loginButton);
+        await new Promise(resolve => setTimeout(resolve, 5000));
 
         
     });
@@ -46,17 +49,19 @@ describe('Get Package by ID Functionality', () => {
       });
 
     test('Click on "Get Package by ID" and verify input field', async () => {
+
         await clickElementByText(driver, 'Get Package by ID');
+        
         await waitForElement(driver, By.xpath("//input[@placeholder='Enter Package ID']"));
         await waitForElement(driver, By.xpath("//button[text()='Fetch Package']"));
     });
 
     test('Fetch a package by ID with a GitHub URL and verify ID, Download button, and JavaScript Program', async () => {
-        await fillInputField(driver, By.xpath("//input[@placeholder='Enter Package ID']"), '255');
+        await fillInputField(driver, By.xpath("//input[@placeholder='Enter Package ID']"), '674');
         await clickElementByText(driver, 'Fetch Package');
 
         const packageNameElement = await driver.wait(
-            until.elementLocated(By.xpath("//*[contains(text(),'Test1')]")),
+            until.elementLocated(By.xpath("//*[contains(text(),'express')]")),
             5000
         );
         await driver.executeScript("arguments[0].scrollIntoView(true);", packageNameElement);
@@ -83,16 +88,16 @@ describe('Get Package by ID Functionality', () => {
         
 
         // Validate elements
-        expect(await packageNameElement.getText()).toBe("Test1 (v1.0.0)");
-        expect(await idElement.getText()).toBe("ID: 255");
-        expect(githubUrl).toContain('https://github.com/abdelrahmanHamdyG/NPM-packages-Evaluator');
+        expect(await packageNameElement.getText()).toBe("express (v1.0.0)");
+        expect(await idElement.getText()).toBe("ID: 674");
+        expect(githubUrl).toContain('https://github.com/expressjs/express');
         expect(await jsProgramElement.isDisplayed()).toBe(true);
         expect(await jsProgramCode.getText()).toBe('console.log("Test1");');
         expect(await downloadButton.isDisplayed()).toBe(true);
     });
 
     test('Fetch a package by ID without a GitHub URL and verify ID, Download button, and JavaScript Program', async () => {
-        await fillInputField(driver, By.xpath("//input[@placeholder='Enter Package ID']"), '256');
+        await fillInputField(driver, By.xpath("//input[@placeholder='Enter Package ID']"), '675');
         await clickElementByText(driver, 'Fetch Package');
 
         
@@ -122,7 +127,7 @@ describe('Get Package by ID Functionality', () => {
         
         // Validate elements
         expect(await packageNameElement.getText()).toBe("Test2 (v1.0.0)");
-        expect(await idElement.getText()).toBe("ID: 256");
+        expect(await idElement.getText()).toBe("ID: 675");
         expect(elements.length).toBe(0); // No GitHub URL
         expect(await jsProgramElement.isDisplayed()).toBe(true);
         expect(await jsProgramCode.getText()).toBe('console.log("Test2");');
