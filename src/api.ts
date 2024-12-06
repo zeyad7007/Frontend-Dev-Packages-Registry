@@ -39,7 +39,7 @@ apiClient.interceptors.request.use(
       console.log(token);
       if (token) {
         config.headers['X-Authorization'] = `${token}`; // Add Authorization header
-        console.log(config.headers['Authorization']);
+        console.log(config.headers['X-Authorization']);
       }
     }
 
