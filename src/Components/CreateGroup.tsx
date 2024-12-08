@@ -45,11 +45,11 @@ const CreateGroup: React.FC = () => {
 
   return (
     <div className="container mt-4">
-      <h2 className="display-4 fw-bold text-center">Create a New Group</h2>
+      <h2 id="createGroupHeader" className="display-4 fw-bold text-center">Create a New Group</h2>
 
       {/* Group Name Input */}
       <div className="form-group mt-3">
-        <label htmlFor="groupNameInput" className="form-label fw-bold">
+        <label htmlFor="groupNameInput" id="groupName" className="form-label fw-bold">
           Group Name
         </label>
         <input
@@ -63,7 +63,7 @@ const CreateGroup: React.FC = () => {
       </div>
 
       {/* Submit Button */}
-      <button onClick={handleCreateGroup} className="btn btn-primary btn-lg mt-3">
+      <button onClick={handleCreateGroup} id="createGroupButton" className="btn btn-primary btn-lg mt-3">
         Create Group
       </button>
 

@@ -80,7 +80,7 @@ const RegisterUser: React.FC = () => {
 
   return (
     <div className="container mt-5">
-      <h1 className="display-4 fw-bold text-center">Register User</h1>
+      <h1 id="RegisterUserHeader" className="display-4 fw-bold text-center">Register User</h1>
 
       <form onSubmit={handleSubmit} className="mt-4">
         {/* Name */}
@@ -121,7 +121,7 @@ const RegisterUser: React.FC = () => {
             checked={formData.isAdmin}
             onChange={handleChange}
           />
-          <label htmlFor="isAdmin" className="form-check-label">Admin</label>
+          <label htmlFor="isAdmin" id="admin"className="form-check-label">Admin</label>
         </div>
 
         {/* Group ID */}
@@ -139,7 +139,7 @@ const RegisterUser: React.FC = () => {
         </div>
 
         {/* Permissions */}
-        <h4 className="fw-bold">Permissions</h4>
+        <h4 id="permissions" className="fw-bold">Permissions</h4>
         <div className="form-check">
           <input
             type="checkbox"
@@ -149,7 +149,7 @@ const RegisterUser: React.FC = () => {
             checked={formData.canDownload}
             onChange={handleChange}
           />
-          <label htmlFor="canDownload" className="form-check-label">Download</label>
+          <label htmlFor="canDownload" id="download" className="form-check-label">Download</label>
         </div>
         <div className="form-check">
           <input
@@ -160,7 +160,7 @@ const RegisterUser: React.FC = () => {
             checked={formData.canSearch}
             onChange={handleChange}
           />
-          <label htmlFor="canSearch" className="form-check-label">Search</label>
+          <label htmlFor="canSearch" id="search" className="form-check-label">Search</label>
         </div>
         <div className="form-check">
           <input
@@ -171,11 +171,11 @@ const RegisterUser: React.FC = () => {
             checked={formData.canUpload}
             onChange={handleChange}
           />
-          <label htmlFor="canUpload" className="form-check-label">Upload</label>
+          <label htmlFor="canUpload" id="upload" className="form-check-label">Upload</label>
         </div>
 
         {/* Submit Button */}
-        <button type="submit" className="btn btn-primary btn-lg mt-4">Register</button>
+        <button type="submit" id="registerUserButton" className="btn btn-primary btn-lg mt-4">Register</button>
       </form>
 
       {/* Success Message */}

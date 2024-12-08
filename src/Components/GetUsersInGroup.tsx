@@ -56,11 +56,11 @@ const GetUsersInGroup: React.FC = () => {
 
   return (
     <div className="container mt-4">
-      <h2 className="display-4 fw-bold text-center">Get Group Users</h2>
+      <h2 id="getUsersHeader"className="display-4 fw-bold text-center">Get Group Users</h2>
 
       {/* Group ID Input */}
       <div className="form-group mt-3">
-        <label htmlFor="groupIdInput" className="form-label fw-bold">Group ID</label>
+        <label htmlFor="groupIdInput" id="group" className="form-label fw-bold">Group ID</label>
         <input
           id="groupIdInput"
           type="text"
@@ -72,7 +72,7 @@ const GetUsersInGroup: React.FC = () => {
       </div>
 
       {/* Submit Button */}
-      <button onClick={fetchUsers} className="btn btn-primary btn-lg mt-3">
+      <button onClick={fetchUsers} id="getUsersButton" className="btn btn-primary btn-lg mt-3">
         Fetch Users
       </button>
 

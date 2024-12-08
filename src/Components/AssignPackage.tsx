@@ -46,11 +46,11 @@ const AssignPackageToGroup: React.FC = () => {
 
   return (
     <div className="container mt-4">
-      <h2 className="display-4 fw-bold text-center">Assign Package to Group</h2>
+      <h2 id="assignPackageHeader" className="display-4 fw-bold text-center">Assign Package to Group</h2>
 
       {/* Package ID Input */}
       <div className="form-group mt-3">
-        <label htmlFor="packageIdInput" className="form-label fw-bold">Package ID</label>
+        <label htmlFor="packageIdInput" id="package" className="form-label fw-bold">Package ID</label>
         <input
           id="packageIdInput"
           type="text"
@@ -63,7 +63,7 @@ const AssignPackageToGroup: React.FC = () => {
       
       {/* Group ID Input */}
       <div className="form-group mt-3">
-        <label htmlFor="groupIdInput" className="form-label fw-bold">Group ID</label>
+        <label id="group" htmlFor="groupIdInput" className="form-label fw-bold">Group ID</label>
         <input
           id="groupIdInput"
           type="text"
@@ -75,7 +75,7 @@ const AssignPackageToGroup: React.FC = () => {
       </div>
 
       {/* Submit Button */}
-      <button onClick={handleAssignPackage} className="btn btn-primary btn-lg mt-3">
+      <button onClick={handleAssignPackage} id="assignPackageButton" className="btn btn-primary btn-lg mt-3">
         Assign Package to Group
       </button>
 

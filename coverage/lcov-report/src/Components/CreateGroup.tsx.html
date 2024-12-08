@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">18.18% </span>
+                <span class="strong">36.36% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>6/33</span>
+                <span class='fraction'>12/33</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">20% </span>
+                <span class="strong">30% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/20</span>
+                <span class='fraction'>6/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">25% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/4</span>
+                <span class='fraction'>2/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">13.33% </span>
+                <span class="strong">30% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>4/30</span>
+                <span class='fraction'>9/30</span>
             </div>
         
             
@@ -155,7 +155,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -164,13 +171,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -195,7 +195,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -242,13 +242,13 @@ import axios, { AxiosError } from 'axios';
 import { createGroup } from '../api'; // Import the createGroup function
 import { GroupI } from '../Interface'; // Import the Group interface
 &nbsp;
-const CreateGroup: React.FC = <span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >{</span></span>
-  const [groupName, setGroupName] = <span class="cstat-no" title="statement not covered" >useState&lt;string&gt;(''); // State for group name input</span>
-  const [errorMessage, setErrorMessage] = <span class="cstat-no" title="statement not covered" >useState&lt;string | null&gt;(null); // State for error messages</span>
-  const [successMessage, setSuccessMessage] = <span class="cstat-no" title="statement not covered" >useState&lt;string | null&gt;(null); // State for success messages</span>
+const CreateGroup: React.FC = () =&gt; {
+  const [groupName, setGroupName] = useState&lt;string&gt;(''); // State for group name input
+  const [errorMessage, setErrorMessage] = useState&lt;string | null&gt;(null); // State for error messages
+  const [successMessage, setSuccessMessage] = useState&lt;string | null&gt;(null); // State for success messages
 &nbsp;
   // Function to handle form submission
-  const handleCreateGroup = <span class="cstat-no" title="statement not covered" >useCallback(<span class="fstat-no" title="function not covered" >async () =&gt; {</span></span>
+  const handleCreateGroup = useCallback(<span class="fstat-no" title="function not covered" >async () =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (!groupName.trim()) {</span>
 <span class="cstat-no" title="statement not covered" >      setErrorMessage('Group name is required.');</span>
 <span class="cstat-no" title="statement not covered" >      setSuccessMessage(null);</span>
@@ -282,13 +282,13 @@ const CreateGroup: React.FC = <span class="fstat-no" title="function not covered
     }
   }, [groupName]);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return (</span>
+  return (
     &lt;div className="container mt-4"&gt;
-      &lt;h2 className="display-4 fw-bold text-center"&gt;Create a New Group&lt;/h2&gt;
+      &lt;h2 id="createGroupHeader" className="display-4 fw-bold text-center"&gt;Create a New Group&lt;/h2&gt;
 &nbsp;
       {/* Group Name Input */}
       &lt;div className="form-group mt-3"&gt;
-        &lt;label htmlFor="groupNameInput" className="form-label fw-bold"&gt;
+        &lt;label htmlFor="groupNameInput" id="groupName" className="form-label fw-bold"&gt;
           Group Name
         &lt;/label&gt;
         &lt;input
@@ -302,20 +302,20 @@ const CreateGroup: React.FC = <span class="fstat-no" title="function not covered
       &lt;/div&gt;
 &nbsp;
       {/* Submit Button */}
-      &lt;button onClick={handleCreateGroup} className="btn btn-primary btn-lg mt-3"&gt;
+      &lt;button onClick={handleCreateGroup} id="createGroupButton" className="btn btn-primary btn-lg mt-3"&gt;
         Create Group
       &lt;/button&gt;
 &nbsp;
       {/* Error Message */}
       {errorMessage &amp;&amp; (
-        &lt;div className="alert alert-danger mt-3" role="alert"&gt;
+<span class="branch-1 cbranch-no" title="branch not covered" >        &lt;div className="alert alert-danger mt-3" role="alert"&gt;</span>
           {errorMessage}
         &lt;/div&gt;
       )}
 &nbsp;
       {/* Success Message */}
       {successMessage &amp;&amp; (
-        &lt;div className="alert alert-success mt-3" role="alert"&gt;
+<span class="branch-1 cbranch-no" title="branch not covered" >        &lt;div className="alert alert-success mt-3" role="alert"&gt;</span>
           {successMessage}
         &lt;/div&gt;
       )}
@@ -331,7 +331,7 @@ export default CreateGroup;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-12-08T05:34:06.249Z
+                at 2024-12-08T07:53:51.052Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

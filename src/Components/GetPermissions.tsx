@@ -63,11 +63,11 @@ const GetUserPermissions: React.FC = () => {
 
   return (
     <div className="container mt-4">
-      <h2 className="display-4 fw-bold text-center">Get User Permissions</h2>
+      <h2 id="getPermissionsHeader" className="display-4 fw-bold text-center">Get User Permissions</h2>
 
       {/* User ID Input */}
       <div className="form-group mt-3">
-        <label htmlFor="userIdInput" className="form-label fw-bold">User ID</label>
+        <label htmlFor="userIdInput" id="user" className="form-label fw-bold">User ID</label>
         <input
           id="userIdInput"
           type="text"
@@ -80,7 +80,7 @@ const GetUserPermissions: React.FC = () => {
       </div>
 
       {/* Submit Button */}
-      <button onClick={fetchPermissions} className="btn btn-primary btn-lg mt-3">
+      <button onClick={fetchPermissions} id="getPermissionsButton" className="btn btn-primary btn-lg mt-3">
         Fetch Permissions
       </button>
 

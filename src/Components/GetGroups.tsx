@@ -7,7 +7,7 @@ const GetGroups: React.FC = () => {
   const [groups, setGroups] = useState<GroupResponseI[]>([]); // State for groups
   const [errorMessage, setErrorMessage] = useState<string | null>(null); // State for error messages
   const [successMessage, setSuccessMessage] = useState<string | null>(null); // State for success messages
-
+  
   // Fetch all groups API call
   const fetchGroups = useCallback(async () => {
     try {
@@ -45,11 +45,11 @@ const GetGroups: React.FC = () => {
 
   return (
     <div className="container mt-4">
-      <h2 className="display-4 fw-bold text-center">All Groups</h2>
+      <h2 id="getGroupsHeader" className="display-4 fw-bold text-center">All Groups</h2>
 
       {/* Success Message */}
       {successMessage && (
-        <div className="alert alert-success mt-3" role="alert">
+        <div id="successMessage" className="alert alert-success mt-3" role="alert">
           {successMessage}
         </div>
       )}

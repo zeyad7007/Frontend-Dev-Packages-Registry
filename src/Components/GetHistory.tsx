@@ -53,11 +53,11 @@ const GetPackageHistory: React.FC = () => {
 
   return (
     <div className="container mt-4">
-      <h2 className="display-4 fw-bold text-center">Get Package History</h2>
+      <h2 id="getPackageHistoryHeader"className="display-4 fw-bold text-center">Get Package History</h2>
 
       {/* Package ID Input */}
       <div className="form-group mt-3">
-        <label htmlFor="packageIdInput" className="form-label fw-bold">Package ID</label>
+        <label htmlFor="packageIdInput" id="package" className="form-label fw-bold">Package ID</label>
         <input
           id="packageIdInput"
           type="number"
@@ -69,7 +69,7 @@ const GetPackageHistory: React.FC = () => {
       </div>
 
       {/* Submit Button */}
-      <button onClick={fetchHistory} className="btn btn-primary btn-lg mt-3">
+      <button onClick={fetchHistory} id="getPackageHistoryButton" className="btn btn-primary btn-lg mt-3">
         Fetch History
       </button>
 

@@ -54,11 +54,11 @@ const UpdatePermissions: React.FC = () => {
 
   return (
     <div className="container mt-4">
-      <h2 className="display-4 fw-bold text-center">Update User Permissions</h2>
+      <h2 id="updatePermissionsHeader" className="display-4 fw-bold text-center">Update User Permissions</h2>
 
       {/* User ID Input */}
       <div className="form-group mt-3">
-        <label htmlFor="userId" className="form-label fw-bold">User ID</label>
+        <label htmlFor="userId" id="user" className="form-label fw-bold">User ID</label>
         <input
           id="userId"
           type="text"
@@ -72,7 +72,7 @@ const UpdatePermissions: React.FC = () => {
 
       {/* Permissions Form */}
       <div className="form-group mt-3">
-        <label className="fw-bold">Permissions</label>
+        <label id="permissions" className="fw-bold">Permissions</label>
         <div className="form-check">
           <input
             type="checkbox"
@@ -81,7 +81,7 @@ const UpdatePermissions: React.FC = () => {
             checked={permissions.can_download}
             onChange={(e) => handlePermissionChange('can_download', e.target.checked)}
           />
-          <label htmlFor="canDownload" className="form-check-label">Download</label>
+          <label htmlFor="canDownload" id="download" className="form-check-label">Download</label>
         </div>
         <div className="form-check">
           <input
@@ -91,7 +91,7 @@ const UpdatePermissions: React.FC = () => {
             checked={permissions.can_search}
             onChange={(e) => handlePermissionChange('can_search', e.target.checked)}
           />
-          <label htmlFor="canSearch" className="form-check-label">Search</label>
+          <label htmlFor="canSearch" id="search" className="form-check-label">Search</label>
         </div>
         <div className="form-check">
           <input
@@ -101,12 +101,12 @@ const UpdatePermissions: React.FC = () => {
             checked={permissions.can_upload}
             onChange={(e) => handlePermissionChange('can_upload', e.target.checked)}
           />
-          <label htmlFor="canUpload" className="form-check-label">Upload</label>
+          <label htmlFor="canUpload" id="upload" className="form-check-label">Upload</label>
         </div>
       </div>
 
       {/* Submit Button */}
-      <button onClick={handleUpdatePermissions} className="btn btn-primary btn-lg mt-3">
+      <button onClick={handleUpdatePermissions} id="updatePermissionsButton" className="btn btn-primary btn-lg mt-3">
         Update Permissions
       </button>
 

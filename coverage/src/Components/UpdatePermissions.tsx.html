@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">15.38% </span>
+                <span class="strong">35.89% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>6/39</span>
+                <span class='fraction'>14/39</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">20% </span>
+                <span class="strong">30% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/20</span>
+                <span class='fraction'>6/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">11.11% </span>
+                <span class="strong">22.22% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/9</span>
+                <span class='fraction'>2/9</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">11.42% </span>
+                <span class="strong">31.42% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>4/35</span>
+                <span class='fraction'>11/35</span>
             </div>
         
             
@@ -198,29 +198,24 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -228,6 +223,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -235,8 +235,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -245,9 +243,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -328,24 +328,24 @@ import { updatePermissions } from '../api'; // Import the API function
 import axios, { AxiosError } from 'axios';
 import { PermissionsI, UserPermissionsResponseI } from '../Interface';
 &nbsp;
-const UpdatePermissions: React.FC = <span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >{</span></span>
-  const [userId, setUserId] = <span class="cstat-no" title="statement not covered" >useState&lt;string&gt;(''); // User ID input</span>
-  const [permissions, setPermissions] = <span class="cstat-no" title="statement not covered" >useState&lt;PermissionsI&gt;({</span>
+const UpdatePermissions: React.FC = () =&gt; {
+  const [userId, setUserId] = useState&lt;string&gt;(''); // User ID input
+  const [permissions, setPermissions] = useState&lt;PermissionsI&gt;({
     can_download: false,
     can_search: false,
     can_upload: false,
   }); // Permissions state
-  const [errorMessage, setErrorMessage] = <span class="cstat-no" title="statement not covered" >useState&lt;string | null&gt;(null);</span>
-  const [successMessage, setSuccessMessage] = <span class="cstat-no" title="statement not covered" >useState&lt;string | null&gt;(null);</span>
+  const [errorMessage, setErrorMessage] = useState&lt;string | null&gt;(null);
+  const [successMessage, setSuccessMessage] = useState&lt;string | null&gt;(null);
 &nbsp;
-  const handlePermissionChange = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(f</span>ield: keyof PermissionsI, value: boolean) =&gt; {</span>
+  const handlePermissionChange = <span class="fstat-no" title="function not covered" >(f</span>ield: keyof PermissionsI, value: boolean) =&gt; {
 <span class="cstat-no" title="statement not covered" >    setPermissions(<span class="fstat-no" title="function not covered" >(p</span>rev) =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
       ...prev,
       [field]: value,
     }));
   };
 &nbsp;
-  const handleUpdatePermissions = <span class="cstat-no" title="statement not covered" >useCallback(<span class="fstat-no" title="function not covered" >async () =&gt; {</span></span>
+  const handleUpdatePermissions = useCallback(<span class="fstat-no" title="function not covered" >async () =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (!userId) {</span>
 <span class="cstat-no" title="statement not covered" >      setErrorMessage('User ID is required.');</span>
 <span class="cstat-no" title="statement not covered" >      return;</span>
@@ -377,13 +377,13 @@ const UpdatePermissions: React.FC = <span class="fstat-no" title="function not c
     }
   }, [userId, permissions]);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return (</span>
+  return (
     &lt;div className="container mt-4"&gt;
-      &lt;h2 className="display-4 fw-bold text-center"&gt;Update User Permissions&lt;/h2&gt;
+      &lt;h2 id="updatePermissionsHeader" className="display-4 fw-bold text-center"&gt;Update User Permissions&lt;/h2&gt;
 &nbsp;
       {/* User ID Input */}
       &lt;div className="form-group mt-3"&gt;
-        &lt;label htmlFor="userId" className="form-label fw-bold"&gt;User ID&lt;/label&gt;
+        &lt;label htmlFor="userId" id="user" className="form-label fw-bold"&gt;User ID&lt;/label&gt;
         &lt;input
           id="userId"
           type="text"
@@ -397,7 +397,7 @@ const UpdatePermissions: React.FC = <span class="fstat-no" title="function not c
 &nbsp;
       {/* Permissions Form */}
       &lt;div className="form-group mt-3"&gt;
-        &lt;label className="fw-bold"&gt;Permissions&lt;/label&gt;
+        &lt;label id="permissions" className="fw-bold"&gt;Permissions&lt;/label&gt;
         &lt;div className="form-check"&gt;
           &lt;input
             type="checkbox"
@@ -406,7 +406,7 @@ const UpdatePermissions: React.FC = <span class="fstat-no" title="function not c
             checked={permissions.can_download}
             onChange={<span class="fstat-no" title="function not covered" >(e</span>) =&gt; <span class="cstat-no" title="statement not covered" >handlePermissionChange('can_download', e.target.checked)}</span>
           /&gt;
-          &lt;label htmlFor="canDownload" className="form-check-label"&gt;Download&lt;/label&gt;
+          &lt;label htmlFor="canDownload" id="download" className="form-check-label"&gt;Download&lt;/label&gt;
         &lt;/div&gt;
         &lt;div className="form-check"&gt;
           &lt;input
@@ -416,7 +416,7 @@ const UpdatePermissions: React.FC = <span class="fstat-no" title="function not c
             checked={permissions.can_search}
             onChange={<span class="fstat-no" title="function not covered" >(e</span>) =&gt; <span class="cstat-no" title="statement not covered" >handlePermissionChange('can_search', e.target.checked)}</span>
           /&gt;
-          &lt;label htmlFor="canSearch" className="form-check-label"&gt;Search&lt;/label&gt;
+          &lt;label htmlFor="canSearch" id="search" className="form-check-label"&gt;Search&lt;/label&gt;
         &lt;/div&gt;
         &lt;div className="form-check"&gt;
           &lt;input
@@ -426,25 +426,25 @@ const UpdatePermissions: React.FC = <span class="fstat-no" title="function not c
             checked={permissions.can_upload}
             onChange={<span class="fstat-no" title="function not covered" >(e</span>) =&gt; <span class="cstat-no" title="statement not covered" >handlePermissionChange('can_upload', e.target.checked)}</span>
           /&gt;
-          &lt;label htmlFor="canUpload" className="form-check-label"&gt;Upload&lt;/label&gt;
+          &lt;label htmlFor="canUpload" id="upload" className="form-check-label"&gt;Upload&lt;/label&gt;
         &lt;/div&gt;
       &lt;/div&gt;
 &nbsp;
       {/* Submit Button */}
-      &lt;button onClick={handleUpdatePermissions} className="btn btn-primary btn-lg mt-3"&gt;
+      &lt;button onClick={handleUpdatePermissions} id="updatePermissionsButton" className="btn btn-primary btn-lg mt-3"&gt;
         Update Permissions
       &lt;/button&gt;
 &nbsp;
       {/* Error Message */}
       {errorMessage &amp;&amp; (
-        &lt;div className="alert alert-danger mt-3" role="alert"&gt;
+<span class="branch-1 cbranch-no" title="branch not covered" >        &lt;div className="alert alert-danger mt-3" role="alert"&gt;</span>
           {errorMessage}
         &lt;/div&gt;
       )}
 &nbsp;
       {/* Success Message */}
       {successMessage &amp;&amp; (
-        &lt;div className="alert alert-success mt-3" role="alert"&gt;
+<span class="branch-1 cbranch-no" title="branch not covered" >        &lt;div className="alert alert-success mt-3" role="alert"&gt;</span>
           {successMessage}
         &lt;/div&gt;
       )}
@@ -460,7 +460,7 @@ export default UpdatePermissions;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-12-08T05:34:06.168Z
+                at 2024-12-08T07:53:50.987Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

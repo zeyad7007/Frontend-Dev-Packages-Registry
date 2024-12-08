@@ -19,8 +19,8 @@ describe('All Tests', () => {
         // await driver.manage().setTimeouts({ implicit: 20000 }); // Set 20 seconds for all implicit waits
 
         driver = await getChromeDriver();
-        // await driver.get('https://frontend-dev-packages-registry.vercel.app/');
-        await driver.get('http://localhost:5173/home');
+        await driver.get('https://frontend-dev-packages-registry.vercel.app/');
+        // await driver.get('http://localhost:5173/home');
         await clickElementByText(driver, 'Login');
 
         // Perform login
@@ -511,12 +511,157 @@ describe('All Tests', () => {
       });
 
       test('Verify Update Permissions form elements', async () => {
-        await clickElementByText(driver, 'Get Package Rating');
+        await clickElementByText(driver, 'Update Permissions');
 
         // Verify and scroll to all components
         const elements = [
-            "package-id-input",  
-            "fetch-rating-button", 
+            "updatePermissionsHeader",
+            "user",
+            "permissions",
+            "download",
+            "search",
+            "upload",
+            "userId",  
+            "canDownload",
+            "canSearch",
+            "canUpload",
+            "updatePermissionsButton" 
+        ];
+
+        for (const id of elements) {
+            const el = await driver.wait(until.elementLocated(By.id(id)), 5000);
+            await driver.executeScript("arguments[0].scrollIntoView(true);", el);
+            expect(await el.isDisplayed()).toBe(true);
+        }
+    });
+
+    test('Verify Get Permissions form elements', async () => {
+        await clickElementByText(driver, 'Get Permissions');
+
+        // Verify and scroll to all components
+        const elements = [
+            "getPermissionsHeader",
+            "user",
+            "userIdInput",  
+            "getPermissionsButton" 
+        ];
+
+        for (const id of elements) {
+            const el = await driver.wait(until.elementLocated(By.id(id)), 5000);
+            await driver.executeScript("arguments[0].scrollIntoView(true);", el);
+            expect(await el.isDisplayed()).toBe(true);
+        }
+    });
+
+    test('Verify Register User form elements', async () => {
+        await clickElementByText(driver, 'Register User');
+
+        // Verify and scroll to all components
+        const elements = [
+            "RegisterUserHeader",
+            "name",  
+            "password",
+            "isAdmin",
+            "groupId",
+            "canDownload",
+            "canSearch",
+            "canUpload",
+            "admin",
+            "permissions",
+            "search",
+            "download",
+            "upload",
+            "registerUserButton"
+        ];
+
+        for (const id of elements) {
+            const el = await driver.wait(until.elementLocated(By.id(id)), 5000);
+            await driver.executeScript("arguments[0].scrollIntoView(true);", el);
+            expect(await el.isDisplayed()).toBe(true);
+        }
+    });
+
+    test('Verify Create Group form elements', async () => {
+        await clickElementByText(driver, 'Create Group');
+
+        // Verify and scroll to all components
+        const elements = [
+            "createGroupHeader",
+            "groupName",  
+            "groupNameInput",
+            "createGroupButton" 
+        ];
+
+        for (const id of elements) {
+            const el = await driver.wait(until.elementLocated(By.id(id)), 5000);
+            await driver.executeScript("arguments[0].scrollIntoView(true);", el);
+            expect(await el.isDisplayed()).toBe(true);
+        }
+    });
+
+    test('Verify Assign Package form elements', async () => {
+        await clickElementByText(driver, 'Assign Package to Group');
+
+        // Verify and scroll to all components
+        const elements = [
+            "assignPackageHeader",
+            "package",  
+            "packageIdInput",
+            "group",
+            "groupIdInput",
+            "assignPackageButton"
+        ];
+
+        for (const id of elements) {
+            const el = await driver.wait(until.elementLocated(By.id(id)), 5000);
+            await driver.executeScript("arguments[0].scrollIntoView(true);", el);
+            expect(await el.isDisplayed()).toBe(true);
+        }
+    });
+
+    test('Verify Get Groups form elements', async () => {
+        await clickElementByText(driver, 'Get Groups');
+
+        // Verify and scroll to all components
+        const elements = [
+            "getGroupsHeader",
+            "successMessage"
+        ];
+
+        for (const id of elements) {
+            const el = await driver.wait(until.elementLocated(By.id(id)), 5000);
+            await driver.executeScript("arguments[0].scrollIntoView(true);", el);
+            expect(await el.isDisplayed()).toBe(true);
+        }
+    });
+
+    test('Verify Get Users form elements', async () => {
+        await clickElementByText(driver, 'Get Group Users');
+
+        // Verify and scroll to all components
+        const elements = [
+            "getUsersHeader",
+            "group",  
+            "groupIdInput",
+            "getUsersButton" 
+        ];
+
+        for (const id of elements) {
+            const el = await driver.wait(until.elementLocated(By.id(id)), 5000);
+            await driver.executeScript("arguments[0].scrollIntoView(true);", el);
+            expect(await el.isDisplayed()).toBe(true);
+        }
+    });
+
+    test('Verify Get Package History form elements', async () => {
+        await clickElementByText(driver, 'Get Package History');
+
+        // Verify and scroll to all components
+        const elements = [
+            "getPackageHistoryHeader",
+            "package",  
+            "packageIdInput",
+            "getPackageHistoryButton" 
         ];
 
         for (const id of elements) {
