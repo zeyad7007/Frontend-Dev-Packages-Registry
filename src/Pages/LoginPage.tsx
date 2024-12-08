@@ -7,8 +7,14 @@ interface LoginPageProps {
   redirectPath: string;
 }
 
+
+
 const LoginPage: React.FC<LoginPageProps> = ({ setIsAuthenticated, redirectPath }) => {
   const navigate = useNavigate();
+
+  const goToLandingPage = () => {
+    navigate('/');
+  };
 
   const handleLogin = (token: string) => {
     // Save the token in localStorage
@@ -29,6 +35,12 @@ const LoginPage: React.FC<LoginPageProps> = ({ setIsAuthenticated, redirectPath 
       <div className="card shadow-lg p-4" data-testid="login-card" style={{ maxWidth: '400px', width: '100%' }}>
         <h2 className="display-4 fw-bold text-center mb-4">Login</h2>
         <Authenticate onLogin={handleLogin} />
+        <button
+          className="btn btn-dark btn-lg mb-3"
+          onClick={goToLandingPage}
+        >
+          Back to Landing Page
+        </button>
       </div>
     </div>
   );
