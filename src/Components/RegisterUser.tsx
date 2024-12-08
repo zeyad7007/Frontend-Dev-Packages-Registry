@@ -134,7 +134,6 @@ const RegisterUser: React.FC = () => {
             className="form-control form-control-lg"
             value={formData.groupId || ''}
             onChange={handleChange}
-            required
           />
         </div>
 

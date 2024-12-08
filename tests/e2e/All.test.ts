@@ -16,11 +16,10 @@ describe('All Tests', () => {
     const uploadedPackage = { id: '', name: '', version: '', JSProgram: '', githubURL: '' };
     const uploadedPackage2 = { id: '', name: '', version: '', JSProgram: '', githubURL: '' };
     beforeAll(async () => {
-        // await driver.manage().setTimeouts({ implicit: 20000 }); // Set 20 seconds for all implicit waits
 
         driver = await getChromeDriver();
-        await driver.get('https://frontend-dev-packages-registry.vercel.app/');
-        // await driver.get('http://localhost:5173/home');
+        // await driver.get('https://frontend-dev-packages-registry.vercel.app/'); //this is the link to the deployed version of the program works but without coverage
+        await driver.get('http://localhost:5173/home');  //Run the program locally and use this link to test coverage
         await clickElementByText(driver, 'Login');
 
         // Perform login
@@ -409,10 +408,14 @@ describe('All Tests', () => {
         expect(errorMessage).toBe("Error 404: Package doesn't exist");
     });
 
-    test('wait', async () => {
+    test('wait1', async () => {
         await new Promise(resolve => setTimeout(resolve, 5000));
     });
 
+    test('wait2', async () => {
+        await new Promise(resolve => setTimeout(resolve, 5000));
+    });
+    
     test('Fetch a package by ID without a GitHub URL and verify ID, Download button, and JavaScript Program', async () => {
         await fillInputField(driver, By.xpath("//input[@placeholder='Enter Package ID']"), uploadedPackage2.id);
         await clickElementByText(driver, 'Fetch Package');
@@ -425,7 +428,8 @@ describe('All Tests', () => {
         await driver.executeScript("arguments[0].scrollIntoView(true);", packageNameElement);
 
         // Check for ID
-        const idElement = await driver.findElement(By.xpath("//*[contains(text(),'ID:')]"));
+        // const idElement = await driver.findElement(By.xpath("//*[contains(text(),'ID:')]"));
+        const idElement = await driver.findElement(By.id('iddd'));
         await driver.executeScript("arguments[0].scrollIntoView(true);", idElement);
 
         // Ensure GitHub URL is not present
