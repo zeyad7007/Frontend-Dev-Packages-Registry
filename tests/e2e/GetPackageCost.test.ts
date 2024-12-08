@@ -27,7 +27,7 @@ describe('Get Package Cost Functionality', () => {
         await fillInputField(driver, By.id('password-input'), 'adminPassword123'); 
         await driver.executeScript('arguments[0].scrollIntoView(true);', loginButton);
         await driver.wait(until.elementIsVisible(loginButton), 5000);
-        await driver.executeScript('arguments[0].click();', loginButton);
+        await driver.executeScript('arguments[0].click();', loginButton);               
     });
 
     afterAll(async () => {

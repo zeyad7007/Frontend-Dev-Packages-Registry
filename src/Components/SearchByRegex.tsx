@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { getPackagesByRegex } from '../api';
 import axios, { AxiosError } from 'axios';
-import { Package } from '../Interface';
+import { PackageIR } from '../Interface';
 
 const SearchByRegex: React.FC = () => {
   const [regex, setRegex] = useState<string>('');
-  const [packages, setPackages] = useState<Package[]>([]);
+  const [packages, setPackages] = useState<PackageIR[]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleSearch = async () => {
@@ -54,9 +54,9 @@ const SearchByRegex: React.FC = () => {
       <div className="mt-3" aria-live="polite">
         {packages.length > 0 ? (
           packages.map((pkg) => (
-            <div key={pkg.metadata.ID} className="border rounded p-3 mb-2">
-              <h5>{pkg.metadata.Name}</h5>
-              <p>Version: {pkg.metadata.Version}</p>
+            <div key={pkg.ID} className="border rounded p-3 mb-2">
+              <h5>{pkg.Name}</h5>
+              <p>Version: {pkg.Version}</p>
             </div>
           ))
         ) : (

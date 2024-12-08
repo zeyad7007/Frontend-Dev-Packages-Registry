@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { 
-  Package, 
+  Package,
+  PackageIR, 
   PackageUpdateI, 
   PackageUploadI, 
   GetPackagesQuery, 
@@ -17,7 +18,7 @@ import {
   UserinGroupI,
   PackageHistoryI,
   PackageHistoryBodyI,
-  CostFullData
+  CostI
 } from './Interface';
 
 // Create an Axios instance
@@ -53,7 +54,7 @@ apiClient.interceptors.request.use(
 // API endpoints
 export const getPackages = async (offset: number, queries: GetPackagesQuery[]): Promise<PackageListI[]> => {
   const response = await apiClient.post('/packages', queries, { params: { offset } });
-  return response.data.packages;
+  return response.data;
 };
 
 export const resetRegistry = async (): Promise<void> => {
@@ -80,14 +81,14 @@ export const uploadPackage = async (data: PackageUploadI): Promise<Package> => {
   return response.data;
 };
 
-export const getPackagesByRegex = async (regex: string): Promise<Package[]> => {
+export const getPackagesByRegex = async (regex: string): Promise<PackageIR[]> => {
   console.log(regex);
   const response = await apiClient.post('/package/byRegEx', { RegEx: regex });
   console.log(response);
   return response.data;
 };
 
-export const getPackageCost = async (id: string, dependency: boolean = false): Promise<CostFullData> => {
+export const getPackageCost = async (id: string, dependency: boolean = false): Promise<CostI> => {
   console.log(id);
   const response = await apiClient.get(`/package/${id}/cost`, { params: { dependency } });
   console.log(response.data);

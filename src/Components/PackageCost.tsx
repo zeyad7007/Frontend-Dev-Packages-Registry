@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { getPackageCost } from '../api';
 import axios, { AxiosError } from 'axios';
-import { CostFullData, Dependency } from '../Interface';
+import { CostI } from '../Interface';
 
 const PackageCost: React.FC = () => {
   const [id, setId] = useState<string>('');
-  const [cost, setCost] = useState<CostFullData | null>(null);
+  const [cost, setCost] = useState<CostI | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const fetchCost = async () => {
@@ -64,9 +64,6 @@ const PackageCost: React.FC = () => {
         <div className="card mt-4 p-4 shadow-sm">
           <h4>Package Cost Details</h4>
           <hr />
-          <p>
-            <strong>Package ID:</strong> {cost.dependencies.id}
-          </p>
           <table className="table table-striped table-bordered">
             <thead className="table-light">
               <tr>
@@ -76,11 +73,15 @@ const PackageCost: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {cost.dependencies.Dependencies.map((dependency: Dependency, index) => (
-                <tr key={index}>
-                  <td>{dependency.Dependency}</td>
-                  <td>{dependency.StandaloneCost !== undefined ? dependency.StandaloneCost : 'N/A'}</td>
-                  <td>{dependency.TotalCost}</td>
+              {Object.entries(cost).map(([dependencyId, dependencyData]) => (
+                <tr key={dependencyId}>
+                  <td>{dependencyId}</td>
+                  <td>
+                    {dependencyData.standaloneCost !== undefined
+                      ? `${dependencyData.standaloneCost} KB`
+                      : 'N/A'}
+                  </td>
+                  <td>{dependencyData.totalCost} KB</td>
                 </tr>
               ))}
             </tbody>

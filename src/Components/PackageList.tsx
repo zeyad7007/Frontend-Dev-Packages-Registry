@@ -114,10 +114,10 @@ const PackageList: React.FC = () => {
       <div className="mt-3" aria-live="polite">
         {packages.length > 0 ? (
           packages.map((pkg) => (
-            <div key={pkg.id} className="border rounded p-3 mb-2">
-              <h5>{pkg.name}</h5>
-              <p>Version: {pkg.version}</p>
-              <p>ID: {pkg.id}</p>
+            <div key={pkg.ID} className="border rounded p-3 mb-2">
+              <h5>{pkg.Name}</h5>
+              <p>Version: {pkg.Version}</p>
+              <p>ID: {pkg.ID}</p>
             </div>
           ))
         ) : (

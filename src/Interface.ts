@@ -3,7 +3,7 @@ export interface Package {
   metadata: {
     Name: string;
     Version?: string;
-    ID: string;
+    ID: number;
   };
   data: {
     Content?: string;
@@ -11,6 +11,12 @@ export interface Package {
     JSProgram: string;
     debloat?:boolean;
   };
+}
+
+export interface PackageIR{
+  Version?: string;
+  Name: string;
+  ID: number;
 }
 
 export interface PackageUploadI {
@@ -69,8 +75,8 @@ export interface Metrics{
 
 export interface CostI{
   [id:string]:{
-      StandAloneCost?: number;
-      TotalCost: number; 
+    standaloneCost?: number;
+    totalCost: number; 
   }
 }
 
@@ -92,9 +98,9 @@ export interface CostFullData {
 
 
 export interface PackageListI{
-id:string;
-name:string;
-version:string;
+  Version:string;
+  Name:string;
+  ID:string;
 }
 
 export interface AuthenticateI{
