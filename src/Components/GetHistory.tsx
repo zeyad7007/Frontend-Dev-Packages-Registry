@@ -89,9 +89,9 @@ const GetPackageHistory: React.FC = () => {
 
       {/* History Display */}
       {history && (
-        <div className="border rounded p-3 mt-3">
+        <div className="border rounded p-3 mt-3" aria-live="polite"> 
           <h4>Package History:</h4>
-          <ul className="list-unstyled">
+          <ul className="list-unstyled" aria-live="polite">
             {history.map((entry) => (
               <li key={entry.id} className="mb-2">
                 <strong>Action:</strong> {entry.action} <br />
