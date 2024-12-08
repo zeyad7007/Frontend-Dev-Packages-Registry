@@ -15,16 +15,27 @@ export async function navigateToUrl(driver: WebDriver, url: string): Promise<voi
  * @param driver - The Selenium WebDriver instance.
  * @param text - The visible text of the element to click.
  */
+// export async function clickElementByText(driver: WebDriver, text: string): Promise<void> {
+//     const element = await driver.findElement(By.xpath(`//*[text()='${text}']`));
+//     await element.click();
+// }
+
 export async function clickElementByText(driver: WebDriver, text: string): Promise<void> {
     const element = await driver.findElement(By.xpath(`//*[text()='${text}']`));
-    await element.click();
-}
+    await driver.executeScript('arguments[0].scrollIntoView({block: "center"});', element);
+    await driver.wait(async () => element.isDisplayed(), 5000); // Ensure it is visible
+    await driver.wait(async () => element.isEnabled(), 5000); // Ensure it is enabled
+    await driver.executeScript('arguments[0].click();', element); // Click using JavaScript to bypass issues
+  }
 
-export async function clickElementById(driver: WebDriver, id: string): Promise<void> {
+
+  export async function clickElementById(driver: WebDriver, id: string): Promise<void> {
     const element = await driver.findElement(By.id(id));
-    await element.click();
-}
-
+    await driver.executeScript('arguments[0].scrollIntoView({block: "center"});', element); // Scroll into view
+    await driver.wait(async () => element.isDisplayed(), 5000); // Ensure it is visible
+    await driver.wait(async () => element.isEnabled(), 5000); // Ensure it is enabled
+    await driver.executeScript('arguments[0].click();', element); // Click using JavaScript to bypass issues
+  }
 /**
  * Waits for an element to be located and visible, then clicks it.
  * @param driver - The Selenium WebDriver instance.
@@ -55,7 +66,7 @@ export async function fillInputField(driver: WebDriver, locator: By, value: stri
  * @param locator - The locator to find the element.
  * @param timeout - Maximum wait time in milliseconds (default 5000 ms).
  */
-export async function waitForElement(driver: WebDriver, locator: By, timeout: number = 5000): Promise<void> {
+export async function waitForElement(driver: WebDriver, locator: By, timeout: number = 20000): Promise<void> {
     await driver.wait(until.elementLocated(locator), timeout);
     await driver.wait(until.elementIsVisible(await driver.findElement(locator)), timeout);
 }

@@ -33,6 +33,10 @@ const UploadPackage: React.FC = () => {
       const successMessage = document.createElement('div');
       successMessage.className = 'alert alert-success';
       successMessage.innerText = `Package uploaded with ID: ${result.metadata.ID}`;
+      if(packageData.URL){
+        successMessage.id = 'successMessage1';}
+      else{
+        successMessage.id = 'successMessage2';}
       document.querySelector('.container')?.prepend(successMessage);
       setTimeout(() => successMessage.remove(), 5000);
     } catch (err) {
@@ -100,7 +104,7 @@ const UploadPackage: React.FC = () => {
       />
       <button onClick={handleUpload} className="btn btn-success btn-lg">Upload Package</button>
 
-      {errorMessage && <div className="alert alert-danger" role="alert" aria-live="assertive">{errorMessage}</div>}
+      {errorMessage && <div id="errorMessage" className="alert alert-danger" role="alert" aria-live="assertive">{errorMessage}</div>}
     </div>
   );
 };

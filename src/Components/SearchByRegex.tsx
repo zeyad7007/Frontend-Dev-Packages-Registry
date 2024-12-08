@@ -57,6 +57,7 @@ const SearchByRegex: React.FC = () => {
             <div key={pkg.ID} className="border rounded p-3 mb-2">
               <h5>{pkg.Name}</h5>
               <p>Version: {pkg.Version}</p>
+              <p>ID: {pkg.ID}</p>
             </div>
           ))
         ) : (

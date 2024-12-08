@@ -36,10 +36,10 @@ const ResetRegistry: React.FC = () => {
   return (
     <div className="container">
       <h2 className="display-4 fw-bold text-center">Reset Registry</h2> {/* Bold heading */}
-      <button className="btn btn-danger btn-lg mt-4" onClick={handleReset} aria-live="polite">
+      <button id="Reset" className="btn btn-danger btn-lg mt-4" onClick={handleReset} aria-live="polite">
         Reset Registry
       </button>
-      {errorMessage && <div className="alert alert-danger" role="alert" aria-live="assertive">{errorMessage}</div>}
+      {errorMessage && <div className="alert alert-danger" role="alert" id="ResetMessage" aria-live="assertive">{errorMessage}</div>}
     </div>
   );
 };

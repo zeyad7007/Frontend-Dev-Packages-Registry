@@ -49,7 +49,7 @@ const PackageCost: React.FC = () => {
             onChange={(e) => setId(e.target.value)}
           />
         </div>
-        <button onClick={fetchCost} className="btn btn-primary w-100">
+        <button onClick={fetchCost} id= "fetch-cost-button" className="btn btn-primary w-100">
           Fetch Cost
         </button>
       </div>

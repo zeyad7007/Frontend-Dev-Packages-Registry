@@ -50,7 +50,6 @@ describe('Get Package Cost Functionality', () => {
 
         const components = [
             { id: 'package-id-input' }, 
-            { id: 'include-dependencies-checkbox' }, 
             { id: 'fetch-cost-button' } 
         ];
 

@@ -66,7 +66,7 @@ const PackageDetails: React.FC = () => {
       {packageData && (
         <div aria-live="polite">
           <h3>{packageData.metadata.Name} (v{packageData.metadata.Version})</h3>
-          <p>ID: {packageData.metadata.ID}</p>
+          <p id='iddd'>ID: {packageData.metadata.ID}</p>
           {packageData.data.URL && (
             <p>URL: <a href={packageData.data.URL} target="_blank" rel="noopener noreferrer">{packageData.data.URL}</a></p>
           )}
