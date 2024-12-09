@@ -18,8 +18,13 @@ describe('All Tests', () => {
     beforeAll(async () => {
 
         driver = await getChromeDriver();
+
+        // npm run test:nyc runs all tests with e2e coverage
+        // npm run test runs all tests with unit tests coverage
+
+
         // await driver.get('https://frontend-dev-packages-registry.vercel.app/'); //this is the link to the deployed version of the program works but without coverage
-        await driver.get('http://localhost:5173/home');  //Run the program locally and use this link to test coverage
+        await driver.get('http://localhost:5173/home');  //to test coverage run the program locally and use the localhost link 
         await clickElementByText(driver, 'Login');
 
         // Perform login
@@ -184,53 +189,17 @@ describe('All Tests', () => {
         expect(messageText).toContain('Package uploaded with ID:');
     });
 
-    // test('Disqualified package error (Error 424)', async () => {
-    //     const packageName = 'disqualified package';
-    //     await fillInputField(driver, By.xpath("//input[@placeholder='Package Name']"), packageName);
-    //     await fillInputField(driver, By.xpath("//textarea[@placeholder='JS Program']"), 'console.log("disqualified package");');
-    //     await fillInputField(driver, By.xpath("//input[@placeholder='GitHub Repo URL']"), 'https://github.com/abdelrahmanHamdyG/Books-Exchange-App');
+    test('wait1', async () => {
+        await new Promise(resolve => setTimeout(resolve, 5000));
+    });
 
-    //     const debloatCheckbox = await driver.findElement(By.xpath("//input[@type='checkbox' and @name='debloat']"));
-    //     await driver.executeScript("arguments[0].scrollIntoView(true);", debloatCheckbox);
-    //     if (!(await debloatCheckbox.isSelected())) {
-    //         await debloatCheckbox.click();
-    //     }
+    test('wait2', async () => {
+        await new Promise(resolve => setTimeout(resolve, 5000));
+    });
 
-    //     const uploadButton = await driver.findElement(By.xpath("//button[text()='Upload Package']"));
-    //     await uploadButton.click();
-
-    //     const errorMessage = await driver.wait(
-    //         until.elementLocated(By.xpath("//*[contains(text(),'Error 424: disqualified package')]")),
-    //         5000
-    //     );
-    //     const messageText = await errorMessage.getText();
-    //     expect(messageText).toContain('Error 424: disqualified package');
-    // });
-
-    // test('Duplicate package error (Error 409)', async () => {
-    //     const packageName = 'Test1';
-    //     await fillInputField(driver, By.xpath("//input[@placeholder='Package Name']"), packageName);
-    //     await fillInputField(driver, By.xpath("//textarea[@placeholder='JS Program']"), 'console.log("duplicate package");');
-    //     await fillInputField(driver, By.xpath("//input[@placeholder='GitHub Repo URL']"), 'https://github.com/expressjs/express');
-
-    //     const debloatCheckbox = await driver.findElement(By.xpath("//input[@type='checkbox' and @name='debloat']"));
-    //     await driver.executeScript("arguments[0].scrollIntoView(true);", debloatCheckbox);
-    //     if (!(await debloatCheckbox.isSelected())) {
-    //         await debloatCheckbox.click();
-    //     }
-
-    //     const uploadButton = await driver.findElement(By.xpath("//button[text()='Upload Package']"));
-    //     await uploadButton.click();
-
-    //     const errorMessage = await driver.wait(
-    //         until.elementLocated(By.xpath("//*[contains(text(),'Error 409: Package exists already')]")),
-    //         5000
-    //     );
-    //     const messageText = await errorMessage.getText();
-    //     expect(messageText).toContain('Error 409: Package exists already');
-    // });
-
-
+    test('wait3', async () => {
+        await new Promise(resolve => setTimeout(resolve, 5000));
+    });
 
 
     test('Verify all components appear when "Get Package Cost" is clicked', async () => {
@@ -408,13 +377,7 @@ describe('All Tests', () => {
         expect(errorMessage).toBe("Error 404: Package doesn't exist");
     });
 
-    test('wait1', async () => {
-        await new Promise(resolve => setTimeout(resolve, 5000));
-    });
-
-    test('wait2', async () => {
-        await new Promise(resolve => setTimeout(resolve, 5000));
-    });
+    
     
     test('Fetch a package by ID without a GitHub URL and verify ID, Download button, and JavaScript Program', async () => {
         await fillInputField(driver, By.xpath("//input[@placeholder='Enter Package ID']"), uploadedPackage2.id);
@@ -675,48 +638,6 @@ describe('All Tests', () => {
         }
     });
     
-    //   test('Submit valid inputs and validate success message', async () => {
-    //     const userIdInput = await driver.findElement(By.id('userIdInput'));
-    //     const groupIdInput = await driver.findElement(By.id('groupIdInput'));
-    //     const submitButton = await driver.findElement(By.id('submitButton'));
-    
-    //     await driver.executeScript('arguments[0].scrollIntoView(true);', userIdInput);
-    //     await fillInputField(driver, By.id('userIdInput'), '35');
-    
-    //     await driver.executeScript('arguments[0].scrollIntoView(true);', groupIdInput);
-    //     await fillInputField(driver, By.id('groupIdInput'), '6');
-    
-    //     await driver.executeScript('arguments[0].scrollIntoView(true);', submitButton);
-    //     await driver.wait(until.elementIsVisible(submitButton), 5000);
-    //     await driver.executeScript('arguments[0].click();', submitButton);
-    
-    //     await waitForElement(driver, By.id('successMessage'), 5000);
-    //     const successMessage = await driver.findElement(By.id('successMessage'));
-    //     await driver.executeScript('arguments[0].scrollIntoView(true);', successMessage);
-    //     expect(await successMessage.getText()).toContain('User assigned to a new group');
-    //   });
-    
-    //   test('Submit invalid inputs and validate error message', async () => {
-        
-    //     const userIdInput = await driver.findElement(By.id('userIdInput'));
-    //     const groupIdInput = await driver.findElement(By.id('groupIdInput'));
-    //     const submitButton = await driver.findElement(By.id('submitButton'));
-    
-    //     await driver.executeScript('arguments[0].scrollIntoView(true);', userIdInput);
-    //     await fillInputField(driver, By.id('userIdInput'), '999');
-    
-    //     await driver.executeScript('arguments[0].scrollIntoView(true);', groupIdInput);
-    //     await fillInputField(driver, By.id('groupIdInput'), '999');
-    
-    //     await driver.executeScript('arguments[0].scrollIntoView(true);', submitButton);
-    //     await driver.wait(until.elementIsVisible(submitButton), 5000);
-    //     await driver.executeScript('arguments[0].click();', submitButton);
-    
-    //     await waitForElement(driver, By.id('errorMessage'), 5000);
-    //     const errorMessage = await driver.findElement(By.id('errorMessage'));
-    //     await driver.executeScript('arguments[0].scrollIntoView(true);', errorMessage);
-    //     expect(await errorMessage.getText()).toContain('Error 404:');
-    //   });
     
     test('Verify components on "Get Tracks" page', async () => {
         // Click on the "Get Tracks" button

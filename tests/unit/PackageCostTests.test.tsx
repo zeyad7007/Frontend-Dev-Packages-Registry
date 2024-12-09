@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor} from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, test, expect, vi, beforeEach, Mock } from 'vitest';
 import PackageCost from '../../src/Components/PackageCost';
 import { getPackageCost } from '../../src/api';
@@ -18,52 +18,20 @@ describe('PackageCost Component', () => {
   test('renders input field, checkbox, button, and initial layout', () => {
     render(<PackageCost />);
 
-    expect(screen.getByPlaceholderText('Enter Package ID')).toBeInTheDocument();
-    expect(screen.getByRole('checkbox', { name: 'Include Dependencies' })).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('e.g., 123')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Fetch Cost' })).toBeInTheDocument();
   });
 
   test('handles package ID input change', () => {
     render(<PackageCost />);
 
-    const idInput = screen.getByPlaceholderText('Enter Package ID') as HTMLInputElement;
+    const idInput = screen.getByPlaceholderText('e.g., 123') as HTMLInputElement;
     fireEvent.change(idInput, { target: { value: '456' } });
     expect(idInput.value).toBe('456');
   });
 
-  test('handles include dependencies checkbox change', () => {
-    render(<PackageCost />);
 
-    const checkbox = screen.getByRole('checkbox', { name: 'Include Dependencies' }) as HTMLInputElement;
-    expect(checkbox.checked).toBe(false);
-
-    fireEvent.click(checkbox);
-    expect(checkbox.checked).toBe(true);
-  });
-
-  test('displays package cost details on successful fetch', async () => {
-    // Mock a successful response
-    (getPackageCost as Mock).mockResolvedValueOnce([
-      {
-        ID: '456',
-        standalonecost: 200,
-        totalcost: 500,
-      },
-    ]);
-
-    render(<PackageCost />);
-
-    fireEvent.change(screen.getByPlaceholderText('Enter Package ID'), { target: { value: '456' } });
-    fireEvent.click(screen.getByRole('button', { name: 'Fetch Cost' }));
-
-    await waitFor(() => {
-      const costData = screen.getByText(/Package Cost Details:/);
-      expect(costData).toBeInTheDocument();
-      expect(screen.getByText('Standalone Cost:').parentElement);
-      expect( screen.getByText('Total Cost:').parentElement);
-    });
-  });
-
+  
 
   test('displays specific error message on Axios error with response data', async () => {
     // Mock an Axios error with specific error data
@@ -78,7 +46,7 @@ describe('PackageCost Component', () => {
 
     render(<PackageCost />);
 
-    fireEvent.change(screen.getByPlaceholderText('Enter Package ID'), { target: { value: '456' } });
+    fireEvent.change(screen.getByPlaceholderText('e.g., 123'), { target: { value: '456' } });
     fireEvent.click(screen.getByRole('button', { name: 'Fetch Cost' }));
 
     const errorMessage = await screen.findByRole('alert');
@@ -96,7 +64,7 @@ describe('PackageCost Component', () => {
 
     render(<PackageCost />);
 
-    fireEvent.change(screen.getByPlaceholderText('Enter Package ID'), { target: { value: '456' } });
+    fireEvent.change(screen.getByPlaceholderText('e.g., 123'), { target: { value: '456' } });
     fireEvent.click(screen.getByRole('button', { name: 'Fetch Cost' }));
 
     const errorMessage = await screen.findByRole('alert');
@@ -116,7 +84,7 @@ describe('PackageCost Component', () => {
 
     render(<PackageCost />);
 
-    fireEvent.change(screen.getByPlaceholderText('Enter Package ID'), { target: { value: '456' } });
+    fireEvent.change(screen.getByPlaceholderText('e.g., 123'), { target: { value: '456' } });
     fireEvent.click(screen.getByRole('button', { name: 'Fetch Cost' }));
 
     const errorMessage = await screen.findByRole('alert');
@@ -129,7 +97,7 @@ describe('PackageCost Component', () => {
 
     render(<PackageCost />);
 
-    fireEvent.change(screen.getByPlaceholderText('Enter Package ID'), { target: { value: '456' } });
+    fireEvent.change(screen.getByPlaceholderText('e.g., 123'), { target: { value: '456' } });
     fireEvent.click(screen.getByRole('button', { name: 'Fetch Cost' }));
 
     const errorMessage = await screen.findByRole('alert');

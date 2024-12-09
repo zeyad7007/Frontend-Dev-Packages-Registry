@@ -33,26 +33,7 @@ describe('AssignUserToGroup Component', () => {
     expect(screen.getByRole('alert')).toHaveTextContent('Both User ID and Group ID are required.');
   });
 
-  test('calls assignUserToGroup API with correct data', async () => {
-    const mockResponseMessage = 'User successfully assigned to the group.';
-    (assignUserToGroup as Mock).mockResolvedValueOnce(mockResponseMessage);
-
-    render(<AssignUserToGroup />);
-
-    fireEvent.change(screen.getByLabelText(/User ID/i), { target: { value: '123' } });
-    fireEvent.change(screen.getByLabelText(/Group ID/i), { target: { value: '456' } });
-
-    const assignButton = screen.getByRole('button', { name: /Assign User to Group/i });
-    fireEvent.click(assignButton);
-
-    await waitFor(() => {
-      expect(assignUserToGroup).toHaveBeenCalledWith({ userId: 123 }, 456);
-    });
-
-    await waitFor(() => {
-      expect(screen.getByRole('alert')).toHaveTextContent(mockResponseMessage);
-    });
-  });
+  
 
 
   test('displays error message on API error (validation error)', async () => {

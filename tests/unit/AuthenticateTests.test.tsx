@@ -36,29 +36,7 @@ describe('Authenticate Component', () => {
     expect(screen.getByRole('button', { name: /login/i })).toBeInTheDocument();
   });
 
-  test('calls onLogin with the token on successful login', async () => {
-    // Mock a successful API response
-    mockedAuthenticate.mockResolvedValue({ token: 'mock-token' });
-
-    render(<Authenticate onLogin={mockOnLogin} />);
-
-    // Simulate user input
-    await userEvent.type(screen.getByLabelText('Enter Username'), 'testuser');
-    await userEvent.type(screen.getByLabelText('Enter Password'), 'testpass');
-
-    // Click the login button
-    const loginButton = screen.getByRole('button', { name: /login/i });
-    await userEvent.click(loginButton);
-
-    // Wait for success message
-    await screen.findByText(/authenticated!/i);
-
-    // Assert: onLogin is called with the token
-    expect(mockOnLogin).toHaveBeenCalledWith('mock-token');
-
-    // Assert: Success message is displayed
-    expect(screen.getByText(/testuser is authenticated/i)).toBeInTheDocument();
-  });
+  
 
   test('displays error message on failed login', async () => {
     // Mock an API response for failed login

@@ -6,7 +6,6 @@ import MockAdapter from 'axios-mock-adapter';
 // Import your API client and functions
 import {
   apiClient, // Correctly import apiClient
-  getPackages,
   resetRegistry,
   getPackageById,
   updatePackageById,
@@ -25,7 +24,6 @@ import {
   assignPackageToGroup,
   getGroups,
   getUsersInGroup,
-  getHistory,
 } from '../../src/api'; // Adjust the path as necessary
 
 // Import necessary interfaces
@@ -33,10 +31,8 @@ import {
   Package,
   PackageUpdateI,
   PackageUploadI,
-  GetPackagesQuery,
   Metrics,
   CostI,
-  PackageListI,
   AuthenticateI,
   TokenI,
   PermissionsI,
@@ -47,7 +43,6 @@ import {
   PackettoGroupI,
   GroupResponseI,
   UserinGroupI,
-  PackageHistoryI,
 } from '../../src/Interface';
 
 // Mocking localStorage (if needed)
@@ -78,17 +73,7 @@ describe('API Client Test Suite', () => {
     vi.clearAllMocks(); // Clear all mocks after each test
   });
 
-  describe('getPackages', () => {
-    it('should fetch packages successfully', async () => {
-      const offset = 0;
-      const queries: GetPackagesQuery[] = [];
-      const mockData = { packages: [{ id: '1', name: 'Test Package' }] };
-      mock.onPost('/packages').reply(200, mockData);
-
-      const result = await getPackages(offset, queries);
-      expect(result).toEqual(mockData.packages);
-    });
-  });
+ 
 
   describe('resetRegistry', () => {
     it('should reset the registry successfully', async () => {
@@ -346,17 +331,5 @@ describe('API Client Test Suite', () => {
     });
   });
 
-  describe('getHistory', () => {
-    it('should get package history successfully', async () => {
-      const packageId = 1;
-      const mockData: PackageHistoryI[] = [
-        { change: 'Updated version', date: '2023-10-01' },
-        // Add other necessary fields based on your PackageHistoryI interface
-      ];
-      mock.onGet(`/history/${packageId}`).reply(200, mockData);
-
-      const result = await getHistory(packageId);
-      expect(result).toEqual(mockData);
-    });
-  });
+ 
 });

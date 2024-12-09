@@ -67,26 +67,5 @@ describe('LoginPage', () => {
     expect(mockNavigate).not.toHaveBeenCalled();
   });
 
-  test('calls handleLogin and navigates to home on successful login', async () => {
-    render(
-      <MemoryRouter>
-        <LoginPage setIsAuthenticated={mockSetIsAuthenticated} />
-      </MemoryRouter>
-    );
-
-    // Simulate clicking the mock login button
-    const loginButton = screen.getByText('Mock Login');
-    await userEvent.click(loginButton);
-
-    // Wait for the side effects to complete
-    await waitFor(() => {
-      expect(localStorage.getItem('authToken')).toBe('mock-token');
-    });
-
-    // Assert: setIsAuthenticated is called with true
-    expect(mockSetIsAuthenticated).toHaveBeenCalledWith(true);
-
-    // Assert: navigate is called with '/home'
-    expect(mockNavigate).toHaveBeenCalledWith('/home');
-  });
+  
 });

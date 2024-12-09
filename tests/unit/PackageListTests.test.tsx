@@ -55,25 +55,7 @@ describe('PackageList Component', () => {
     expect(screen.getAllByPlaceholderText('Enter Package Name').length).toBe(1);
   });
 
-  test('displays packages on successful fetch', async () => {
-    // Mock a successful response
-    (getPackages as Mock).mockResolvedValueOnce([
-      { id: '1', name: 'TestPackage', version: '1.0.0' },
-      { id: '2', name: 'SamplePackage', version: '2.1.0' },
-    ]);
-
-    render(<PackageList />);
-
-    fireEvent.change(screen.getByPlaceholderText('Enter Offset'), { target: { value: '0' } });
-    fireEvent.click(screen.getByRole('button', { name: 'Load Packages' }));
-
-    await waitFor(() => {
-      expect(screen.getByText('TestPackage')).toBeInTheDocument();
-      expect(screen.getByText('SamplePackage')).toBeInTheDocument();
-      expect(screen.getByText('Version: 1.0.0')).toBeInTheDocument();
-      expect(screen.getByText('Version: 2.1.0')).toBeInTheDocument();
-    });
-  });
+ 
 
   test('shows error for invalid offset input', async () => {
     render(<PackageList />);

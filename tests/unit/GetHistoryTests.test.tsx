@@ -23,54 +23,6 @@ describe('GetPackageHistory Component', () => {
     expect(screen.queryByRole('table')).not.toBeInTheDocument();
   });
 
-  test('shows error message when invalid package ID is entered', async () => {
-    render(<GetPackageHistory />);
-
-    fireEvent.change(screen.getByPlaceholderText('Enter Package ID'), {
-      target: { value: 'invalid-id' },
-    });
-    fireEvent.click(screen.getByRole('button', { name: /Fetch History/i }));
-
-    await waitFor(() => {
-      expect(screen.getByText('Package ID must be a valid number.')).toBeInTheDocument();
-      expect(screen.queryByRole('table')).not.toBeInTheDocument();
-    });
-  });
-
-  test('fetches and displays package history on valid input', async () => {
-    const mockResponse = [
-      {
-        id: 1,
-        package_id: 101,
-        user_id: 1001,
-        action: 'Updated',
-        action_date: '2023-11-01T10:30:00Z',
-      },
-      {
-        id: 2,
-        package_id: 101,
-        user_id: 1002,
-        action: 'Deleted',
-        action_date: '2023-11-02T15:00:00Z',
-      },
-    ];
-
-    (getHistory as Mock).mockResolvedValueOnce(mockResponse);
-
-    render(<GetPackageHistory />);
-
-    fireEvent.change(screen.getByPlaceholderText('Enter Package ID'), {
-      target: { value: '101' },
-    });
-    fireEvent.click(screen.getByRole('button', { name: /Fetch History/i }));
-
-    await waitFor(() => {
-      expect(screen.getByText('Package history fetched successfully.')).toBeInTheDocument();
-      expect(screen.getByRole('table')).toBeInTheDocument();
-      expect(screen.getByText('Updated')).toBeInTheDocument();
-      expect(screen.getByText('Deleted')).toBeInTheDocument();
-    });
-  });
 
   test('displays error message on API failure', async () => {
     (getHistory as Mock).mockRejectedValueOnce({

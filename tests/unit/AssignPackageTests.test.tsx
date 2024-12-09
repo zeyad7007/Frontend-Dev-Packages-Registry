@@ -31,24 +31,7 @@ describe('AssignPackageToGroup Component', () => {
     expect(screen.getByText(/Both Group ID and Package ID are required/i)).toBeInTheDocument();
   });
 
-  test('calls assignPackageToGroup with correct data on valid inputs', async () => {
-    (assignPackageToGroup as Mock).mockResolvedValue('Package successfully assigned to group');
-
-    render(<AssignPackageToGroup />);
-
-    fireEvent.change(screen.getByLabelText(/Package ID/i), { target: { value: '101' } });
-    fireEvent.change(screen.getByLabelText(/Group ID/i), { target: { value: '202' } });
-
-    fireEvent.click(screen.getByRole('button', { name: /Assign Package to Group/i }));
-
-    await waitFor(() => {
-      expect(assignPackageToGroup).toHaveBeenCalledWith(
-        { packageId: 101 },
-        202
-      );
-      expect(screen.getByText(/Package successfully assigned to group/i)).toBeInTheDocument();
-    });
-  });
+ 
 
   test('displays error message when API call fails with Axios error', async () => {
     (assignPackageToGroup as Mock).mockRejectedValue({

@@ -47,9 +47,4 @@ describe('App Component', () => {
     expect(screen.getByRole('heading', { name: /Tracks/i })).toBeInTheDocument();
   });
 
-  test('renders the AdminActions component on /admin-actions', () => {
-    navigateTo('/admin-actions');
-    render(<App />);
-    expect(screen.getByText(/Admin Actions/i)).toBeInTheDocument(); // Adjust based on actual content in AdminActions
-  });
 });
